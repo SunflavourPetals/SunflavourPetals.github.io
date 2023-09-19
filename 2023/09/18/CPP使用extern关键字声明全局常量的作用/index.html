@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>C++ 使用extern关键字声明全局常量的作用 | Petals&#39; blog</title>
+  <meta name="keywords" content=" CPP , 令我猝不及防的CPP_MSVC知识 ">
+  <meta name="description" content="C++ 使用extern关键字声明全局常量的作用 | Petals&#39; blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="太长不看环节 引通常在编写大型C&#x2F;C++程序时，我们会用到分文件编写程序的方式组织代码，按照不同的功能模块(此模块非c++20模块)，将一份程序分成不同的部分。 为了让模块之间能够相互访问，需要将声明放在头文件(.h)中，将定义放在源文件(.c&#x2F;.cpp)中。 12&#x2F;&#x2F; header &quot;foo.h&quot;int foo();  123456&#x2F;&#x2F; source &amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 使用extern关键字声明全局常量的作用">
+<meta property="og:url" content="http://sunflavourpetals.github.io/2023/09/18/CPP%E4%BD%BF%E7%94%A8extern%E5%85%B3%E9%94%AE%E5%AD%97%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%B8%B8%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8/index.html">
+<meta property="og:site_name" content="Petals&#39; blog">
+<meta property="og:description" content="太长不看环节 引通常在编写大型C&#x2F;C++程序时，我们会用到分文件编写程序的方式组织代码，按照不同的功能模块(此模块非c++20模块)，将一份程序分成不同的部分。 为了让模块之间能够相互访问，需要将声明放在头文件(.h)中，将定义放在源文件(.c&#x2F;.cpp)中。 12&#x2F;&#x2F; header &quot;foo.h&quot;int foo();  123456&#x2F;&#x2F; source &amp;q">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://sunflavourpetals.github.io/2023/09/18/CPP%E4%BD%BF%E7%94%A8extern%E5%85%B3%E9%94%AE%E5%AD%97%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%B8%B8%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8/my_cat.jpg">
+<meta property="article:published_time" content="2023-09-18T12:34:53.000Z">
+<meta property="article:modified_time" content="2023-09-19T03:50:01.489Z">
+<meta property="article:author" content="SunflavourPetals">
+<meta property="article:tag" content="CPP">
+<meta property="article:tag" content="令我猝不及防的CPP_MSVC知识">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://sunflavourpetals.github.io/2023/09/18/CPP%E4%BD%BF%E7%94%A8extern%E5%85%B3%E9%94%AE%E5%AD%97%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%B8%B8%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8/my_cat.jpg">
+
+
+<link rel="icon" href="/img/avatar.png">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+<script src="/js/custom-iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.png"/>
+</a>
+<div class="author">
+    <span>SunflavourPetals</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+            <a title="github"
+               href="https://github.com/SunflavourPetals"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            <a title="email"
+               href="mailto:3090002881@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            <a title="bilibili"
+               href="https://space.bilibili.com/38695927"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-bilibili"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(1)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="CPP">
+            <i class="fold iconfont icon-right"></i>
+            CPP
+            <small>(1)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="CPP&lt;---&gt;猝不及防系列">
+            
+            猝不及防系列
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="1">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>令我猝不及防的CPP_MSVC知识</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>CPP</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="全部文章 CPP 猝不及防系列 "
+           href="/2023/09/18/CPP%E4%BD%BF%E7%94%A8extern%E5%85%B3%E9%94%AE%E5%AD%97%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%B8%B8%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8/"
+           data-tag="CPP,令我猝不及防的CPP_MSVC知识"
+           data-author="" >
+            <span class="post-title" title="C++ 使用extern关键字声明全局常量的作用">C++ 使用extern关键字声明全局常量的作用</span>
+            <span class="post-date" title="2023-09-18 20:34:53">2023/09/18</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-CPP使用extern关键字声明全局常量的作用" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">C++ 使用extern关键字声明全局常量的作用</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="CPP">CPP</a> > 
+            
+            <a  data-rel="CPP&lt;---&gt;猝不及防系列">猝不及防系列</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">CPP</a>
+            
+            <a class="color3">令我猝不及防的CPP_MSVC知识</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2023-09-19 11:50:01'>2023-09-18 20:34</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95"><span class="toc-text">引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Extern-%E5%9C%A8%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E6%97%B6%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">Extern 在声明全局变量时的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VC-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%9A%84%E9%93%BE%E6%8E%A5"><span class="toc-text">VC++全局变量的链接</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="#toolongtowatch">太长不看环节</a></p>
+<h2 id="引"><a href="#引" class="headerlink" title="引"></a>引</h2><p>通常在编写大型C&#x2F;C++程序时，我们会用到分文件编写程序的方式组织代码，按照不同的功能模块(此模块非c++20模块)，将一份程序分成不同的部分。</p>
+<p>为了让模块之间能够相互访问，需要将声明放在头文件(.h)中，将定义放在源文件(.c&#x2F;.cpp)中。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// header &quot;foo.h&quot;</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">foo</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// source &quot;foo.cpp&quot;</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;foo.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">foo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，其他模块只要使用了预处理指令<code>#include &quot;foo.h&quot;</code>，就能使用函数<code>foo</code>了(<del>每个用到<code>foo</code>的源文件中，直接在使用之前声明一次也行</del>)。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;foo.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">foo</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>预处理指令<code>#include &quot;foo.h&quot;</code>的作用仅仅只是在预处理阶段使用”foo.h”文件的内容替换掉这条指令而已。</p>
+<p>也就是说，编译器在编译”main.cpp”阶段，代码中只有孤零零一条声明：<code>int foo();</code>，而没有函数<code>foo</code>的定义，大家都不知道这个函数<code>foo</code>在哪里，也不知道这个函数<code>foo</code>干了什么，只知道有个叫<code>foo</code>的函数并且这里调用了函数<code>foo</code>。</p>
+<p>虽然有些疑问，但是”main.cpp”还是被成功编译了，生成了一个”main.obj”(Windows平台)，<code>.obj</code>文件即”可重定位目标文件”，里面装满了编译器生成的目标代码。这时，”foo.cpp”也被编译了，生成了一个”foo.obj”文件……</p>
+<p>现在来到了链接阶段，”main.cpp”中的<code>main</code>函数调用了<code>foo</code>函数，现在我们知道<code>foo</code>函数在”foo.obj”中，链接程序将它和<code>main</code>函数一并放入了”main.exe”(假设是这个名字)，并且在<code>main</code>函数中调用<code>foo</code>函数的地方填上了<code>foo</code>函数的位置。</p>
+<p>这样，<code>main</code>函数就知道<code>foo</code>函数在哪了，当程序执行到此处时，<code>main</code>函数将把控制权交给<code>foo</code>，等着它将返回值交给<code>main</code>……</p>
+<p>这就是小学生都知道的C&#x2F;C++语言从源码到可执行文件的流程。<del>当然，如果你照着上面写了然后还编译链接了，甚至还反编译了，甚至还一条条去看汇编指令了，最后发现<code>main</code>函数直接返回了0，说程序编译都是骗人的……别急，这可能是编译器将<code>foo</code>函数直接内联了，用代码替换了函数调用，这不是我们要讨论的内容。</del></p>
+<h2 id="Extern-在声明全局变量时的作用"><a href="#Extern-在声明全局变量时的作用" class="headerlink" title="Extern 在声明全局变量时的作用"></a>Extern 在声明全局变量时的作用</h2><p>闹了半天主角”extern”都没出现，现在开始进入正题。</p>
+<p>对函数进行分文件编写是呼吸一样平常的事情，而经常编写C&#x2F;C++程序的话，全局变量将是一个绕不开的东西。它也能像函数一样，将声明与定义分离。下面将进行展示~  </p>
+<p>(使用MSVC)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// header &quot;bar.h&quot;</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> bar;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// source &quot;bar.cpp&quot;</span></span><br><span class="line"><span class="type">int</span> bar&#123; <span class="number">123</span> &#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;bar.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> bar;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>没错， <code>extern</code>关键字出现了，它告诉链接器这个叫<code>bar</code>的，等会去别的转换单元中查找定义(MSDN的说辞)。通常情况下，非常量全局变量具有外部链接，如你所见，这个<code>bar</code>就是一个非常量全局变量，它具有外部链接，链接器让远在他<code>.obj</code>的<code>main</code>函数也能找到它。</p>
+<hr>
+<div id="toolongtowatch">我所熟知的情况到这就结束了，但是前几天，我在整理旧的代码的时候，发现了一个奇怪又熟悉的东西：</div>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> Petal_SetMainFunc(MainFunc) \</span></span><br><span class="line"><span class="meta">namespace Petal::UserEntrance \</span></span><br><span class="line"><span class="meta">&#123;   \</span></span><br><span class="line"><span class="meta">    extern const fptr<span class="string">&lt;int&gt;</span> pt_user_main&#123; &amp;::MainFunc &#125;;  \</span></span><br><span class="line"><span class="meta">    extern const ptrc<span class="string">&lt;TChar&gt;</span> pt_user_main_name&#123; Petal_TStr(#MainFunc) &#125;;  \</span></span><br><span class="line"><span class="meta">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在定义的时候出现了关键字<code>extern</code>，显然此时我已经忘记了<code>extern</code>在此处的作用，我抱着好奇的心态将它删了(指<code>extern</code>)，结果出现了链接错误：</p>
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/error-messages/tool-errors/linker-tools-error-lnk2001">LNK2001</a></td>
+<td>无法解析的外部符号 “int (__cdecl* Petal::UserEntrance::pt_user_main)(void)” (?pt_user_main@UserEntrance@Petal@@3Q6AHXZEA)</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/error-messages/tool-errors/linker-tools-error-lnk2001">LNK2001</a></td>
+<td>无法解析的外部符号 “wchar_t const * const Petal::UserEntrance::pt_user_main_name” (?pt_user_main_name@UserEntrance@Petal@@3QEB_WEB)</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/error-messages/tool-errors/linker-tools-error-lnk1120">LNK1120</a></td>
+<td>2 个无法解析的外部命令</td>
+</tr>
+</tbody></table>
+<p><strong>经典</strong>  </p>
+<p><strong>经典</strong>链接错误  </p>
+<p><em>Classic</em>  </p>
+<p>我忘记了当时为什么会这样写，查下MSDN。</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/cpp/extern-cpp?view=msvc-170">extern (C++) | Microsoft Learn | zh-cn</a></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/cpp/extern-cpp?view=msvc-170">extern (C++) | Microsoft Learn | en-us</a></p>
+<p>我果然是健忘的，故写下博客以便未来哪天犯傻了能快速找到之前的经验</p>
+<img title="cat" src="my_cat.jpg" width="298" data-align="center">
+
+<p>也就是说，全局常量变量具有内部链接，即使在外声明也无法使用，除非在定义时在前面加上关键字<code>extern</code>。用<code>bar</code>来举例如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// header &quot;bar.h&quot;</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> bar;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// source &quot;bar.cpp&quot;</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> bar&#123; <span class="number">123</span> &#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;bar.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> bar;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="VC-全局变量的链接"><a href="#VC-全局变量的链接" class="headerlink" title="VC++全局变量的链接"></a>VC++全局变量的链接</h2><p>既然都说到这份上，还是复习一下VC++中全局变量所具有的链接(不包含C++20及以上的内容)。</p>
+<p><del>遗忘，是一种诅咒</del></p>
+<p>仅内部链接：</p>
+<ul>
+<li><p>使用static声明的全局变量</p>
+</li>
+<li><p>类型具有const限定 &amp;&amp; 先前没有外部链接的声明 的全局变量</p>
+</li>
+<li><p>无名命名空间及其中的命名空间中的全局变量</p>
+</li>
+</ul>
+<p>例</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.cpp</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> foo&#123; <span class="number">1</span> &#125;;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> bar&#123; <span class="number">2</span> &#125;;</span><br><span class="line"><span class="keyword">namespace</span> &#123; <span class="type">int</span> unnamed&#123; <span class="number">3</span> &#125;; &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> foo;</span><br><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> bar;</span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> baz;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span>&#123; foo &#125;; <span class="comment">// LNK2001</span></span><br><span class="line">    <span class="type">int</span>&#123; bar &#125;; <span class="comment">// LNK2001</span></span><br><span class="line">    <span class="type">int</span>&#123; baz &#125;; <span class="comment">// LNK2001</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>外部链接(不在无名命名空间及其中的命名空间内定义的情况)：</p>
+<ul>
+<li><p>使用extern声明的全局变量</p>
+</li>
+<li><p>没有const限定的全局变量</p>
+</li>
+</ul>
+<p>例</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.cpp</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> foo&#123; <span class="number">1</span> &#125;;</span><br><span class="line"><span class="type">int</span> bar&#123; <span class="number">2</span> &#125;;</span><br><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> baz;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> baz&#123; <span class="number">3</span> &#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> foo;</span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> bar;</span><br><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> baz;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span>&#123; foo &#125;;</span><br><span class="line">    <span class="type">int</span>&#123; bar &#125;;</span><br><span class="line">    <span class="type">int</span>&#123; baz &#125;;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>值得注意的是，C++引用忽略限定符，所以如下也能通过编译链接(MSVC)：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.cpp</span></span><br><span class="line"><span class="type">int</span> val&#123; <span class="number">100</span> &#125;;</span><br><span class="line"><span class="type">int</span> <span class="type">const</span><span class="comment">/*此const限定int*/</span> &amp;<span class="type">const</span><span class="comment">/*此const无效*/</span> test&#123; val &#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span>&amp; <span class="type">const</span> test;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span>&#123; test &#125;;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但请不要这么编写代码。</p>
+<p>更复杂的例子</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.cpp</span></span><br><span class="line"><span class="type">int</span>* ptr1&#123; <span class="literal">nullptr</span> &#125;; <span class="comment">// 外部链接</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>* ptrc1&#123; <span class="literal">nullptr</span> &#125;; <span class="comment">// 外部链接</span></span><br><span class="line"><span class="type">int</span> *<span class="type">const</span> cptr1&#123; <span class="literal">nullptr</span> &#125;; <span class="comment">// 内部链接</span></span><br><span class="line"><span class="type">int</span> <span class="type">const</span>* <span class="type">const</span> cptrc1&#123; <span class="literal">nullptr</span> &#125;; <span class="comment">// 内部链接</span></span><br><span class="line"><span class="type">int</span> <span class="type">const</span>* <span class="type">const</span>&amp; cptrcr1&#123; cptrc1 &#125;; <span class="comment">// 外部链接</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> <span class="type">const</span>* <span class="type">const</span> cptrc2&#123; <span class="literal">nullptr</span> &#125;; <span class="comment">// 外部链接</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>C++参考</p>
+<p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/storage_duration">存储类说明符 - cppreference.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/storage_duration">Storage class specifiers - cppreference.com</a></p>
+<hr>
+<p>完结！</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达，请邮件至 3090002881@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2023 SunflavourPetals
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 642px;
+    }
+    .nav.fullscreen {
+        margin-left: -642px;
+    }
+    .nav-left {
+        width: 220px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 552px;
+        }
+        .nav.fullscreen {
+            margin-left: -552px;
+        }
+        .nav-left {
+            width: 160px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 552px;
+            margin-left: -552px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+    #post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+
+</html>
