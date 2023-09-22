@@ -2,19 +2,19 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>CPP20三路比较运算符的使用 | Petals&#39; blog</title>
+  <title>C++20三路比较运算符的使用 | Petals&#39; blog</title>
   <meta name="keywords" content=" CPP , CPP20 ">
-  <meta name="description" content="CPP20三路比较运算符的使用 | Petals&#39; blog">
+  <meta name="description" content="C++20三路比较运算符的使用 | Petals&#39; blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="C++20三路比较运算符 “&lt;&#x3D;&gt;”三路比较运算符的使用C++20新增三路比较运算符，用于确定两个值的大小顺序。其返回值不为bool类型，而是类类型，且是类枚举类型(使用方法和”C++枚举类”有相似之处，但两者是完全不同的东西)。C++标准为我们提供了三种相应的类型：  std::strong_ordering  std::partial_ordering  std::wea">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CPP20三路比较运算符的使用">
+<meta property="og:title" content="C++20三路比较运算符的使用">
 <meta property="og:url" content="http://sunflavourpetals.github.io/2023/09/22/CPP20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="Petals&#39; blog">
 <meta property="og:description" content="C++20三路比较运算符 “&lt;&#x3D;&gt;”三路比较运算符的使用C++20新增三路比较运算符，用于确定两个值的大小顺序。其返回值不为bool类型，而是类类型，且是类枚举类型(使用方法和”C++枚举类”有相似之处，但两者是完全不同的东西)。C++标准为我们提供了三种相应的类型：  std::strong_ordering  std::partial_ordering  std::wea">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-22T13:44:48.000Z">
-<meta property="article:modified_time" content="2023-09-22T16:52:32.456Z">
+<meta property="article:modified_time" content="2023-09-22T16:55:47.470Z">
 <meta property="article:author" content="SunflavourPetals">
 <meta property="article:tag" content="CPP">
 <meta property="article:tag" content="CPP20">
@@ -268,7 +268,7 @@
            href="/2023/09/22/CPP20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/"
            data-tag="CPP,CPP20"
            data-author="" >
-            <span class="post-title" title="CPP20三路比较运算符的使用">CPP20三路比较运算符的使用</span>
+            <span class="post-title" title="C++20三路比较运算符的使用">C++20三路比较运算符的使用</span>
             <span class="post-date" title="2023-09-22 21:44:48">2023/09/22</span>
         </a>
         
@@ -301,7 +301,7 @@
     <div class="pjax">
         <article id="post-CPP20三路比较运算符的使用" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">CPP20三路比较运算符的使用</h1>
+        <h1 class="article-title">C++20三路比较运算符的使用</h1>
     
     <div class="article-meta">
         
@@ -328,7 +328,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2023-09-23 00:52:32'>2023-09-22 21:44</time>
+            发布时间 : <time class="date" title='最后更新: 2023-09-23 00:55:47'>2023-09-22 21:44</time>
         
     </div>
     <div class="article-meta">
@@ -375,10 +375,9 @@
 <li><p><code>std::weak_ordering</code></p>
 </li>
 </ul>
-<div id="ordering_cast"> </div> 其中`std::strong_ordering`可以隐式转换为`std::weak_ordering`；`std::weak_ordering`可以隐式转换为`std::partial_ordering`。
+<div id="ordering_cast">三种ordering的隐式转换</div>
 
-
-
+<p>其中<code>std::strong_ordering</code>可以隐式转换为<code>std::weak_ordering</code>；<code>std::weak_ordering</code>可以隐式转换为<code>std::partial_ordering</code>。</p>
 <p>对于整数，三路比较运算的结果是<code>std::strong_ordering</code>类型的，</p>
 <p>其值为下列值之一：</p>
 <ul>
