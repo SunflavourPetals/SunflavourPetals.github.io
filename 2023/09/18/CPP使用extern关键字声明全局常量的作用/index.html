@@ -330,7 +330,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2023-09-19 21:01:45'>2023-09-18 20:34</time>
+            发布时间 : <time class="date" title='最后更新: 2023-09-23 20:13:23'>2023-09-18 20:34</time>
         
     </div>
     <div class="article-meta">
@@ -386,7 +386,7 @@
 <p>这样，<code>main</code>函数就知道<code>foo</code>函数在哪了，当程序执行到此处时，<code>main</code>函数将把控制权交给<code>foo</code>，等着它将返回值交给<code>main</code>……</p>
 <p>这就是小学生都知道的C&#x2F;C++语言从源码到可执行文件的流程。<del>当然，如果你照着上面写了然后还编译链接了，甚至还反编译了，甚至还一条条去看汇编指令了，最后发现<code>main</code>函数直接返回了0，说程序编译都是骗人的……别急，这可能是编译器将<code>foo</code>函数直接内联了，用代码替换了函数调用，这不是我们要讨论的内容。</del></p>
 <h2 id="Extern-在声明全局变量时的作用"><a href="#Extern-在声明全局变量时的作用" class="headerlink" title="Extern 在声明全局变量时的作用"></a>Extern 在声明全局变量时的作用</h2><p>闹了半天主角”extern”都没出现，现在开始进入正题。</p>
-<p>对函数进行分文件编写是呼吸一样平常的事情，而经常编写C&#x2F;C++程序的话，全局变量将是一个绕不开的东西。它也能像函数一样，将声明与定义分离。下面将进行展示~  </p>
+<p>对函数进行分文件编写是呼吸一样平常的事情，而经常编写C&#x2F;C++程序的话，全局变量&#x2F;命名空间局部变量将是一个绕不开的东西。它也能像函数一样，将声明与定义分离。下面将进行展示~  </p>
 <p>(使用MSVC)</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// header &quot;bar.h&quot;</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> bar;</span><br></pre></td></tr></table></figure>
 
