@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>比宏更好用的source_location | Petals&#39; blog</title>
+  <meta name="keywords" content=" CPP , CPP20 ">
+  <meta name="description" content="比宏更好用的source_location | Petals&#39; blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="引&#x2F;&#x2F; 你不会喜欢这个 #if defined(_UNICODE) || defined(UNICODE) #define MY_FILET __FILEW__ #else #define MY_FILET __FILE__ #endif  #define MY_THROW_IF_FAILED(code) \     ::my::ThrowIfFailed(code, TEXT(#code), M">
+<meta property="og:type" content="article">
+<meta property="og:title" content="比宏更好用的source_location">
+<meta property="og:url" content="http://sunflavourpetals.github.io/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/index.html">
+<meta property="og:site_name" content="Petals&#39; blog">
+<meta property="og:description" content="引&#x2F;&#x2F; 你不会喜欢这个 #if defined(_UNICODE) || defined(UNICODE) #define MY_FILET __FILEW__ #else #define MY_FILET __FILE__ #endif  #define MY_THROW_IF_FAILED(code) \     ::my::ThrowIfFailed(code, TEXT(#code), M">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-09T08:51:44.000Z">
+<meta property="article:modified_time" content="2024-02-10T06:59:11.224Z">
+<meta property="article:author" content="SunflavourPetals">
+<meta property="article:tag" content="CPP">
+<meta property="article:tag" content="CPP20">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.png">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-dark.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css" rel="stylesheet">
+<link href="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+<script src="/js/custom-iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.png"/>
+</a>
+<div class="author">
+    <span>SunflavourPetals</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+            <a title="github"
+               href="https://github.com/SunflavourPetals"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            <a title="email"
+               href="mailto:3090002881@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            <a title="bilibili"
+               href="https://space.bilibili.com/38695927"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-bilibili"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(5)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="CPP">
+            <i class="fold iconfont icon-right"></i>
+            CPP
+            <small>(4)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="CPP&lt;---&gt;猝不及防系列">
+            
+            猝不及防系列
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="CPP&lt;---&gt;CPP20">
+            
+            CPP20
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="日常">
+            
+            日常
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="5">
+<input type="hidden" id="yelog_site_word_count" value="11k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>令我猝不及防的CPP_MSVC知识</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>日常</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>CPP</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>CPP20</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="全部文章 CPP CPP20 "
+           href="/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/"
+           data-tag="CPP,CPP20"
+           data-author="" >
+            <span class="post-title" title="比宏更好用的source_location">比宏更好用的source_location</span>
+            <span class="post-date" title="2024-02-09 16:51:44">2024/02/09</span>
+        </a>
+        
+        
+        <a  class="全部文章 日常 "
+           href="/2024/02/03/%E5%88%86%E4%BA%ABVS2022Preview%E6%96%B0UI/"
+           data-tag="日常"
+           data-author="" >
+            <span class="post-title" title="分享VS2022Preview新UI">分享VS2022Preview新UI</span>
+            <span class="post-date" title="2024-02-03 00:00:37">2024/02/03</span>
+        </a>
+        
+        
+        <a  class="全部文章 CPP "
+           href="/2024/01/16/C%E9%A3%8E%E6%A0%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8ECPP%E7%9A%84%E7%9F%9B%E7%9B%BE/"
+           data-tag="CPP"
+           data-author="" >
+            <span class="post-title" title="C风格字符串与CPP的矛盾">C风格字符串与CPP的矛盾</span>
+            <span class="post-date" title="2024-01-16 12:52:10">2024/01/16</span>
+        </a>
+        
+        
+        <a  class="全部文章 CPP CPP20 "
+           href="/2023/09/22/CPP20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/"
+           data-tag="CPP,CPP20"
+           data-author="" >
+            <span class="post-title" title="C++20 三路比较运算符的使用">C++20 三路比较运算符的使用</span>
+            <span class="post-date" title="2023-09-22 21:44:48">2023/09/22</span>
+        </a>
+        
+        
+        <a  class="全部文章 CPP 猝不及防系列 "
+           href="/2023/09/18/CPP%E4%BD%BF%E7%94%A8extern%E5%85%B3%E9%94%AE%E5%AD%97%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%B8%B8%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8/"
+           data-tag="CPP,令我猝不及防的CPP_MSVC知识"
+           data-author="" >
+            <span class="post-title" title="C++ 使用extern关键字声明全局常量的作用">C++ 使用extern关键字声明全局常量的作用</span>
+            <span class="post-date" title="2023-09-18 20:34:53">2023/09/18</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-比宏更好用的source-location" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">比宏更好用的source_location</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="CPP">CPP</a> > 
+            
+            <a  data-rel="CPP&lt;---&gt;CPP20">CPP20</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">CPP</a>
+            
+            <a class="color1">CPP20</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2024-02-10 14:59:11'>2024-02-09 16:51</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:2.1k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95"><span class="toc-text">引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%BE%E7%BB%8F%E5%BD%93%E4%B8%8B%E5%8F%AF%E7%94%A8%E7%9A%84C"><span class="toc-text">曾经当下可用的C++</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%8F"><span class="toc-text">为什么是宏</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%93%E4%B8%8B%E5%8F%AF%E7%94%A8%E7%9A%84C"><span class="toc-text">当下可用的C++</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#std-source-location-current"><span class="toc-text">std::source_location::current</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E5%A4%96%E8%AF%9D"><span class="toc-text">题外话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8"><span class="toc-text">注</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95-1"><span class="toc-text">_引</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-6 i,
+    .toc-level-6 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="引"><a href="#引" class="headerlink" title="引"></a>引</h3><pre><code class="C++">// 你不会喜欢这个
+#if defined(_UNICODE) || defined(UNICODE)
+#define MY_FILET __FILEW__
+#else
+#define MY_FILET __FILE__
+#endif
+
+#define MY_THROW_IF_FAILED(code) \
+    ::my::ThrowIfFailed(code, TEXT(#code), MY_FILET, __LINE__);
+</code></pre>
+<a href="#注">
+<div>
+<i>在过去的日子里，邪恶当道！</i><br />
+<p align="right"><i>——Kristen Nygaard</i></p>
+</div>
+
+<div>
+<i>而且，我还持有这样的观点：Cpp必须被摧毁。</i><br />  
+<p align="right"><i>——老加图（Marcus Porcius Cato）</i></p><br />  
+</div>  
+</a>
+
+<h3 id="曾经当下可用的C"><a href="#曾经当下可用的C" class="headerlink" title="曾经当下可用的C++"></a>曾经当下可用的C++</h3><p>在<text id="dragon">《DX12 3D 游戏开发实战》</text>出版之际(指英文原版，出版日期2016&#x2F;03&#x2F;24，引用自<a target="_blank" rel="noopener" href="https://www.amazon.com/Introduction-3D-Game-Programming-DirectX/dp/1942270062">亚马逊</a>)，C++还处于准备迈入C++17的时代。“<a href="#%E5%BC%95">引</a>”中的代码是其中示例的一个变形：API往往返回一个<code>HRESULT</code>类型的值(可以看作是一种错误码)，然后我们可通过<code>FAILED</code>宏来检测返回值是否代表失败。如果失败，还要调用<code>_com_error::ErrorMessgae</code>来获取失败信息，并将文件名、行号、代码和错误信息一并塞到一个自定义异常类的对象里，并抛出它。在程序出错时，这些信息对正在学习D3D的人将很有帮助。  </p>
+<p>“引”中的代码是我根据记忆改写的，可以发现，如果我们无Cpp(C语言预处理器)可用，那么我们将不得不在每次调用<code>my::ThrowIfFailed</code>这个函数时手动填写<code>__FILE__</code>&#x2F;<code>__FILEW__</code>和<code>__LINE__</code>，作为第三和第四个参数，对于大量的检测需求，手工代码代价高昂，耗尽了我们的精力……</p>
+<h4 id="为什么是宏"><a href="#为什么是宏" class="headerlink" title="为什么是宏"></a>为什么是宏</h4><p>宏或者不是一个宏，这是个问题。有什么诡计能让我们同时避免宏和手动填写参数吗？有人可能会想到给函数填写默认参数，但是很遗憾，函数默认参数是行不通的，这种方法不能得到我们想要的效果。最后我们妥协了，选择了宏——如果有其他更好的办法，弗兰克叔叔为什么不告诉我们呢？我记得<a target="_blank" rel="noopener" href="https://www.amazon.com/Introduction-3D-Game-Programming-DirectX/dp/1942270062">龙书</a>作者曾在书里阐述过原因，如果你了解宏只是简单的文本替换，你也能马上明白原因所在。预处理能让宏 <code>__FILE__</code>、<code>__LINE__</code> 出现在源文件中正确的位置，此处就不赘述了。  </p>
+<p>此外，<code>TEXT(#code)</code> 这样的东西只适用于MSVC，在 gcc 等平台无法通过编译(如有兴趣可以详细查看预处理器的那些规则)，其中<code>TEXT</code>是宏，可能的实现：  </p>
+<pre><code class="C++">#if defined(_UNICODE) || defined(UNICODE)
+#define TEXT(quote) L##quote
+#else
+#define TEXT(quote) quote
+#endif
+</code></pre>
+<p>测试以默认参数的形式实现与ThrowIfFailed相似的代码：  </p>
+<pre><code class="C++">#include &lt;iostream&gt;
+
+#include &lt;string&gt;
+
+void bad_log(std::string_view msg, const char* caller, const char* file = __FILE__, int line = __LINE__)
+&#123;
+    std::cout
+        &lt;&lt; &quot;FILE: &quot; &lt;&lt; file &lt;&lt; &quot; LINE: &quot; &lt;&lt; line &lt;&lt; &quot; CALLER: &quot; &lt;&lt; caller
+        &lt;&lt; &quot; MSG: &quot; &lt;&lt; msg &lt;&lt; &quot;\n&quot;;
+&#125;
+
+int main()
+&#123;
+    bad_log(&quot;Hell&quot;, __FUNCTION__);
+    bad_log(&quot;Hell&quot;, __func__);
+&#125;
+</code></pre>
+<p>可能的输出：</p>
+<pre><code>FILE: xxx/main.cpp LINE: 5 CALLER: main MSG: Hell
+FILE: xxx/main.cpp LINE: 5 CALLER: main MSG: Hell
+</code></pre>
+<p>很明显不是我们要的效果，在这个程序中，不管在哪里使用默认参数调用<code>bad_log</code>，它的实参<code>line</code>总是<code>5</code>，由于<code>bad_log</code>调用和<code>bad_log</code>的声明同处一个源文件(就算使用头文件，它们也是同处一个翻译单元，但是<code>__LINE__</code>会被头文件包含顺序影响)，它能以我们期望的方式工作，但这不够。简而言之：Only MACRO can do.  </p>
+<h3 id="当下可用的C"><a href="#当下可用的C" class="headerlink" title="当下可用的C++"></a>当下可用的C++</h3><p>我在写这篇文章的时候，正值除夕(实际写到这里时已经到正月初一了)，可以说各种意义上都进入2024年了。C++23尚且不能被支持完善，但是C++20可用。然而就在C++20中，标准库中增加了<code>std::source_location</code>，以解决我们的燃眉之急：  </p>
+<pre><code class="C++">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;source_location&gt;
+
+void log(std::string_view msg = &quot;&quot;, const std::source_location&amp; location = std::source_location::current())
+&#123;
+    std::cout
+        &lt;&lt; &quot;FILE: &quot;    &lt;&lt; location.file_name()
+        &lt;&lt; &quot;(&quot;         &lt;&lt; location.line() &lt;&lt; &quot;,&quot; &lt;&lt; location.column() &lt;&lt; &quot;)&quot;
+        &lt;&lt; &quot; CALLER: &quot; &lt;&lt; location.function_name()
+        &lt;&lt; &quot; MSG: &quot;    &lt;&lt; msg &lt;&lt; &quot;\n&quot;;
+&#125;
+
+int main()
+&#123;
+    log(&quot;Hello&quot;);
+&#125;
+</code></pre>
+<p>可能的输出(MSVC)：</p>
+<pre><code>FILE: xxx/main.cpp(16,2) CALLER: int __cdecl main(void) MSG: Hello
+</code></pre>
+<p>注：全部使用<code>TAB</code>表示缩进而非空格（这会影响<code>column</code>的返回值，如果使用四个空格表示缩进，我想<code>column</code>的返回值会是<code>5</code>）。  </p>
+<p>这正是我们想要的。</p>
+<h4 id="std-source-location-current"><a href="#std-source-location-current" class="headerlink" title="std::source_location::current"></a>std::source_location::current</h4><p><code>std::source_location::current</code>函数将构造一个表示调用位置的 source_location 对象。  </p>
+<p>若直接调用 <code>current()</code> （通过指名 <code>current()</code> 的函数调用），则它返回对应调用位置的拥有实现定义值的 <code>source_location</code> 对象。该值应当以同预定义宏 <code>__LINE__</code> 与 <code>__FILE__</code> 的方式受 <code>#line</code> 预处理指令影响。<br>若在默认成员初始化器中使用 <code>current()</code>，则返回值对应初始化该数据成员的构造函数定义或聚合初始化的位置。<br>若 <code>current()</code> 用于默认参数，则返回值对应对 <code>current()</code> 的调用的调用点位置。<br>若以任何其他方式调用 <code>current()</code> ，则返回值未指定。  </p>
+<p>注：<code>std::source_location::current</code> 通常要求编译器的内建实现。  </p>
+<p>以上是 <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/utility/source_location">c++ reference</a> 中的描述(稍有改动)。<br>以下是我写的示例：  </p>
+<pre><code class="C++">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;source_location&gt;
+// curr line: 4
+void log(std::string_view msg = &quot;&quot;, const std::source_location&amp; location = std::source_location::current())
+&#123;
+    std::cout
+        &lt;&lt; &quot;FILE: &quot; &lt;&lt; location.file_name()
+        &lt;&lt; &quot;(&quot; &lt;&lt; location.line() &lt;&lt; &quot;,&quot; &lt;&lt; location.column() &lt;&lt; &quot;)&quot;
+        &lt;&lt; &quot; CALLER: &quot; &lt;&lt; location.function_name()
+        &lt;&lt; &quot; MSG: &quot; &lt;&lt; msg &lt;&lt; &quot;\n&quot;;
+&#125;
+// curr line: 13
+struct T1 // 使用默认成员初始化器
+&#123;
+    std::source_location loc = std::source_location::current();
+&#125;;
+// curr line: 18
+struct T2 // 使用构造函数的成员初始化器列表
+&#123;
+    T2() : loc&#123; std::source_location::current() &#125; &#123;&#125;
+    std::source_location loc;
+&#125;;
+// curr line: 24
+struct T3 // 将在main函数中使用聚合初始化
+&#123;
+    std::source_location loc;
+&#125;;
+// curr line: 29
+int main()
+&#123;
+    T1 t1&#123;&#125;; // curr line: 32
+    log(&quot;T1&quot;, t1.loc);
+    T2 t2&#123;&#125;; // curr line: 34
+    log(&quot;T2&quot;, t2.loc);
+    T3 t3&#123; std::source_location::current() &#125;; // curr line: 36
+    log(&quot;T3&quot;, t3.loc);
+    return 0;
+&#125;
+</code></pre>
+<p>可能的输出(MSVC)：  </p>
+<pre><code>FILE: xxx\main.cpp(32,8) CALLER: int __cdecl main(void) MSG: T1
+FILE: xxx\main.cpp(21,36) CALLER: __cdecl T2::T2(void) MSG: T2
+FILE: xxx\main.cpp(36,31) CALLER: int __cdecl main(void) MSG: T3
+</code></pre>
+<p>预处理指令 <code>#line</code> 影响 <code>std::source_location::current</code> 的例子：  </p>
+<pre><code class="C++">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;source_location&gt;
+
+void log(std::string_view msg = &quot;&quot;, const std::source_location&amp; location = std::source_location::current())
+&#123;
+    std::cout
+        &lt;&lt; &quot;FILE: &quot; &lt;&lt; location.file_name()
+        &lt;&lt; &quot;(&quot; &lt;&lt; location.line() &lt;&lt; &quot;,&quot; &lt;&lt; location.column() &lt;&lt; &quot;)&quot;
+        &lt;&lt; &quot; CALLER: &quot; &lt;&lt; location.function_name()
+        &lt;&lt; &quot; MSG: &quot; &lt;&lt; msg &lt;&lt; &quot;\n&quot;;
+&#125;
+
+int main()
+&#123;
+#line 123456 &quot;foo.cpp&quot;
+    u8&quot;😁&quot;; // __LINE__: 123456
+    log(&quot;after #line&quot;, std::source_location::current());  // __LINE__: 123457
+    return 0;
+&#125;
+</code></pre>
+<p>可能的输出(MSVC)：  </p>
+<pre><code>FILE: xxx\foo.cpp(123457,43) CALLER: int __cdecl main(void) MSG: after #line
+</code></pre>
+<p>预处理指令 <code>#line</code> 的 <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/preprocessor/line" title="预处理指令 #line">c++ reference</a>。  </p>
+<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>在使用C++时，总会听到别人建议“尽量避免使用宏”等。正如题注所隐含的信息，本贾尼就不喜欢C语言预处理器，C++也在竭力提供不依靠预处理器的选择，比如模板使得程序员不必再使用宏来泛型编程、模块使得程序员摆脱<code>#include</code>指令是唯一选择的境地、包括本文所提到的<code>std::source_location</code>也淡化了使用<code>__FILE__</code>和<code>__LINE__</code>的必要性，毕竟，我们现在有新的、更优的方式达到我们的目的。  </p>
+<p>在没有模板的时期编写一个支持泛型的工具 be like：  </p>
+<pre><code class="CC">// stack.h
+class ELEM_stack
+&#123;
+    ELEM *min, *top, *max;
+    ...
+&#125;
+</code></pre>
+<pre><code class="CC">// main.cpp
+#define ELEM int
+#define ELEM_stack int_stack
+#include &quot;stack.h&quot;
+#undef ELEM
+#undef ELEM_stack
+
+#define ELEM float
+#define ELEM_stack float_stack
+#include &quot;stack.h&quot;
+#undef ELEM
+#undef ELEM_stack
+
+int_stack is;
+float_stack fs;
+</code></pre>
+<blockquote>
+<p>源自《C++语言的设计和演化》(2.9.2 没有模板时的容器类)。</p>
+</blockquote>
+<h3 id="注"><a href="#注" class="headerlink" title="注"></a>注</h3><h4 id="引-1"><a href="#引-1" class="headerlink" title="_引"></a>_引</h4><p><em>这两句话分别为《C++语言设计与演化》的第一章《C++的史前时代》与最后一章《C语言预处理器》的题记（引用的是中文译本，裘宗燕译。题记中的“Cpp”指“C语言预处理器——C Preprocessor”）。老加图是古罗马政治家，老加图自然不可能对C语言预处理器有什么意见，这句话是模仿的老加图的名言：迦太基必须被摧毁。</em>  </p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达，请邮件至 3090002881@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2023 SunflavourPetals
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'photoSwipe';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+
+        // PhotoSwipe
+        $('article').each(function(i){
+            $(this).find('img').each(function(){
+                if ($(this).closest('figure').hasClass('article-gallery-img')) {
+                    return;
+                }
+                var alt = this.alt;
+                $(this)
+                    .wrap('<figure class="article-gallery-img" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject"></figure>')
+                    .wrap('<a href="' + this.src + '" title="' + alt + '"></a>');
+                $(this).after('<div class="img_alt"><span>' + (alt || '') + '</span></div>');
+            });
+        });
+
+        var pswpElement = document.querySelectorAll('.pswp')[0];
+        if (pswpElement) {
+            var gallerySelector = '.article-gallery, article';
+
+            var initPhotoSwipeFromDOM = function(gallerySelector) {
+
+                // parse slide data (url, title, size ...) from DOM elements
+                // (children of gallerySelector)
+                var parseThumbnailElements = function(el) {
+                    var thumbElements = $(el).find('figure.article-gallery-img').toArray(),
+                        numNodes = thumbElements.length,
+                        items = [],
+                        figureEl,
+                        linkEl,
+                        size,
+                        imgEl,
+                        item;
+
+                    for (var i = 0; i < numNodes; i++) {
+
+                        figureEl = thumbElements[i]; // <figure> element
+
+                        // include only element nodes
+                        if (figureEl.nodeType !== 1) {
+                            continue;
+                        }
+
+                        linkEl = figureEl.children[0]; // <a> element
+                        imgEl = linkEl.children[0]; // <img>
+
+                        size = linkEl.getAttribute('data-size');
+                        size = size && size.split('x');
+
+                        // create slide object
+                        item = {
+                            src: linkEl.getAttribute('href'),
+                            w: size && parseInt(size[0], 10) || imgEl.width,
+                            h: size && parseInt(size[1], 10) || imgEl.height
+                        };
+
+                        if (figureEl.children.length > 1) {
+                            // <figcaption> content
+                            item.title = figureEl.children[1].innerHTML;
+                        }
+
+                        if (linkEl.children.length > 0) {
+                            // <img> thumbnail element, retrieving thumbnail url
+                            item.msrc = linkEl.children[0].getAttribute('src');
+                        }
+
+                        item.el = figureEl; // save link to element for getThumbBoundsFn
+                        items.push(item);
+                    }
+
+                    return items;
+                };
+
+                // find nearest parent element
+                var closest = function closest(el, fn) {
+                    return el && (fn(el) ? el : closest(el.parentNode, fn));
+                };
+
+                // triggers when user clicks on thumbnail
+                var onThumbnailsClick = function(e) {
+                    e = e || window.event;
+
+                    var eTarget = e.target || e.srcElement;
+
+                    // find root element of slide
+                    var clickedListItem = closest(eTarget, function(el) {
+                        return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+                    });
+
+                    if (!clickedListItem) {
+                        return;
+                    }
+
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    } else {
+                        e.returnValue = false;
+                    }
+
+                    // find index of clicked item by looping through all child nodes
+                    // alternatively, you may define index via data- attribute
+                    var clickedGallery = $(clickedListItem).closest(gallerySelector)[0],
+                        childNodes = $(clickedGallery).find('figure.article-gallery-img').toArray(),
+                        numChildNodes = childNodes.length,
+                        nodeIndex = 0,
+                        index;
+
+                    for (var i = 0; i < numChildNodes; i++) {
+                        if (childNodes[i].nodeType !== 1) {
+                            continue;
+                        }
+
+                        if (childNodes[i] === clickedListItem) {
+                            index = nodeIndex;
+                            break;
+                        }
+                        nodeIndex++;
+                    }
+
+
+
+                    if (index >= 0) {
+                        // open PhotoSwipe if valid index found
+                        openPhotoSwipe(index, clickedGallery);
+                    }
+                    return false;
+                };
+
+                // parse picture index and gallery index from URL (#&pid=1&gid=2)
+                var photoswipeParseHash = function() {
+                    var hash = window.location.hash.substring(1),
+                        params = {};
+
+                    if (hash.length < 5) {
+                        return params;
+                    }
+
+                    var vars = hash.split('&');
+                    for (var i = 0; i < vars.length; i++) {
+                        if (!vars[i]) {
+                            continue;
+                        }
+                        var pair = vars[i].split('=');
+                        if (pair.length < 2) {
+                            continue;
+                        }
+                        params[pair[0]] = pair[1];
+                    }
+
+                    if (params.gid) {
+                        params.gid = parseInt(params.gid, 10);
+                    }
+
+                    return params;
+                };
+
+                var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+                    var pswpElement = document.querySelectorAll('.pswp')[0],
+                        gallery,
+                        options,
+                        items;
+
+                    items = parseThumbnailElements(galleryElement);
+
+                    // define options (if needed)
+                    options = {
+
+                        // define gallery index (for URL)
+                        galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+                        getThumbBoundsFn: function(index) {
+                            // See Options -> getThumbBoundsFn section of documentation for more info
+                            var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                                pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                                rect = thumbnail.getBoundingClientRect();
+
+                            return {
+                                x: rect.left,
+                                y: rect.top + pageYScroll,
+                                w: rect.width
+                            };
+                        }
+                    };
+
+                    // PhotoSwipe opened from URL
+                    if (fromURL) {
+                        if (options.galleryPIDs) {
+                            // parse real index when custom PIDs are used
+                            // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                            for (var j = 0; j < items.length; j++) {
+                                if (items[j].pid == index) {
+                                    options.index = j;
+                                    break;
+                                }
+                            }
+                        } else {
+                            // in URL indexes start from 1
+                            options.index = parseInt(index, 10) - 1;
+                        }
+                    } else {
+                        options.index = parseInt(index, 10);
+                    }
+
+                    // exit if index not found
+                    if (isNaN(options.index)) {
+                        return;
+                    }
+
+                    if (disableAnimation) {
+                        options.showAnimationDuration = 0;
+                    }
+
+                    // Pass data to PhotoSwipe and initialize it
+                    gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+
+                    gallery.listen('imageLoadComplete', function(index, item) {
+                        var linkEl = item.el.children[0];
+                        var img = item.container.children[0];
+                        if (!linkEl.getAttribute('data-size')) {
+                            linkEl.setAttribute('data-size', img.naturalWidth + 'x' + img.naturalHeight);
+                            item.w = img.naturalWidth;
+                            item.h = img.naturalHeight;
+                            gallery.invalidateCurrItems();
+                            gallery.updateSize(true);
+                        }
+                    });
+
+                    gallery.init();
+                };
+
+                // loop through all gallery elements and bind events
+                var galleryElements = document.querySelectorAll(gallerySelector);
+
+                for (var i = 0, l = galleryElements.length; i < l; i++) {
+                    galleryElements[i].setAttribute('data-pswp-uid', i + 1);
+                    galleryElements[i].onclick = onThumbnailsClick;
+                }
+
+                // Parse URL and open gallery if it contains #&pid=3&gid=1
+                var hashData = photoswipeParseHash();
+                if (hashData.pid && hashData.gid) {
+                    openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+                }
+            };
+
+            // execute above function
+            initPhotoSwipeFromDOM(gallerySelector);
+        }
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 642px;
+    }
+    .nav.fullscreen {
+        margin-left: -642px;
+    }
+    .nav-left {
+        width: 220px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 552px;
+        }
+        .nav.fullscreen {
+            margin-left: -552px;
+        }
+        .nav-left {
+            width: 160px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 552px;
+            margin-left: -552px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #323232;
+    }
+    
+    
+    .nav-right nav a.hover > span{
+        color: #a0f5e2 !important;
+    }
+    
+
+    /*列表样式*/
+    
+    #post .pjax article .article-entry>ol, #post .pjax article .article-entry>ul, #post .pjax article>ol, #post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    #post .pjax article .article-entry li>ol, #post .pjax article .article-entry li>ul,#post .pjax article li>ol, #post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    #post .pjax article .article-entry>ol>li, #post .pjax article .article-entry>ul>li,#post .pjax article>ol>li, #post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    #post .pjax article .article-entry li>ol>li, #post .pjax article .article-entry li>ul>li,#post .pjax article li>ol>li, #post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    #post {
+        background: url(https://sunflavourpetals.github.io/img/dark_background.png);
+    }
+    
+    
+    #post .index {
+        background: url(https://sunflavourpetals.github.io/img/dark_background.png);
+    }
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+        background: url("https://sunflavourpetals.github.io/img/night_background.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    #post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+         It's a separate element, as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+        <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+</html>

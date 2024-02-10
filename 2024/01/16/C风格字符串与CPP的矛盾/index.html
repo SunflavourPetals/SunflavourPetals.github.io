@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>C风格字符串与CPP的矛盾 | Petals&#39; blog</title>
+  <meta name="keywords" content=" CPP ">
+  <meta name="description" content="C风格字符串与CPP的矛盾 | Petals&#39; blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="引&#x2F;&#x2F; 你不会喜欢这个 #if defined(_UNICODE) || defined(UNICODE) #define MY_FILET __FILEW__ #else #define MY_FILET __FILE__ #endif  #define MY_THROW_IF_FAILED(code) \     ::my::ThrowIfFailed(code, TEXT(#code), M">
+<meta property="og:type" content="article">
+<meta property="og:title" content="比宏更好用的source_location">
+<meta property="og:url" content="http://sunflavourpetals.github.io/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/index.html">
+<meta property="og:site_name" content="Petals&#39; blog">
+<meta property="og:description" content="引&#x2F;&#x2F; 你不会喜欢这个 #if defined(_UNICODE) || defined(UNICODE) #define MY_FILET __FILEW__ #else #define MY_FILET __FILE__ #endif  #define MY_THROW_IF_FAILED(code) \     ::my::ThrowIfFailed(code, TEXT(#code), M">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-09T08:51:44.000Z">
+<meta property="article:modified_time" content="2024-02-10T06:59:11.224Z">
+<meta property="article:author" content="SunflavourPetals">
+<meta property="article:tag" content="CPP">
+<meta property="article:tag" content="CPP20">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.png">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-dark.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css" rel="stylesheet">
+<link href="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+<script src="/js/custom-iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.png"/>
+</a>
+<div class="author">
+    <span>SunflavourPetals</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+            <a title="github"
+               href="https://github.com/SunflavourPetals"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            <a title="email"
+               href="mailto:3090002881@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            <a title="bilibili"
+               href="https://space.bilibili.com/38695927"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-bilibili"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(5)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="CPP">
+            <i class="fold iconfont icon-right"></i>
+            CPP
+            <small>(4)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="CPP&lt;---&gt;猝不及防系列">
+            
+            猝不及防系列
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="CPP&lt;---&gt;CPP20">
+            
+            CPP20
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="日常">
+            
+            日常
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="5">
+<input type="hidden" id="yelog_site_word_count" value="11k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>令我猝不及防的CPP_MSVC知识</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>日常</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>CPP</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>CPP20</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="全部文章 CPP CPP20 "
+           href="/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/"
+           data-tag="CPP,CPP20"
+           data-author="" >
+            <span class="post-title" title="比宏更好用的source_location">比宏更好用的source_location</span>
+            <span class="post-date" title="2024-02-09 16:51:44">2024/02/09</span>
+        </a>
+        
+        
+        <a  class="全部文章 日常 "
+           href="/2024/02/03/%E5%88%86%E4%BA%ABVS2022Preview%E6%96%B0UI/"
+           data-tag="日常"
+           data-author="" >
+            <span class="post-title" title="分享VS2022Preview新UI">分享VS2022Preview新UI</span>
+            <span class="post-date" title="2024-02-03 00:00:37">2024/02/03</span>
+        </a>
+        
+        
+        <a  class="全部文章 CPP "
+           href="/2024/01/16/C%E9%A3%8E%E6%A0%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8ECPP%E7%9A%84%E7%9F%9B%E7%9B%BE/"
+           data-tag="CPP"
+           data-author="" >
+            <span class="post-title" title="C风格字符串与CPP的矛盾">C风格字符串与CPP的矛盾</span>
+            <span class="post-date" title="2024-01-16 12:52:10">2024/01/16</span>
+        </a>
+        
+        
+        <a  class="全部文章 CPP CPP20 "
+           href="/2023/09/22/CPP20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/"
+           data-tag="CPP,CPP20"
+           data-author="" >
+            <span class="post-title" title="C++20 三路比较运算符的使用">C++20 三路比较运算符的使用</span>
+            <span class="post-date" title="2023-09-22 21:44:48">2023/09/22</span>
+        </a>
+        
+        
+        <a  class="全部文章 CPP 猝不及防系列 "
+           href="/2023/09/18/CPP%E4%BD%BF%E7%94%A8extern%E5%85%B3%E9%94%AE%E5%AD%97%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%B8%B8%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8/"
+           data-tag="CPP,令我猝不及防的CPP_MSVC知识"
+           data-author="" >
+            <span class="post-title" title="C++ 使用extern关键字声明全局常量的作用">C++ 使用extern关键字声明全局常量的作用</span>
+            <span class="post-date" title="2023-09-18 20:34:53">2023/09/18</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-C风格字符串与CPP的矛盾" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">C风格字符串与CPP的矛盾</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="CPP">CPP</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">CPP</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2024-02-04 19:51:06'>2024-01-16 12:52</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:4.7k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95"><span class="toc-text">引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">定义字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8EC%E9%87%8C%E6%9D%A5"><span class="toc-text">从C里来</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">C++的字符串</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84"><span class="toc-text">附</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">用户自定义字面量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%AF%9D%E9%A2%98"><span class="toc-text">其他话题</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-6 i,
+    .toc-level-6 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <style>
+.big_thing {
+    color: #d01010;
+}
+.striking_thing {
+    color: #ef9010;
+}
+.green_text {
+    color: #20c010;
+}
+.rev {
+    color: #1537f5;
+}
+</style>
+
+<h2 id="引"><a href="#引" class="headerlink" title="引"></a>引</h2><img src="blue_pen.jpg" alt="蓝的盆" width="353" height="264" data-align="center">
+
+<p>声明：这文章是乱写的，就是为了喷而已，弄得一团乱麻不明所以，可以看个乐。<br>主要缘由是为我的框架实现 <code>Debug::print</code> 时产生了一些思考。  </p>
+<h2 id="定义字符串"><a href="#定义字符串" class="headerlink" title="定义字符串"></a>定义字符串</h2><p>读之前先想想: 什么是字符串?(为了简单起见，只展示和<code>char</code>类型有关的内容)</p>
+<ul>
+<li>字符串字面量是字符串吗? <code>&quot;literal&quot;</code> <code>R&quot;(literal)&quot;</code> …</li>
+<li>字符数组是字符串吗? <code>const char str[N]</code> <code>char str[N]</code></li>
+<li>指向字符类型数据的指针是字符串吗? <code>const char *str</code> <code>char *str</code></li>
+<li><code>std::string</code> 类型的对象是字符串吗?</li>
+<li><code>std::string_view</code> 类型的对象是字符串吗?</li>
+</ul>
+<p>这个世界太乱  </p>
+<p><a href="#%E6%80%BB%E7%BB%93">太长不看环节</a></p>
+<h3 id="从C里来"><a href="#从C里来" class="headerlink" title="从C里来"></a>从C里来</h3><p>以NUL结尾是C风格字符串的特征。<br>C++字符串字面量类型为 <code>const char_t[N]</code>，C和C++都在语言层面做出了字符串字面量以NUL(即<code>\0</code>)结尾的保证，例如 C++ 中，<code>&quot;str&quot;</code> 类型为 <code>const char[4]</code>，值为 <code>&#123; s, t, r, NUL &#125;</code></p>
+<p>首先认为字符串字面量是字符串。  </p>
+<p><code>std::cout &lt;&lt; &quot;Hello world&quot;;</code> 这样的代码很符合直觉。</p>
+<p><text class="striking_thing"><b>字符串字面量有类型 <code>const char_t[N]</code></b></text>。  </p>
+<hr>
+<p>既然字符串字面量有类型 <code>const char_t[N]</code>。<br>那么字符数组是字符串吗？  </p>
+<div>
+首先解释一下我为什么要这样问。<br />  
+<b><i>为什么考虑字符数组是否为字符串？</i></b><br />  
+我的答案是因为字符串字面量持有字符数组类型，在作为函数的实参时字符串字面量和字符数组(持有“const char_t[N]”类型)在被调用者看来是一样的，字符串字面量在他眼里并不特别，即“被调用者无法区分实参是字符串字面量还是字符数组”。这就引出了下一个疑惑。<br />  
+<b><i>为什么纠结字符串字面量和字符数组的区别？/为什么要区分它们？</i></b><br />  
+我的答案是，字符数组无法被保证具有C风格字符串以NUL结尾的规则，尤其是在退化为指针的情况下，使用它则有安全隐患。而字符串字面量遵守这一规则，具有更强的约束。字符串字面量是字符数组的一个特例，它在字符数组的类型之上还有 字符串+字符NUL 的含义。<br />
+即字符串字面量保证字符串内容后紧邻的值能被解释为字符NUL且字符串字面量所保证的NUL字符不是字符串内容的一部分。<br />
+<br />  
+这两个不同的事物都持有类型“const char_t[N]”，造成了混乱，这就是我喷的点。<br />
+</div>
+<br />
+
+<hr>
+<p>如果只考虑C风格字符串，那么它是不是字符串需要依靠是否以NUL结尾这一规则来判断。如果将其视为字符串，那我们程序员必须保证我们创造的字符数组始终符合以上规则，即字符数组范围内始终存在至少一个 <code>NUL</code> 字符，否则我们不能将字符数组和C风格字符串这一概念绑定<br>考虑：  </p>
+<ul>
+<li><code>char cstr[] = &quot;str&quot;</code> &#x2F;&#x2F; 暂时可以当成C风格字符串使用(范围cstr内存在NUL时)  </li>
+<li><code>char arr[] = &#123; &#39;s&#39;, &#39;t&#39;, &#39;r&#39; &#125;</code> &#x2F;&#x2F; 不能当成C风格字符串！</li>
+</ul>
+<p>故：<br>字符数组不总是C风格字符串<code>-&gt;</code>不能仅通过对象持有字符数组类型就判定其为C风格字符串  </p>
+<p>如果视字符数组为 “C++风格” 的字符串: string 或 string_view。那么字符串的大小需要被以某种方式指定。  </p>
+<p>考虑如下情景：<br>Q: <code>&quot;str&quot;</code> 所代表的字符串应是 <code>&#123; s, t, r &#125;</code> 还是 <code>&#123; s, t, r, NUL &#125;</code>?<br>A: 显然 <code>&quot;str&quot;</code> 应是 <code>&#123; s, t, r &#125;</code>.<br>Q: <code>const char arr[]&#123; &#39;s&#39;, &#39;t&#39;, &#39;r&#39; &#125;</code> 应该是什么?<br>A: 显然 <code>const char arr[]&#123; &#39;s&#39;, &#39;t&#39;, &#39;r&#39; &#125;</code> 应是 <code>&#123; s, t, r &#125;</code>.<br>Q: <code>const char arr[]&#123; &#39;s&#39;, &#39;t&#39;, &#39;r&#39;, &#39;\0&#39; &#125;</code> 应该是什么?<br>A: 显然 <code>const char arr[]&#123; &#39;s&#39;, &#39;t&#39;, &#39;r&#39;, &#39;\0&#39; &#125;</code> 应是 <code>&#123; s, t, r, NUL &#125;</code>.<br>Q: <code>char str[]&#123; &quot;str&quot; &#125;</code> 应该是什么? …  </p>
+<p>(如果你认为<code>&#123; s, t, r &#125;</code>和<code>&#123; s, t, r, NUL &#125;</code>是一回事，那你根本不了解C++的字符串)  </p>
+<p>当我们将字符串作为参数时，参数类型限制了被调用者，它无法知道调用者给的是字符串字面量还是字符数组，因为字符串字面量持有字符数组类型(<code>const char_t[N]</code>)，字符串字面量在被调用者看来并不特别…  </p>
+<div class="big_thing"><b>此处出现一个核心矛盾：字符串字面量与字符数组对象的暧昧关系。它们都持有数组类型，但是字符串字面量具有更强的约束和准确的语义，它作为字符数组同时告诉你最后一个元素不是字符串的一部分，字符数组如果是字符串，无法判断最后一个元素是否是字符串的一部分</b></div>  
+<br />
+
+<p>(如果你认为<code>&#123; s, t, r &#125;</code>和<code>&#123; s, t, r, NUL &#125;</code>是一回事，那你应该去了解std::string和std::string_view，我们不玩字符串以NUL结尾那一套)<br><code>cout &lt;&lt; string_view&#123; &quot;str\0ing&quot;, sizeof(&quot;str\0ing&quot;) - 1 &#125;</code> 将输出<code>string</code>(NUL字符也被输出了，但是它不可见（我使用QtCreator时发现，它的控制台总是会把输出的NUL以一个空格的形式显示出来，它会输出<code>str ing</code>）)。  </p>
+<p>所以我们在c++里真的做不到让<text class="green_text">被调用者</text>区分<code>&quot;str&quot;</code>和<code>const char arr_str[4]&#123; &#39;s&#39;, &#39;t&#39;, &#39;r&#39;, &#39;\0&#39; &#125;</code>吗？  </p>
+<p>做不到！</p>
+<p>所以“字符串的大小需要被指定”，即调用者决定字符串长度。  </p>
+<p>怎么做？  </p>
+<p>仅通过字符串字面量&#x2F;字符数组、即通过 <code>const char*</code> 或 <code>char*</code> 对象(由数组退化为指针这一特性导致)构造string&#x2F;string_view对象的方法，无一例外都需要 <code>traits_type::length</code> 函数求出字符串长度，对于普通的字符数组，可能产生额外开销且可能有隐患。  </p>
+<p>通过宏</p>
+<pre><code class="C++">#define LTOSV(Literal_) ::std::string_view&#123; Literal_, sizeof(Literal_) - 1 &#125;
+#define LTOWSV(Literal_) ::std::wstring_view&#123; Literal_, sizeof(Literal_) / sizeof(wchar_t) - 1 &#125;
+// ... // 其他，如 basic_string_view&lt;char8_t&gt; 等的支持
+</code></pre>
+<p>则不够优雅、非常繁杂、易错且有令人讨厌的名称污染。  </p>
+<p>(C++ 11) 对于字符串字面量，解决方法是<a href="#%E7%94%A8%E6%88%B7%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E9%9D%A2%E9%87%8F">用户自定义字面量</a>。<br>对于普通的字符数组，我建议不拿它当字符串看，它就只是字符数组。  </p>
+<p>可悲。  </p>
+<p>(题外话↓)</p>
+<p>不过至少我们还能通过数组类型知道数组大小，可以保障不出现越界访问的情况。<br>考虑这种安全但有些一言难尽的写法<code>(^_^)</code>：</p>
+<pre><code class="C++">template &lt;template T, std::size_t size&gt;
+[[nodiscard]] inline constexpr std::size_t get_arr_size(T(&amp;arr)[size]) noexcept
+&#123;
+    return size;
+&#125;
+template &lt;std::integral CharT, std::size_t size&gt;
+[[nodiscard]] inline constexpr std::size_t get_cstr_length(CharT(&amp;str)[size]) noexcept
+&#123;
+    std::size_t len&#123;&#125;;
+    for (auto c : str)
+    &#123;
+        if (c == CharT(&#39;\0&#39;))
+            break;
+        ++len;
+    &#125;
+    return len;
+&#125;
+</code></pre>
+<pre><code class="C++">char arr[] = &#123; &#39;s&#39;, &#39;t&#39;, &#39;r&#39; &#125;;
+std::cout
+    &lt;&lt; get_arr_size(&quot;str&quot;) &lt;&lt; &quot; : &quot; &lt;&lt; get_cstr_length(&quot;str&quot;) &lt;&lt; &quot;\n&quot;
+    &lt;&lt; get_arr_size(arr)   &lt;&lt; &quot; : &quot; &lt;&lt; get_cstr_length(arr)   &lt;&lt; &quot;\n&quot;;
+</code></pre>
+<p>(↑此为题外话)  </p>
+<hr>
+<p>“得益于”数组会退化为指向偏移量为0处元素的指针，C语言使用者通常会使用<code>const char*</code>和<code>char*</code>来引用C风格字符串，<br>考虑：  </p>
+<pre><code class="C++">[[nodiscard]] constexpr std::string c_style_string(const char* s)
+&#123;
+    return &#123; s, std::strlen(s) &#125;; // 我知道这代码很蠢，这只是为了演示而写
+&#125;
+</code></pre>
+<pre><code class="C++">auto v = c_style_string(&quot;str\0ing&quot;); // 得到 &#123; &quot;str&quot;, 3 &#125;
+auto v = c_style_string(&quot;another string&quot;); // 得到 &#123; &quot;another string&quot;, 14 &#125;
+char wtf[]&#123; &#39;w&#39;, &#39;t&#39;, &#39;f&#39; &#125;;
+auto v = c_style_string(wtf); // wtf烫烫烫烫烫烫烫烫?
+</code></pre>
+<p>现在更糟了，退化为指针之后我们怎么得知字符串参数的内存资源有多大？<br>传入参数的一方可以轻易抹除掉字符串“以NUL结尾”这一保证，<br>以至于产生越界访问。<br>甚至<code>char*</code>只是约定俗成被当成字符串，它甚至可能只是单纯地指向某<code>char</code>类型的变量，我们通过类型这一信息无法判断其语义。  </p>
+<pre><code class="C++">// 将字符串内的小写字母改写为大写字母
+void ToUpper(char* str) // 愚蠢的 c 风格接口
+&#123;
+    for (auto* e = str; *e != &#39;\0&#39;; ++e)
+        if ((*e) &gt;= &#39;a&#39; &amp;&amp; (*e) &lt;= &#39;z&#39;)
+            *e -= (&#39;a&#39; - &#39;A&#39;);
+&#125;
+void foo()
+&#123;
+    char bug[]&#123; &#39;b&#39;, &#39;u&#39;, &#39;g&#39; &#125;;
+    ToUpper(bug); // 轻易导致程序崩溃
+&#125;
+void bar()
+&#123;
+    char bug = &#39;B&#39;;
+    ToUpper(&amp;bug); // 蓝的盆.jpg
+&#125;
+</code></pre>
+<div class="big_thing"><b>此处出现一个陷阱：字符数组退化为指针，我们丢失了数组长度，且约定的以NUL结尾的规则可以被轻易违背，有越界访问的风险</b></div>
+
+<p>C风格API给出的解决方案是增加一个表示size的数据，  </p>
+<pre><code class="C++">std::size_t ToUpper(const char* str,
+                    std::size_t str_len);
+</code></pre>
+<p>这样看上去解决了问题，但是有“程序员突然发疯填入参数(shit, 7654321)(shit有类型char[4]，假设值为{ ‘s’, ‘h’, ‘i’, ‘t’ })”导致bug的风险，即这个规则也是可以被轻易违背的，用处不大。</p>
+<p>这样的风格应当被弃用！至少我们有了 <code>string</code>、<code>string_view</code>、<code>span</code> 等设施之后就不该再使用它了。</p>
+<hr>
+<h3 id="C-的字符串"><a href="#C-的字符串" class="headerlink" title="C++的字符串"></a>C++的字符串</h3><p>std::string 则保证字符串最后一个字符的下一位置被置为NUL，并提供了c_str()函数获取C风格字符串(通过const char*类型引用字符串)。但是这不意味着<code>std::string</code>的实例是C风格字符串。</p>
+<p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/string/basic_string">如果你不了解 string，现在可以马上去了解它</a>。  </p>
+<p>std::string_view 没有保证该串最后一个字符的下一位置为NUL的职责。</p>
+<p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/string/basic_string_view">如果你不了解 string_view，现在可以马上去了解它</a>。  </p>
+<hr>
+<p>我们推崇在c++里使用 <code>std::string</code> <code>std::string_view</code> 或类似的类型来表示字符串。</p>
+<p>C风格字符串和<code>std::string_view</code>与<code>std::string</code>有大不同，如果你不这么认为，<br>请考虑：</p>
+<pre><code class="C++">std::string str&#123; &quot;str\0ing&quot;, 7 &#125;;
+// auto str = &quot;str\0ing&quot;s; // 更好、更现代的形式: 用户自定义字面量
+// (需要额外操作如 using namespace std::string_literals;)
+std::string_view str_v&#123; &quot;str\0ing&quot;, 7 &#125;;
+// auto str_v = &quot;str\0ing&quot;sv; // 描述同上
+std::cout
+    &lt;&lt; str   &lt;&lt; &quot;\n&quot;
+    &lt;&lt; str_v &lt;&lt; &quot;\n&quot;;
+
+std::string c_to_s&#123; &quot;str\0ing&quot; &#125;;
+std::string_view c_to_sv&#123; &quot;str\0ing&quot; &#125;;
+std::cout
+    &lt;&lt; c_to_s  &lt;&lt; &quot;\n&quot;
+    &lt;&lt; c_to_sv &lt;&lt; &quot;\n&quot;;
+
+const char cstr_a[]&#123; &quot;str\0ing&quot; &#125;;
+const char* cstr = &quot;str\0ing&quot;;
+std::cout
+    &lt;&lt; cstr_a &lt;&lt; &quot;\n&quot;
+    &lt;&lt; cstr    &lt;&lt; &quot;\n&quot;;
+</code></pre>
+<p>并思考结果是什么？输出了什么(留意对NUL的处理)？针对它们的处理有何差异(留意对NUL的处理)？  </p>
+<p>你不能忽视NUL，对它进行的不同处理会导致程序产生不同的输出。<br>即使你觉得“字符串”中就不应该出现NUL。  </p>
+<p>对于 <code>str</code> 和 <code>str_v</code>，它们通过实参 <code>7</code> 知道了字符串长度，不需要额外计算字符串长度，<code>str</code> 和 <code>str_v</code> 所代表的字符串为 <code>&#123; s, t, r, NUL, i, n, g &#125;</code><br>其他不做赘述。  </p>
+<p>或者你担心使用 <code>std::string</code> 的性能而选择<code>char *s = new char[n]</code>，请进行性能测试再做抉择。在以字符串作为输入参数且无需和C风格API打交道的情况下可以考虑使用 <code>string_view</code> 替代 <code>const char*</code>、<code>const char*, size_t</code>、<code>const string&amp;</code>(别跟我说你不被允许使用c++17及以上标准)，<br>如果你最终要调用C风格API，<code>string_view</code> 因不具有保证字符串结尾的位置为NUL的功能而落选，我因为需要和C风格API打交道考虑专为C风格字符串(主要是为字符串字面量)提供一个更现代的类型CStringRef：</p>
+<pre><code class="C++">template &lt;typename CharT&gt;
+class BasicCStringRef
+&#123;
+public:
+    [[nodiscard]] constexpr size_type size() const noexcept;
+    [[nodiscard]] constexpr size_type length() const noexcept;
+    [[nodiscard]] constexpr const_pointer data() const noexcept;
+    [[nodiscard]] constexpr const_pointer c_str() const noexcept;
+    [[nodiscard]] constexpr bool empty() const noexcept;
+    template &lt;typename Traits = ::std::char_traits&lt;CharT&gt;&gt;
+    [[nodiscard]] constexpr BasicStringView&lt;CharT, Traits&gt; view() const noexcept;
+    template &lt;typename Traits = ::std::char_traits&lt;CharT&gt;, typename Alloc = ::std::allocator&lt;CharT&gt;&gt;
+    [[nodiscard]] constexpr BasicString&lt;CharT, Traits, Alloc&gt; to_string() const;
+    [[nodiscard]] constexpr const_iterator begin() const noexcept;
+    [[nodiscard]] constexpr const_iterator end() const noexcept;
+    // 更多设施如operator const CharT*...
+&#125;;
+// 为各个字符类型提供 operator&quot;&quot;_csr (const char_t*, std::size_t)...
+</code></pre>
+<p>并将其纳入了<a target="_blank" rel="noopener" href="https://github.com/SunflavourPetals/Petal-Framework/blob/main/Petal~Application/Petal~String.h">我的库</a>中，但它不怎么好(我的水平有限且不太愿意重复string_view的功能)且对于现代C++并没有什么用处，我认为理想情况情况下，抛弃C风格字符串才是好的选择(但这太激进了)。  </p>
+<hr>
+<p>回到最开始的  </p>
+<pre><code class="C++">std::cout &lt;&lt; &quot;Hello world&quot;;
+</code></pre>
+<p>如果要发泄的话我会说：  </p>
+<p>“ 都 ！ 是 ！ C ！ 害 ！ 的 ！ ” ，  </p>
+<p>然后结束这场发泄——我真希望字符串字面量从一开始就是 string_view 或 CStringRef 这样的设施。  </p>
+<p>好在用户自定义字面量给出了解决方案，然而代价是需要你使用using指令且需要在引号后多打一两个字母。  </p>
+<p>免责声明：<br>我对C语言本身没什么看法，C语言很出色，但是把继续现代C++当成带类的C并写出很多令人头疼的代码是我不愿意看到的。如果语言的使用者出于某种目的需要将指针、字符数组“当作”字符串来使用，那也没问题，C++不会限制程序员的表达，任何人都有权力写他想要的代码，我也无权把自己的观点和守则强加到别人身上。至于这篇文章，很大程度上是在宣泄情绪，因为C++的字符串字面量和我常用的string、string_view等设施结合的不够好(就算是<code>operator&quot;&quot;</code>也需要程序员多打一两个字母，虽然这么说确实有些矫情)。<br>我制作的“CStringRef”本质上杂糅了C风格的字符串和C++的string_view。它既要求字符串尾的数据被置为NUL，又要求字符串不以NUL结束，这种东西在C++中根本没有必要。<br>而对“使用C语言制作程序出现Bug责怪自己水平低、使用C++制作程序出现Bug责怪C++不像C”的说法，我是讨厌的，就算这只是一句玩笑话。  </p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>事项和建议：  </p>
+<ul>
+<li><div class="rev">使用现代C++，</div>  </li>
+<li><div class="rev">尽量使用 string 和 string_view，</div>  </li>
+<li><div class="rev">尽量避免使用单独的字符串字面量或字符数组表示字符串，</div>  </li>
+<li><div class="rev">尽量使用用户自定义字面量通过字符串字面量获得string或string_view对象，</div>  </li>
+<li><div class="rev">当函数接收字符串作为输入参数(不修改)时，考虑使用 string_view 做形参的类型：T foo(string_view in);，</div>  </li>
+<li><div class="rev">当函数接收字符串作为输入输出参数且需要修改它的元素时，考虑使用 span&lt;char_t> 做形参的类型(C++20)，</div>  </li>
+<li><div class="rev">当函数接收字符串作为输入输出参数且需要修改它时(可能增长或缩短)，考虑使用 string& 做形参的类型，</div>  </li>
+<li><div class="rev">函数向调用方输出字符串应当优先采用返回值的方式返回 string 类型字符串，</div>  </li>
+<li><div class="rev">不要让 string_view 的生命周期长于它引用的字符串，如不要返回从局部(自动存储期) string 对象得来的 string_view，对于 span 和我的 CStringRef 同理，它们都不拥有资源的所有权，而像是一种“引用”，</div>  </li>
+<li><div class="rev">字符串字面量具有静态存储期。</div></li>
+</ul>
+<hr>
+<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><h3 id="用户自定义字面量"><a href="#用户自定义字面量" class="headerlink" title="用户自定义字面量"></a>用户自定义字面量</h3><p>(只讨论本文相关的话题，如果想深入了解，请参考<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/user_literal">C++ Reference</a>)  </p>
+<p>所幸 C++ 11 提供了用户自定义字面量(如果你不知道它，请<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/user_literal">点击此处</a>去了解它)，我们能用用户自定义字面量轻松优雅又高效地得到字符串字面量的长度：  </p>
+<pre><code class="C++">[[nodiscard]] std::size_t operator&quot;&quot;_len(const char*, std::size_t length) noexcept
+&#123;
+    return length;
+&#125;
+void test()
+&#123;
+    std::cout &lt;&lt; &quot;string&quot;_len &lt;&lt; &quot;\n&quot;;
+&#125;
+</code></pre>
+<p><code>test</code> 函数将输出：  </p>
+<pre><code>6
+</code></pre>
+<hr>
+<p>当然只是得到长度什么的远远不够，我们可以直接用用户自定义字面量(<code>operator&quot;&quot;s</code>、<code>operator&quot;&quot;sv</code>)取得 string、string_view 对象，并且已由标准库提供。  </p>
+<p>得益于此特性，通过字符串字面量获得 <code>string_view</code>、<code>string</code> 等类型的对象能解决我们遇到的问题，只需要将合适的字符串字面量换成如下形式：  </p>
+<pre><code class="C++">using namespace std::string_literals; // 前提条件, 了解 operator&quot;&quot;s 和 operator&quot;&quot;sv，它们从C++14起被标准库提供
+
+// void xxx_strapi(string_type in_arg); // string_type 是某类型的别名
+// 某函数 xxx_strapi, 参数需要一字符串作为输入参数(不修改)(函数名字起的太糟还望不要纠结命名). 
+// 形参应持有 string_view 类型而非持有 const char* 类型
+// 也不推荐继续使用 const string&amp; 的形式，因为可能有额外开销尤其是需要申请内存
+xxx_strapi(&quot;xxx&quot;sv); // 推荐使用 operator&quot;&quot;sv, 
+// string_view 的“性价比”大于继续使用 const char*
+// 这体现在代码可读性、可维护性等多个方面
+// operator&quot;&quot;sv 优于 使用 const char*(字符串字面量/字符数组很多情况下会退化为此类型) 对象构造 string_view 的形式
+
+std::string str = &quot;xxx&quot;s; 
+// 等同于 auto str = &quot;xxx&quot;s;
+</code></pre>
+<h4 id="其他话题"><a href="#其他话题" class="headerlink" title="其他话题"></a>其他话题</h4><p>通过字符串字面量获得string_view对象的情景，使用<code>operator&quot;&quot;sv</code>的形式明显优于以下方式</p>
+<ul>
+<li><code>string_view&#123; &quot;sth&quot;, 3 &#125;</code>  </li>
+<li><code>string_view&#123; &quot;sth&quot;, sizeof(&quot;sth&quot;) - 1 &#125;</code>  </li>
+<li><code>string_view&#123; &quot;sth&quot;, &quot;sth&quot;_length &#125;</code></li>
+</ul>
+<p>以上方式需要书写字符串字面量两次(或需要我们根据字符串字面量手动填入字符串长度)，增加了程序出错的可能性！<br>定义宏的方式可以只用我们书写一次字符串字面量，但假设我们遵循“尽量避免宏”这一规则，因为我们有更好的方法：用户自定义字面量，所以不使用宏。  </p>
+<p>更不用说这些形式  </p>
+<ul>
+<li><code>string_view&#123; &quot;sth&quot;, std::strlen(&quot;sth&quot;) &#125;</code>  </li>
+<li><code>string_view&#123; &quot;sth&quot; &#125;</code></li>
+</ul>
+<p>这两种形式需要使用 <code>std::strlen</code> 和 <code>string_view::traits_type::length</code> 函数，尽管绝大多数情况下不会对性能有什么影响，但个人认为不是足够优秀的方式。  </p>
+<hr>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/user_literal">cpp-reference-user_literal</a></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达，请邮件至 3090002881@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2023 SunflavourPetals
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'photoSwipe';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+
+        // PhotoSwipe
+        $('article').each(function(i){
+            $(this).find('img').each(function(){
+                if ($(this).closest('figure').hasClass('article-gallery-img')) {
+                    return;
+                }
+                var alt = this.alt;
+                $(this)
+                    .wrap('<figure class="article-gallery-img" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject"></figure>')
+                    .wrap('<a href="' + this.src + '" title="' + alt + '"></a>');
+                $(this).after('<div class="img_alt"><span>' + (alt || '') + '</span></div>');
+            });
+        });
+
+        var pswpElement = document.querySelectorAll('.pswp')[0];
+        if (pswpElement) {
+            var gallerySelector = '.article-gallery, article';
+
+            var initPhotoSwipeFromDOM = function(gallerySelector) {
+
+                // parse slide data (url, title, size ...) from DOM elements
+                // (children of gallerySelector)
+                var parseThumbnailElements = function(el) {
+                    var thumbElements = $(el).find('figure.article-gallery-img').toArray(),
+                        numNodes = thumbElements.length,
+                        items = [],
+                        figureEl,
+                        linkEl,
+                        size,
+                        imgEl,
+                        item;
+
+                    for (var i = 0; i < numNodes; i++) {
+
+                        figureEl = thumbElements[i]; // <figure> element
+
+                        // include only element nodes
+                        if (figureEl.nodeType !== 1) {
+                            continue;
+                        }
+
+                        linkEl = figureEl.children[0]; // <a> element
+                        imgEl = linkEl.children[0]; // <img>
+
+                        size = linkEl.getAttribute('data-size');
+                        size = size && size.split('x');
+
+                        // create slide object
+                        item = {
+                            src: linkEl.getAttribute('href'),
+                            w: size && parseInt(size[0], 10) || imgEl.width,
+                            h: size && parseInt(size[1], 10) || imgEl.height
+                        };
+
+                        if (figureEl.children.length > 1) {
+                            // <figcaption> content
+                            item.title = figureEl.children[1].innerHTML;
+                        }
+
+                        if (linkEl.children.length > 0) {
+                            // <img> thumbnail element, retrieving thumbnail url
+                            item.msrc = linkEl.children[0].getAttribute('src');
+                        }
+
+                        item.el = figureEl; // save link to element for getThumbBoundsFn
+                        items.push(item);
+                    }
+
+                    return items;
+                };
+
+                // find nearest parent element
+                var closest = function closest(el, fn) {
+                    return el && (fn(el) ? el : closest(el.parentNode, fn));
+                };
+
+                // triggers when user clicks on thumbnail
+                var onThumbnailsClick = function(e) {
+                    e = e || window.event;
+
+                    var eTarget = e.target || e.srcElement;
+
+                    // find root element of slide
+                    var clickedListItem = closest(eTarget, function(el) {
+                        return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+                    });
+
+                    if (!clickedListItem) {
+                        return;
+                    }
+
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    } else {
+                        e.returnValue = false;
+                    }
+
+                    // find index of clicked item by looping through all child nodes
+                    // alternatively, you may define index via data- attribute
+                    var clickedGallery = $(clickedListItem).closest(gallerySelector)[0],
+                        childNodes = $(clickedGallery).find('figure.article-gallery-img').toArray(),
+                        numChildNodes = childNodes.length,
+                        nodeIndex = 0,
+                        index;
+
+                    for (var i = 0; i < numChildNodes; i++) {
+                        if (childNodes[i].nodeType !== 1) {
+                            continue;
+                        }
+
+                        if (childNodes[i] === clickedListItem) {
+                            index = nodeIndex;
+                            break;
+                        }
+                        nodeIndex++;
+                    }
+
+
+
+                    if (index >= 0) {
+                        // open PhotoSwipe if valid index found
+                        openPhotoSwipe(index, clickedGallery);
+                    }
+                    return false;
+                };
+
+                // parse picture index and gallery index from URL (#&pid=1&gid=2)
+                var photoswipeParseHash = function() {
+                    var hash = window.location.hash.substring(1),
+                        params = {};
+
+                    if (hash.length < 5) {
+                        return params;
+                    }
+
+                    var vars = hash.split('&');
+                    for (var i = 0; i < vars.length; i++) {
+                        if (!vars[i]) {
+                            continue;
+                        }
+                        var pair = vars[i].split('=');
+                        if (pair.length < 2) {
+                            continue;
+                        }
+                        params[pair[0]] = pair[1];
+                    }
+
+                    if (params.gid) {
+                        params.gid = parseInt(params.gid, 10);
+                    }
+
+                    return params;
+                };
+
+                var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+                    var pswpElement = document.querySelectorAll('.pswp')[0],
+                        gallery,
+                        options,
+                        items;
+
+                    items = parseThumbnailElements(galleryElement);
+
+                    // define options (if needed)
+                    options = {
+
+                        // define gallery index (for URL)
+                        galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+                        getThumbBoundsFn: function(index) {
+                            // See Options -> getThumbBoundsFn section of documentation for more info
+                            var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                                pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                                rect = thumbnail.getBoundingClientRect();
+
+                            return {
+                                x: rect.left,
+                                y: rect.top + pageYScroll,
+                                w: rect.width
+                            };
+                        }
+                    };
+
+                    // PhotoSwipe opened from URL
+                    if (fromURL) {
+                        if (options.galleryPIDs) {
+                            // parse real index when custom PIDs are used
+                            // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                            for (var j = 0; j < items.length; j++) {
+                                if (items[j].pid == index) {
+                                    options.index = j;
+                                    break;
+                                }
+                            }
+                        } else {
+                            // in URL indexes start from 1
+                            options.index = parseInt(index, 10) - 1;
+                        }
+                    } else {
+                        options.index = parseInt(index, 10);
+                    }
+
+                    // exit if index not found
+                    if (isNaN(options.index)) {
+                        return;
+                    }
+
+                    if (disableAnimation) {
+                        options.showAnimationDuration = 0;
+                    }
+
+                    // Pass data to PhotoSwipe and initialize it
+                    gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+
+                    gallery.listen('imageLoadComplete', function(index, item) {
+                        var linkEl = item.el.children[0];
+                        var img = item.container.children[0];
+                        if (!linkEl.getAttribute('data-size')) {
+                            linkEl.setAttribute('data-size', img.naturalWidth + 'x' + img.naturalHeight);
+                            item.w = img.naturalWidth;
+                            item.h = img.naturalHeight;
+                            gallery.invalidateCurrItems();
+                            gallery.updateSize(true);
+                        }
+                    });
+
+                    gallery.init();
+                };
+
+                // loop through all gallery elements and bind events
+                var galleryElements = document.querySelectorAll(gallerySelector);
+
+                for (var i = 0, l = galleryElements.length; i < l; i++) {
+                    galleryElements[i].setAttribute('data-pswp-uid', i + 1);
+                    galleryElements[i].onclick = onThumbnailsClick;
+                }
+
+                // Parse URL and open gallery if it contains #&pid=3&gid=1
+                var hashData = photoswipeParseHash();
+                if (hashData.pid && hashData.gid) {
+                    openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+                }
+            };
+
+            // execute above function
+            initPhotoSwipeFromDOM(gallerySelector);
+        }
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 642px;
+    }
+    .nav.fullscreen {
+        margin-left: -642px;
+    }
+    .nav-left {
+        width: 220px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 552px;
+        }
+        .nav.fullscreen {
+            margin-left: -552px;
+        }
+        .nav-left {
+            width: 160px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 552px;
+            margin-left: -552px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #323232;
+    }
+    
+    
+    .nav-right nav a.hover > span{
+        color: #a0f5e2 !important;
+    }
+    
+
+    /*列表样式*/
+    
+    #post .pjax article .article-entry>ol, #post .pjax article .article-entry>ul, #post .pjax article>ol, #post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    #post .pjax article .article-entry li>ol, #post .pjax article .article-entry li>ul,#post .pjax article li>ol, #post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    #post .pjax article .article-entry>ol>li, #post .pjax article .article-entry>ul>li,#post .pjax article>ol>li, #post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    #post .pjax article .article-entry li>ol>li, #post .pjax article .article-entry li>ul>li,#post .pjax article li>ol>li, #post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    #post {
+        background: url(https://sunflavourpetals.github.io/img/dark_background.png);
+    }
+    
+    
+    #post .index {
+        background: url(https://sunflavourpetals.github.io/img/dark_background.png);
+    }
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+        background: url("https://sunflavourpetals.github.io/img/night_background.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    #post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+         It's a separate element, as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+        <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+</html>
