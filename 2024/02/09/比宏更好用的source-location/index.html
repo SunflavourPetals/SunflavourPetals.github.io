@@ -2,19 +2,19 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>比宏更好用的source_location | Petals&#39; blog</title>
+  <title>CPP20比宏更好用的source_location | Petals&#39; blog</title>
   <meta name="keywords" content=" CPP , CPP20 ">
-  <meta name="description" content="比宏更好用的source_location | Petals&#39; blog">
+  <meta name="description" content="CPP20比宏更好用的source_location | Petals&#39; blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="引&#x2F;&#x2F; 你不会喜欢这个 #if defined(_UNICODE) || defined(UNICODE) #define MY_FILET __FILEW__ #else #define MY_FILET __FILE__ #endif  #define MY_THROW_IF_FAILED(code) \     ::my::ThrowIfFailed(code, TEXT(#code), M">
 <meta property="og:type" content="article">
-<meta property="og:title" content="比宏更好用的source_location">
+<meta property="og:title" content="CPP20比宏更好用的source_location">
 <meta property="og:url" content="http://sunflavourpetals.github.io/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/index.html">
 <meta property="og:site_name" content="Petals&#39; blog">
 <meta property="og:description" content="引&#x2F;&#x2F; 你不会喜欢这个 #if defined(_UNICODE) || defined(UNICODE) #define MY_FILET __FILEW__ #else #define MY_FILET __FILE__ #endif  #define MY_THROW_IF_FAILED(code) \     ::my::ThrowIfFailed(code, TEXT(#code), M">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-09T08:51:44.000Z">
-<meta property="article:modified_time" content="2024-02-10T06:59:11.224Z">
+<meta property="article:modified_time" content="2024-02-10T07:15:55.819Z">
 <meta property="article:author" content="SunflavourPetals">
 <meta property="article:tag" content="CPP">
 <meta property="article:tag" content="CPP20">
@@ -309,7 +309,7 @@
            href="/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/"
            data-tag="CPP,CPP20"
            data-author="" >
-            <span class="post-title" title="比宏更好用的source_location">比宏更好用的source_location</span>
+            <span class="post-title" title="CPP20比宏更好用的source_location">CPP20比宏更好用的source_location</span>
             <span class="post-date" title="2024-02-09 16:51:44">2024/02/09</span>
         </a>
         
@@ -369,7 +369,7 @@
     <div class="pjax">
         <article id="post-比宏更好用的source-location" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">比宏更好用的source_location</h1>
+        <h1 class="article-title">CPP20比宏更好用的source_location</h1>
     
     <div class="article-meta">
         
@@ -398,7 +398,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-02-10 14:59:11'>2024-02-09 16:51</time>
+            发布时间 : <time class="date" title='最后更新: 2024-02-10 15:15:55'>2024-02-09 16:51</time>
         
     </div>
     <div class="article-meta">
@@ -492,7 +492,7 @@ int main()
 <pre><code>FILE: xxx/main.cpp LINE: 5 CALLER: main MSG: Hell
 FILE: xxx/main.cpp LINE: 5 CALLER: main MSG: Hell
 </code></pre>
-<p>很明显不是我们要的效果，在这个程序中，不管在哪里使用默认参数调用<code>bad_log</code>，它的实参<code>line</code>总是<code>5</code>，由于<code>bad_log</code>调用和<code>bad_log</code>的声明同处一个源文件(就算使用头文件，它们也是同处一个翻译单元，但是<code>__LINE__</code>会被头文件包含顺序影响)，它能以我们期望的方式工作，但这不够。简而言之：Only MACRO can do.  </p>
+<p>很明显不是我们要的效果，在这个程序中，不管在哪里使用默认参数调用<code>bad_log</code>，它的实参<code>line</code>总是<code>5</code>，由于<code>bad_log</code>调用和<code>bad_log</code>的声明同处一个源文件(就算使用头文件，它们也是同处一个翻译单元，但是<code>__LINE__</code>会被头文件包含顺序影响)，它能以我们期望的方式工作，但这不够。<br>简而言之：Only MACRO can do.  </p>
 <h3 id="当下可用的C"><a href="#当下可用的C" class="headerlink" title="当下可用的C++"></a>当下可用的C++</h3><p>我在写这篇文章的时候，正值除夕(实际写到这里时已经到正月初一了)，可以说各种意义上都进入2024年了。C++23尚且不能被支持完善，但是C++20可用。然而就在C++20中，标准库中增加了<code>std::source_location</code>，以解决我们的燃眉之急：  </p>
 <pre><code class="C++">#include &lt;iostream&gt;
 #include &lt;string&gt;
