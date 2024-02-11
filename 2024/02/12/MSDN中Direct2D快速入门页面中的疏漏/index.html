@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://sunflavourpetals.github.io/2024/02/12/MSDN%E4%B8%ADDirect2D%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E9%A1%B5%E9%9D%A2%E4%B8%AD%E7%9A%84%E7%96%8F%E6%BC%8F/display_bug.png">
 <meta property="og:image" content="http://sunflavourpetals.github.io/2024/02/12/MSDN%E4%B8%ADDirect2D%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E9%A1%B5%E9%9D%A2%E4%B8%AD%E7%9A%84%E7%96%8F%E6%BC%8F/display.png">
 <meta property="article:published_time" content="2024-02-11T18:25:25.000Z">
-<meta property="article:modified_time" content="2024-02-11T19:03:32.308Z">
+<meta property="article:modified_time" content="2024-02-11T19:25:44.667Z">
 <meta property="article:author" content="SunflavourPetals">
 <meta property="article:tag" content="DX">
 <meta property="article:tag" content="D2D">
@@ -459,12 +459,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-02-12 03:03:32'>2024-02-12 02:25</time>
+            发布时间 : <time class="date" title='最后更新: 2024-02-12 03:25:44'>2024-02-12 02:25</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:289</span>
+        <span>字数:316</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -520,7 +520,7 @@ HRESULT hr = pRT-&gt;EndDraw();
 <img src="display.png" alt="效果图" data-align="center">  
 
 
-<p>在<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/direct2d/direct2d-quickstart#part-4-render-direct2d-content">创建简单的 Direct2D 应用程序 - 第4部分：呈现 Direct2D 内容 - 4.</a> 这部分内容中，则提到了清屏操作。  </p>
+<p>在<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/direct2d/direct2d-quickstart#part-4-render-direct2d-content">创建简单的 Direct2D 应用程序 - 第4部分：呈现 Direct2D 内容 - 4.</a> 这部分内容中，则提到了清屏操作。除了清屏，还有在 <code>ID2D1HwndRenderTarget::EndDraw</code> 后调用 <code>ValidateRect</code> 函数阻止系统持续生成 <code>WM_PAINT</code> 消息等。  </p>
 <p>此外，在拖拽窗口时渲染的画面有闪烁现象，阻止 <code>WM_ERASEBKGND</code> 消息的默认处理即可避免：  </p>
 <pre><code class="C++">class D2DWindow : public Petal::Window
 &#123;
