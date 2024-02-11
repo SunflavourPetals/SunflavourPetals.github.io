@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>分享VS2022Preview新UI | Petals&#39; blog</title>
-  <meta name="keywords" content=" 日常 ">
-  <meta name="description" content="分享VS2022Preview新UI | Petals&#39; blog">
+  <title>MSDN中Direct2D快速入门页面中的疏漏 | Petals&#39; blog</title>
+  <meta name="keywords" content=" DX , D2D , MSDN ">
+  <meta name="description" content="MSDN中Direct2D快速入门页面中的疏漏 | Petals&#39; blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="正文MSDN文章Direct2D快速入门-步骤 5：绘制矩形中给出的代码如下：   pRT-&gt;BeginDraw();  pRT-&gt;DrawRectangle(     D2D1::RectF(         rc.left + 100.0f,         rc.top + 100.0f,         rc.right - 100.0f,         rc.bottom">
 <meta property="og:type" content="article">
@@ -426,9 +426,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-分享VS2022Preview新UI" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-MSDN中Direct2D快速入门页面中的疏漏" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">分享VS2022Preview新UI</h1>
+        <h1 class="article-title">MSDN中Direct2D快速入门页面中的疏漏</h1>
     
     <div class="article-meta">
         
@@ -438,7 +438,9 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="日常">日常</a>
+            <a  data-rel="DX">DX</a> > 
+            
+            <a  data-rel="DX&lt;---&gt;D2D">D2D</a>
             
         </span>
         
@@ -446,19 +448,23 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">日常</a>
+            <a class="color3">DX</a>
+            
+            <a class="color4">D2D</a>
+            
+            <a class="color5">MSDN</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-02-03 00:13:24'>2024-02-03 00:00</time>
+            发布时间 : <time class="date" title='最后更新: 2024-02-12 03:03:32'>2024-02-12 02:25</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:44</span>
+        <span>字数:289</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -477,7 +483,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E9%A2%98%E4%BA%94%E4%B8%AA%E5%AD%97"><span class="toc-text">标题五个字</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E6%96%87"><span class="toc-text">正文</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -493,17 +499,56 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="标题五个字"><a href="#标题五个字" class="headerlink" title="标题五个字"></a>标题五个字</h3><img src="img_01.png" alt="效果图1" data-align="center">
-<img src="img_02.png" alt="效果图2" data-align="center">
-<img src="img_03.png" alt="效果图3" data-align="center">
+        <h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>MSDN文章<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/direct2d/getting-started-with-direct2d#step-5-draw-the-rectangle">Direct2D快速入门-步骤 5：绘制矩形</a>中给出的代码如下：  </p>
+<pre><code class="C++">pRT-&gt;BeginDraw();
 
-<ul>
-<li>Microsoft Visual Studio Community 2022 (64 位) - Preview</li>
-<li>版本 17.9.0 Preview 5.0</li>
-</ul>
-<p>漂亮得很呐，<del>用上新 ui 立马就觉得老 ui 丑到看不下去了</del>。</p>
-<img src="meme_alice_kawaii.jpg" alt="meme_alice_可爱！" width="330" height="261" data-align="center">
+pRT-&gt;DrawRectangle(
+    D2D1::RectF(
+        rc.left + 100.0f,
+        rc.top + 100.0f,
+        rc.right - 100.0f,
+        rc.bottom - 100.0f),
+        pBlackBrush);
 
+HRESULT hr = pRT-&gt;EndDraw();
+</code></pre>
+<p>此处调用 <code>ID2D1HwndRenderTarget::BeginDraw</code> 后没有使用 <code>ID2D1HwndRenderTarget::Clear</code> 成员函数执行清屏操作，并且我们创建的画笔是黑色画笔。在将上述代码放进 <code>case WM_PAINT:</code> 后，在我的电脑上渲染效果是一片漆黑：  </p>
+<img src="display_bug.png" alt="效果图" data-align="center">  
+
+
+<p>加上清屏操作即可：  </p>
+<img src="display.png" alt="效果图" data-align="center">  
+
+
+<p>在<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/direct2d/direct2d-quickstart#part-4-render-direct2d-content">创建简单的 Direct2D 应用程序 - 第4部分：呈现 Direct2D 内容 - 4.</a> 这部分内容中，则提到了清屏操作。  </p>
+<p>此外，在拖拽窗口时渲染的画面有闪烁现象，阻止 <code>WM_ERASEBKGND</code> 消息的默认处理即可避免：  </p>
+<pre><code class="C++">class D2DWindow : public Petal::Window
+&#123;
+public:
+    Petal::win32lres Process(
+        Petal::win32msg  message, 
+        Petal::win32wprm w_param, 
+        Petal::win32lprm l_param
+    ) noexcept override // 用于我的框架的窗口过程函数的逻辑部分
+    &#123;
+        if (message == WM_ERASEBKGND) return 0; // 防止闪烁
+        return Window::Process(message, w_param, l_param);
+    &#125;
+    ... // 其他内容
+&#125;
+
+// 改写为 WIN32 的形式
+LRESULT CALLBACK MyWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+&#123;
+    switch (msg)
+    &#123;
+    case WM_ERASEBKGND:
+        return 0;
+        ... // 其他内容
+    &#125;
+    ... // 其他内容
+&#125;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达，请邮件至 3090002881@qq.com </span>

@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>MSDN中Direct2D快速入门页面中的疏漏</title>
+      <link href="/2024/02/12/MSDN%E4%B8%ADDirect2D%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E9%A1%B5%E9%9D%A2%E4%B8%AD%E7%9A%84%E7%96%8F%E6%BC%8F/"/>
+      <url>/2024/02/12/MSDN%E4%B8%ADDirect2D%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E9%A1%B5%E9%9D%A2%E4%B8%AD%E7%9A%84%E7%96%8F%E6%BC%8F/</url>
+      
+        <content type="html"><![CDATA[<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>MSDN文章<a href="https://learn.microsoft.com/zh-cn/windows/win32/direct2d/getting-started-with-direct2d#step-5-draw-the-rectangle">Direct2D快速入门-步骤 5：绘制矩形</a>中给出的代码如下：  </p><pre><code class="C++">pRT-&gt;BeginDraw();pRT-&gt;DrawRectangle(    D2D1::RectF(        rc.left + 100.0f,        rc.top + 100.0f,        rc.right - 100.0f,        rc.bottom - 100.0f),        pBlackBrush);HRESULT hr = pRT-&gt;EndDraw();</code></pre><p>此处调用 <code>ID2D1HwndRenderTarget::BeginDraw</code> 后没有使用 <code>ID2D1HwndRenderTarget::Clear</code> 成员函数执行清屏操作，并且我们创建的画笔是黑色画笔。在将上述代码放进 <code>case WM_PAINT:</code> 后，在我的电脑上渲染效果是一片漆黑：  </p><img src="display_bug.png" alt="效果图" data-align="center">  <p>加上清屏操作即可：  </p><img src="display.png" alt="效果图" data-align="center">  <p>在<a href="https://learn.microsoft.com/zh-cn/windows/win32/direct2d/direct2d-quickstart#part-4-render-direct2d-content">创建简单的 Direct2D 应用程序 - 第4部分：呈现 Direct2D 内容 - 4.</a> 这部分内容中，则提到了清屏操作。  </p><p>此外，在拖拽窗口时渲染的画面有闪烁现象，阻止 <code>WM_ERASEBKGND</code> 消息的默认处理即可避免：  </p><pre><code class="C++">class D2DWindow : public Petal::Window&#123;public:    Petal::win32lres Process(        Petal::win32msg  message,         Petal::win32wprm w_param,         Petal::win32lprm l_param    ) noexcept override // 用于我的框架的窗口过程函数的逻辑部分    &#123;        if (message == WM_ERASEBKGND) return 0; // 防止闪烁        return Window::Process(message, w_param, l_param);    &#125;    ... // 其他内容&#125;// 改写为 WIN32 的形式LRESULT CALLBACK MyWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)&#123;    switch (msg)    &#123;    case WM_ERASEBKGND:        return 0;        ... // 其他内容    &#125;    ... // 其他内容&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> DX </category>
+          
+          <category> D2D </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> DX </tag>
+            
+            <tag> D2D </tag>
+            
+            <tag> MSDN </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++20 比宏更好用的source_location</title>
       <link href="/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/"/>
       <url>/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/</url>
