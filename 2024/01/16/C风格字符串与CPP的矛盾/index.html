@@ -272,7 +272,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="6">
-<input type="hidden" id="yelog_site_word_count" value="7.7k">
+<input type="hidden" id="yelog_site_word_count" value="7.8k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -453,12 +453,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-02-12 00:31:55'>2024-01-16 12:52</time>
+            发布时间 : <time class="date" title='最后更新: 2024-02-16 19:32:43'>2024-01-16 12:52</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1k</span>
+        <span>字数:1.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -477,7 +477,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95"><span class="toc-text">引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%82%E7%82%B9"><span class="toc-text">观点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E9%A1%B9%E5%92%8C%E5%BB%BA%E8%AE%AE"><span class="toc-text">事项和建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#14"><span class="toc-text">14</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#25"><span class="toc-text">25</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95"><span class="toc-text">引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%88%E8%BF%B0"><span class="toc-text">陈述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E9%A1%B9%E5%92%8C%E5%BB%BA%E8%AE%AE"><span class="toc-text">事项和建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#14"><span class="toc-text">14</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#25"><span class="toc-text">25</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -502,9 +502,9 @@
 <h3 id="引"><a href="#引" class="headerlink" title="引"></a>引</h3><img src="blue_pen.jpg" alt="蓝的盆" width="353" height="264" data-align="center">
 
 <p>声明：乱写的。  </p>
-<h3 id="观点"><a href="#观点" class="headerlink" title="观点"></a>观点</h3><ol>
+<h3 id="陈述"><a href="#陈述" class="headerlink" title="陈述"></a>陈述</h3><ol>
 <li>字符串字面量持有类型 <code>const char_t[N]</code>，字符串长度等于 <code>N-1</code>；  </li>
-<li>字符串字面量保证 <code>&quot;...&quot;[N-1]</code> 为 NUL，其中N是(1)中的N；  </li>
+<li>字符串字面量保证 null terminated， <code>&quot;...&quot;[N-1]</code> 为 NUL，其中N是(1)中的N；  </li>
 <li>C风格字符串以NUL字符表示字符串结束；  </li>
 <li>字符串字面量通常被用以表示C风格字符串；  </li>
 <li>字符数组对象退化为指针，丢失数组大小信息，容易产生越界访问甚至引起错误；  </li>
@@ -513,21 +513,21 @@
 <li>函数无法区分实参是字符串字面量还是字符数组；  </li>
 <li>C风格API的参数列表 <code>(const char* str, size_t len)</code> 对安全的保证无济于事；  </li>
 <li><code>std::string</code> 不同于C风格字符串，它允许字符串内存在NUL字符；  </li>
-<li><code>std::string</code> 保证 <code>str[str.length()]</code> 为 NUL，保证被当作C风格字符串时符合“以NUL结尾”的规则；  </li>
+<li><code>std::string</code> 保证 null terminated，保证被当作C风格字符串时符合“以NUL结尾”的规则；  </li>
 <li><code>std::string</code> 提供了 <code>c_str</code> 成员函数；  </li>
 <li>当 <code>std::string</code> 字符串内存在NUL字符时，按C风格字符串的规则，<code>c_str</code> 表示的C风格字符串被字符串内第一个NUL字符“截断”；  </li>
 <li>若 <code>std::string</code> 字符串内存在NUL字符，作为C风格字符串(<code>c_str</code>)时的行为和其本身<a href="#14">不一致</a>； </li>
 <li><code>std::string_view</code> 是字符串视图；  </li>
 <li><code>std::string_view</code> 不同于C风格字符串，它允许字符串内存在NUL字符；  </li>
-<li><code>std::string_view</code> 不保证 <code>str[str.length()]</code> 为 NUL；  </li>
+<li><code>std::string_view</code> 不保证 null terminated；  </li>
 <li><code>std::string_view</code> 不提供 <code>c_str</code> 成员函数；  </li>
 <li><code>std::string_view</code> 可能是某个字符串的子串；  </li>
 <li><code>std::string_view</code> 不持有所表示的字符串的所有权，而像是一种引用；  </li>
 <li>仅将字符串字面量作为实参用于构造 <code>std::string</code> 和&#x2F;或 <code>std::string_view</code>，将匹配到接受C风格字符串的构造函数；  </li>
 <li>字符串字面量中可以出现值为 NUL 的元素；  </li>
-<li>通过用户自定义字面量的方式使用标准库中的 <code>operator&quot;&quot;s</code> 从字符串字面量构造 <code>std::string</code> 对象；  </li>
-<li>通过用户自定义字面量的方式使用标准库中的 <code>operator&quot;&quot;sv</code> 从字符串字面量构造 <code>std::string_view</code> 对象；  </li>
-<li>通过用户自定义字面量获得的 <code>std::string</code>、<code>std::string_view</code> 对象，字符串长度总是 <code>N-1</code>，不管字符串字面量中是否有 NUL，而(20)中的构造方法则会受 NUL 元素的影响，<a href="#25">示例</a>。</li>
+<li>通过用户自定义字面量的方式使用标准库(命名空间 <code>std::literals::string_literals</code>) 中的 <code>operator&quot;&quot;s</code> 从字符串字面量构造 <code>std::string</code> 对象；  </li>
+<li>通过用户自定义字面量的方式使用标准库(命名空间 <code>std::literals::string_view_literals</code>)中的 <code>operator&quot;&quot;sv</code> 从字符串字面量构造 <code>std::string_view</code> 对象；  </li>
+<li>通过(23)、(24)获得的 <code>std::string</code>、<code>std::string_view</code> 对象，字符串长度应是 <code>N-1</code> (N为字符数组的尺寸)，不管字符串字面量中是否有 NUL，而(20)中的构造方法则会受 NUL 元素的影响，<a href="#25">示例</a>。</li>
 </ol>
 <h3 id="事项和建议"><a href="#事项和建议" class="headerlink" title="事项和建议"></a>事项和建议</h3><ul>
 <li><div class="rev">使用现代C++，</div>  </li>
@@ -535,16 +535,18 @@
 <li><div class="rev">尽量避免使用字符数组表示字符串，</div>  </li>
 <li><div class="rev">尽量使用用户自定义字面量通过字符串字面量获得string或string_view对象，</div>  </li>
 <li><div class="rev">当函数接收字符串作为输入参数(不修改)时，考虑使用 string_view 做形参的类型：T foo(string_view in);，</div>  </li>
-<li><div class="rev">当函数接收字符串作为输入输出参数且需要修改它的元素时，考虑使用 span&lt;char_t> 做形参的类型(C++20)，</div>  </li>
-<li><div class="rev">当函数接收字符串作为输入输出参数且需要修改它时(可能增长或缩短)，考虑使用 string& 做形参的类型，</div>  </li>
+<li><div class="rev">优先以返回值作为函数输出的方式，</div>  </li>
+<li><div class="rev">当函数接收字符串作为输入输出参数且可能需要修改它的元素时，考虑使用 span&lt;char_t> 做形参的类型(C++20)，</div>  </li>
+<li><div class="rev">当函数接收字符串作为输入输出参数且可能需要修改它时(可能增长或缩短)，考虑使用 string& 做形参的类型，</div>  </li>
 <li><div class="rev">函数向调用方输出字符串应当优先采用返回值的方式返回 string 类型字符串，</div>  </li>
 <li><div class="rev">不要让 string_view 的生命周期长于它引用的字符串的生命周期，如不要返回从局部(自动存储期) string 对象得来的 string_view，对于 span 同理，它们都不拥有资源的所有权，而像是一种“引用”，</div>  </li>
+<li><div class="rev">不要错误使用 `string_view` 和 `span`，如 `string_view result = foo(1); // 函数foo类型为 string(int)`，</div>  </li>
 <li><div class="rev">字符串字面量具有静态存储期。</div></li>
 </ul>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><h4 id="14"><a href="#14" class="headerlink" title="14"></a>14</h4><pre><code class="C++">cout &lt;&lt; string&#123; &quot;str\0ing&quot;, 7 &#125; &lt;&lt; &quot;\n&quot;;
 cout &lt;&lt; string&#123; &quot;str\0ing&quot;, 7 &#125;.c_str() &lt;&lt; &quot;\n&quot;;
 </code></pre>
-<p>结果：</p>
+<p>可能的输出：  </p>
 <pre><code>string
 str
 </code></pre>
@@ -555,7 +557,7 @@ cout &lt;&lt; string_view&#123; &quot;str\0ing&quot; &#125; &lt;&lt; &quot;\n&qu
 cout &lt;&lt; &quot;str\0ing&quot;s &lt;&lt; &quot;\n&quot;;
 cout &lt;&lt; &quot;str\0ing&quot;sv &lt;&lt; &quot;\n&quot;;
 </code></pre>
-<p>结果：</p>
+<p>可能的输出：  </p>
 <pre><code>str
 str
 string
