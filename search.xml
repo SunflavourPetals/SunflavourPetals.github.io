@@ -8,7 +8,7 @@
       <link href="/2024/03/26/CPP-Strict-Weak-Order/"/>
       <url>/2024/03/26/CPP-Strict-Weak-Order/</url>
       
-        <content type="html"><![CDATA[<img src="img.png" alt="C++ Primer 5th" data-align="center"><p>怀疑书上表达有误，若以“小于等于”为例，第一条就令所有整型值和浮点型值内建的<code>&lt;=</code>运算无法满足。  </p><p>对于二元关系 <code>less</code>：  </p><ul><li>若 <code>less(a, b)</code> 为真，则 <code>less(b, a)</code> 为假，即不满足自反性。  </li><li>若 <code>less(a, b)</code> 和 <code>less(b, c)</code> 为真，蕴含 <code>less(a, c)</code> 为真，即满足传递性。  </li><li>令关系 <code>equal(a, b)</code> 为 <code>(¬less(a, b) ∧ ¬less(b, a))</code>，可知 <code>equal</code> 是 <code>a</code> 与 <code>b</code> 的等价关系，且同样具有传递性。</li></ul><p><a href="https://zh.cppreference.com/w/cpp/concepts/strict_weak_order">C++参考</a>  </p>]]></content>
+        <content type="html"><![CDATA[<img src="img.jpg" alt="C++ Primer 5th" data-align="center"><p>怀疑书上表达有误，若以“小于等于”为例，第一条就令所有整型值和浮点型值内建的<code>&lt;=</code>运算无法满足。  </p><p>对于二元关系 <code>less</code>：  </p><ul><li>若 <code>less(a, b)</code> 为真，则 <code>less(b, a)</code> 为假，即不满足自反性。  </li><li>若 <code>less(a, b)</code> 和 <code>less(b, c)</code> 为真，蕴含 <code>less(a, c)</code> 为真，即满足传递性。  </li><li>令关系 <code>equal(a, b)</code> 为 <code>(¬less(a, b) ∧ ¬less(b, a))</code>，可知 <code>equal</code> 是 <code>a</code> 与 <code>b</code> 的等价关系，且同样具有传递性。</li></ul><p><a href="https://zh.cppreference.com/w/cpp/concepts/strict_weak_order">C++参考</a>  </p>]]></content>
       
       
       <categories>
