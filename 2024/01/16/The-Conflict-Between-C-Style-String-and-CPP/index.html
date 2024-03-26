@@ -2,21 +2,24 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>C++20 比宏更好用的source_location | Petals&#39; blog</title>
-  <meta name="keywords" content=" CPP , CPP20 ">
-  <meta name="description" content="C++20 比宏更好用的source_location | Petals&#39; blog">
+  <title>C风格字符串与CPP的矛盾 | Petals&#39; blog</title>
+  <meta name="keywords" content=" CPP ">
+  <meta name="description" content="C风格字符串与CPP的矛盾 | Petals&#39; blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="C++ 完美转发的实现本文将介绍 std::forward 怎样做到“完美转发”及如何实现。如有错误请指出，感激不尽。   讲完美转发前需要先了解转发引用和引用折叠。   转发引用在函数模板中，为了可以根据传入参数的值类别，使形参的类型为相应的左值引用&#x2F;右值引用，我们通常使用转发引用，也称为万能引用：   template &lt;typename T&gt; void foo(T&amp;am">
+<meta name="description" content="怀疑书上表达有误，若以“小于等于”为例，第一条就令所有整型值和浮点型值内建的&lt;&#x3D;运算无法满足。   对于二元关系 less：    若 less(a, b) 为真，则 less(b, a) 为假，即不满足自反性。   若 less(a, b) 和 less(b, c) 为真，蕴含 less(a, c) 为真，即满足传递性。   令关系 equal(a, b) 为 (¬less(a, b)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++ 完美转发的实现">
-<meta property="og:url" content="http://sunflavourpetals.github.io/2024/03/19/CPP%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:title" content="C++ 严格弱序">
+<meta property="og:url" content="http://sunflavourpetals.github.io/2024/03/26/CPP-Strict-Weak-Order/index.html">
 <meta property="og:site_name" content="Petals&#39; blog">
-<meta property="og:description" content="C++ 完美转发的实现本文将介绍 std::forward 怎样做到“完美转发”及如何实现。如有错误请指出，感激不尽。   讲完美转发前需要先了解转发引用和引用折叠。   转发引用在函数模板中，为了可以根据传入参数的值类别，使形参的类型为相应的左值引用&#x2F;右值引用，我们通常使用转发引用，也称为万能引用：   template &lt;typename T&gt; void foo(T&amp;am">
+<meta property="og:description" content="怀疑书上表达有误，若以“小于等于”为例，第一条就令所有整型值和浮点型值内建的&lt;&#x3D;运算无法满足。   对于二元关系 less：    若 less(a, b) 为真，则 less(b, a) 为假，即不满足自反性。   若 less(a, b) 和 less(b, c) 为真，蕴含 less(a, c) 为真，即满足传递性。   令关系 equal(a, b) 为 (¬less(a, b)">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-19T08:04:43.000Z">
-<meta property="article:modified_time" content="2024-03-20T15:35:30.758Z">
+<meta property="og:image" content="http://sunflavourpetals.github.io/2024/03/26/CPP-Strict-Weak-Order/img.png">
+<meta property="article:published_time" content="2024-03-26T05:24:33.000Z">
+<meta property="article:modified_time" content="2024-03-26T11:15:42.769Z">
 <meta property="article:author" content="SunflavourPetals">
+<meta property="article:tag" content="CPP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://sunflavourpetals.github.io/2024/03/26/CPP-Strict-Weak-Order/img.png">
 
 
 <link rel="icon" href="/img/avatar.png">
@@ -149,7 +152,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(8)</small>
+                <small>(9)</small>
             
         </div>
     </li>
@@ -161,7 +164,7 @@
         <div data-rel="CPP">
             <i class="fold iconfont icon-right"></i>
             CPP
-            <small>(5)</small>
+            <small>(6)</small>
         </div>
         
             <ul class="sub hide">
@@ -250,8 +253,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="8">
-<input type="hidden" id="yelog_site_word_count" value="12.3k">
+<input type="hidden" id="yelog_site_posts_number" value="9">
+<input type="hidden" id="yelog_site_word_count" value="12.4k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -334,8 +337,17 @@
     <nav id="title-list-nav">
         
         
+        <a  class="全部文章 CPP "
+           href="/2024/03/26/CPP-Strict-Weak-Order/"
+           data-tag="CPP"
+           data-author="" >
+            <span class="post-title" title="C++ 严格弱序">C++ 严格弱序</span>
+            <span class="post-date" title="2024-03-26 13:24:33">2024/03/26</span>
+        </a>
+        
+        
         <a  class="全部文章 "
-           href="/2024/03/19/CPP%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%E7%9A%84%E5%AE%9E%E7%8E%B0/"
+           href="/2024/03/19/CPP-Implementation-of-forward/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="C++ 完美转发的实现">C++ 完美转发的实现</span>
@@ -344,7 +356,7 @@
         
         
         <a  class="全部文章 CPP CPP20 "
-           href="/2024/02/22/CPP20%E7%9A%84%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6/"
+           href="/2024/02/22/CPP20-Comparison-Operators/"
            data-tag="CPP,CPP20,猝不及防系列"
            data-author="" >
             <span class="post-title" title="C++20 的比较运算符">C++20 的比较运算符</span>
@@ -353,7 +365,7 @@
         
         
         <a  class="全部文章 DX D2D "
-           href="/2024/02/12/MSDN%E4%B8%ADDirect2D%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E9%A1%B5%E9%9D%A2%E4%B8%AD%E7%9A%84%E7%96%8F%E6%BC%8F/"
+           href="/2024/02/12/Omissions-in-MSDN-Getting-Started-with-Direct2d/"
            data-tag="DX,D2D,MSDN"
            data-author="" >
             <span class="post-title" title="MSDN中Direct2D快速入门页面中的疏漏">MSDN中Direct2D快速入门页面中的疏漏</span>
@@ -362,7 +374,7 @@
         
         
         <a  class="全部文章 CPP CPP20 "
-           href="/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/"
+           href="/2024/02/09/The-source-location-Better-Than-Macro/"
            data-tag="CPP,CPP20"
            data-author="" >
             <span class="post-title" title="C++20 比宏更好用的source_location">C++20 比宏更好用的source_location</span>
@@ -371,7 +383,7 @@
         
         
         <a  class="全部文章 日常 "
-           href="/2024/02/03/%E5%88%86%E4%BA%ABVS2022Preview%E6%96%B0UI/"
+           href="/2024/02/03/Try-VS2022Preview-New-UI/"
            data-tag="日常"
            data-author="" >
             <span class="post-title" title="分享VS2022Preview新UI">分享VS2022Preview新UI</span>
@@ -380,7 +392,7 @@
         
         
         <a  class="全部文章 CPP "
-           href="/2024/01/16/C%E9%A3%8E%E6%A0%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8ECPP%E7%9A%84%E7%9F%9B%E7%9B%BE/"
+           href="/2024/01/16/The-Conflict-Between-C-Style-String-and-CPP/"
            data-tag="CPP"
            data-author="" >
             <span class="post-title" title="C风格字符串与CPP的矛盾">C风格字符串与CPP的矛盾</span>
@@ -389,7 +401,7 @@
         
         
         <a  class="全部文章 CPP CPP20 "
-           href="/2023/09/22/CPP20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/"
+           href="/2023/09/22/CPP20-How-to-Use-Three-Way-Comparison/"
            data-tag="CPP,CPP20"
            data-author="" >
             <span class="post-title" title="C++20 三路比较运算符的使用">C++20 三路比较运算符的使用</span>
@@ -398,7 +410,7 @@
         
         
         <a  class="全部文章 CPP "
-           href="/2023/09/18/CPP%E4%BD%BF%E7%94%A8extern%E5%85%B3%E9%94%AE%E5%AD%97%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%B8%B8%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8/"
+           href="/2023/09/18/The-Effect-of-Using-extern-in-const-variable-Declaration/"
            data-tag="CPP,猝不及防系列"
            data-author="" >
             <span class="post-title" title="C++ 使用extern关键字声明全局常量的作用">C++ 使用extern关键字声明全局常量的作用</span>
@@ -423,9 +435,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-比宏更好用的source-location" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-The-Conflict-Between-C-Style-String-and-CPP" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">C++20 比宏更好用的source_location</h1>
+        <h1 class="article-title">C风格字符串与CPP的矛盾</h1>
     
     <div class="article-meta">
         
@@ -435,9 +447,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="CPP">CPP</a> > 
-            
-            <a  data-rel="CPP&lt;---&gt;CPP20">CPP20</a>
+            <a  data-rel="CPP">CPP</a>
             
         </span>
         
@@ -447,19 +457,17 @@
             
             <a class="color4">CPP</a>
             
-            <a class="color1">CPP20</a>
-            
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-02-10 15:36:56'>2024-02-09 16:51</time>
+            发布时间 : <time class="date" title='最后更新: 2024-02-16 19:32:43'>2024-01-16 12:52</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:2.1k</span>
+        <span>字数:1.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -478,7 +486,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95"><span class="toc-text">引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%BE%E7%BB%8F%E5%BD%93%E4%B8%8B%E5%8F%AF%E7%94%A8%E7%9A%84C"><span class="toc-text">曾经当下可用的C++</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%8F"><span class="toc-text">为什么是宏</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%93%E4%B8%8B%E5%8F%AF%E7%94%A8%E7%9A%84C"><span class="toc-text">当下可用的C++</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#std-source-location-current"><span class="toc-text">std::source_location::current</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E5%A4%96%E8%AF%9D"><span class="toc-text">题外话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8"><span class="toc-text">注</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95-1"><span class="toc-text">_引</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95"><span class="toc-text">引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%88%E8%BF%B0"><span class="toc-text">陈述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E9%A1%B9%E5%92%8C%E5%BB%BA%E8%AE%AE"><span class="toc-text">事项和建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#14"><span class="toc-text">14</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#25"><span class="toc-text">25</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -494,189 +502,76 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="引"><a href="#引" class="headerlink" title="引"></a>引</h3><pre><code class="C++">// 你不会喜欢这个
-#if defined(_UNICODE) || defined(UNICODE)
-#define MY_FILET __FILEW__
-#else
-#define MY_FILET __FILE__
-#endif
+        <style>
+.rev {
+    color: #101595;
+}
+</style>
 
-#define MY_THROW_IF_FAILED(code) \
-    ::my::ThrowIfFailed(code, TEXT(#code), MY_FILET, __LINE__);
-</code></pre>
-<a href="#注">
-<div>
-<i>在过去的日子里，邪恶当道！</i><br />
-<p align="right"><i>——Kristen Nygaard</i></p>
-</div>
+<h3 id="引"><a href="#引" class="headerlink" title="引"></a>引</h3><img src="blue_pen.jpg" alt="蓝的盆" width="353" height="264" data-align="center">
 
-<div>
-<i>而且，我还持有这样的观点：Cpp必须被摧毁。</i><br />  
-<p align="right"><i>——老加图（Marcus Porcius Cato）</i></p><br />  
-</div>  
-</a>
-
-<h3 id="曾经当下可用的C"><a href="#曾经当下可用的C" class="headerlink" title="曾经当下可用的C++"></a>曾经当下可用的C++</h3><p>在<text id="dragon">《DX12 3D 游戏开发实战》</text>出版之际(指英文原版，出版日期2016&#x2F;03&#x2F;24，引用自<a target="_blank" rel="noopener" href="https://www.amazon.com/Introduction-3D-Game-Programming-DirectX/dp/1942270062">亚马逊</a>)，C++还处于准备迈入C++17的时代。“<a href="#%E5%BC%95">引</a>”中的代码是其中示例的一个变形：API往往返回一个<code>HRESULT</code>类型的值(可以看作是一种错误码)，然后我们可通过<code>FAILED</code>宏来检测返回值是否代表失败。如果失败，还要调用<code>_com_error::ErrorMessgae</code>来获取失败信息，并将文件名、行号、代码和错误信息一并塞到一个自定义异常类的对象里，并抛出它。在程序出错时，这些信息对正在学习D3D的人将很有帮助。  </p>
-<p>“引”中的代码是我根据记忆改写的，可以发现，如果我们无Cpp(C语言预处理器)可用，那么我们将不得不在每次调用<code>my::ThrowIfFailed</code>这个函数时手动填写<code>__FILE__</code>&#x2F;<code>__FILEW__</code>和<code>__LINE__</code>，作为第三和第四个参数，对于大量的检测需求，手工代码代价高昂，耗尽了我们的精力……</p>
-<h4 id="为什么是宏"><a href="#为什么是宏" class="headerlink" title="为什么是宏"></a>为什么是宏</h4><p>宏或者不是一个宏，这是个问题。有什么诡计能让我们同时避免宏和手动填写参数吗？有人可能会想到给函数填写默认参数，但是很遗憾，函数默认参数是行不通的，这种方法不能得到我们想要的效果。最后我们妥协了，选择了宏——如果有其他更好的办法，弗兰克叔叔为什么不告诉我们呢？我记得<a target="_blank" rel="noopener" href="https://www.amazon.com/Introduction-3D-Game-Programming-DirectX/dp/1942270062">龙书</a>作者曾在书里阐述过原因，如果你了解宏只是简单的文本替换，你也能马上明白原因所在。预处理能让宏 <code>__FILE__</code>、<code>__LINE__</code> 出现在源文件中正确的位置，此处就不赘述了。  </p>
-<p>此外，<code>TEXT(#code)</code> 这样的东西只适用于MSVC，在 gcc 等平台无法通过编译(如有兴趣可以详细查看预处理器的那些规则)，其中<code>TEXT</code>是宏，可能的实现：  </p>
-<pre><code class="C++">#if defined(_UNICODE) || defined(UNICODE)
-#define TEXT(quote) L##quote
-#else
-#define TEXT(quote) quote
-#endif
+<p>声明：乱写的。  </p>
+<h3 id="陈述"><a href="#陈述" class="headerlink" title="陈述"></a>陈述</h3><ol>
+<li>字符串字面量持有类型 <code>const char_t[N]</code>，字符串长度等于 <code>N-1</code>；  </li>
+<li>字符串字面量保证 null terminated， <code>&quot;...&quot;[N-1]</code> 为 NUL，其中N是(1)中的N；  </li>
+<li>C风格字符串以NUL字符表示字符串结束；  </li>
+<li>字符串字面量通常被用以表示C风格字符串；  </li>
+<li>字符数组对象退化为指针，丢失数组大小信息，容易产生越界访问甚至引起错误；  </li>
+<li>字符串字面量所表示的C风格字符串通常以 <code>const char*</code> 的形式被引用；  </li>
+<li>从类型上无法区分字符串字面量和字符数组(<code>const char[N]</code>)；  </li>
+<li>函数无法区分实参是字符串字面量还是字符数组；  </li>
+<li>C风格API的参数列表 <code>(const char* str, size_t len)</code> 对安全的保证无济于事；  </li>
+<li><code>std::string</code> 不同于C风格字符串，它允许字符串内存在NUL字符；  </li>
+<li><code>std::string</code> 保证 null terminated，保证被当作C风格字符串时符合“以NUL结尾”的规则；  </li>
+<li><code>std::string</code> 提供了 <code>c_str</code> 成员函数；  </li>
+<li>当 <code>std::string</code> 字符串内存在NUL字符时，按C风格字符串的规则，<code>c_str</code> 表示的C风格字符串被字符串内第一个NUL字符“截断”；  </li>
+<li>若 <code>std::string</code> 字符串内存在NUL字符，作为C风格字符串(<code>c_str</code>)时的行为和其本身<a href="#14">不一致</a>； </li>
+<li><code>std::string_view</code> 是字符串视图；  </li>
+<li><code>std::string_view</code> 不同于C风格字符串，它允许字符串内存在NUL字符；  </li>
+<li><code>std::string_view</code> 不保证 null terminated；  </li>
+<li><code>std::string_view</code> 不提供 <code>c_str</code> 成员函数；  </li>
+<li><code>std::string_view</code> 可能是某个字符串的子串；  </li>
+<li><code>std::string_view</code> 不持有所表示的字符串的所有权，而像是一种引用；  </li>
+<li>仅将字符串字面量作为实参用于构造 <code>std::string</code> 和&#x2F;或 <code>std::string_view</code>，将匹配到接受C风格字符串的构造函数；  </li>
+<li>字符串字面量中可以出现值为 NUL 的元素；  </li>
+<li>通过用户自定义字面量的方式使用标准库(命名空间 <code>std::literals::string_literals</code>) 中的 <code>operator&quot;&quot;s</code> 从字符串字面量构造 <code>std::string</code> 对象；  </li>
+<li>通过用户自定义字面量的方式使用标准库(命名空间 <code>std::literals::string_view_literals</code>)中的 <code>operator&quot;&quot;sv</code> 从字符串字面量构造 <code>std::string_view</code> 对象；  </li>
+<li>通过(23)、(24)获得的 <code>std::string</code>、<code>std::string_view</code> 对象，字符串长度应是 <code>N-1</code> (N为字符数组的尺寸)，不管字符串字面量中是否有 NUL，而(20)中的构造方法则会受 NUL 元素的影响，<a href="#25">示例</a>。</li>
+</ol>
+<h3 id="事项和建议"><a href="#事项和建议" class="headerlink" title="事项和建议"></a>事项和建议</h3><ul>
+<li><div class="rev">使用现代C++，</div>  </li>
+<li><div class="rev">尽量使用 string 和 string_view，</div>  </li>
+<li><div class="rev">尽量避免使用字符数组表示字符串，</div>  </li>
+<li><div class="rev">尽量使用用户自定义字面量通过字符串字面量获得string或string_view对象，</div>  </li>
+<li><div class="rev">当函数接收字符串作为输入参数(不修改)时，考虑使用 string_view 做形参的类型：T foo(string_view in);，</div>  </li>
+<li><div class="rev">优先以返回值作为函数输出的方式，</div>  </li>
+<li><div class="rev">当函数接收字符串作为输入输出参数且可能需要修改它的元素时，考虑使用 span&lt;char_t> 做形参的类型(C++20)，</div>  </li>
+<li><div class="rev">当函数接收字符串作为输入输出参数且可能需要修改它时(可能增长或缩短)，考虑使用 string& 做形参的类型，</div>  </li>
+<li><div class="rev">函数向调用方输出字符串应当优先采用返回值的方式返回 string 类型字符串，</div>  </li>
+<li><div class="rev">不要让 string_view 的生命周期长于它引用的字符串的生命周期，如不要返回从局部(自动存储期) string 对象得来的 string_view，对于 span 同理，它们都不拥有资源的所有权，而像是一种“引用”，</div>  </li>
+<li><div class="rev">不要错误使用 `string_view` 和 `span`，如 `string_view result = foo(1); // 函数foo类型为 string(int)`，</div>  </li>
+<li><div class="rev">字符串字面量具有静态存储期。</div></li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><h4 id="14"><a href="#14" class="headerlink" title="14"></a>14</h4><pre><code class="C++">cout &lt;&lt; string&#123; &quot;str\0ing&quot;, 7 &#125; &lt;&lt; &quot;\n&quot;;
+cout &lt;&lt; string&#123; &quot;str\0ing&quot;, 7 &#125;.c_str() &lt;&lt; &quot;\n&quot;;
 </code></pre>
-<p>测试以默认参数的形式实现与ThrowIfFailed相似的代码：  </p>
-<pre><code class="C++">#include &lt;iostream&gt;
-
-#include &lt;string&gt;
-
-void bad_log(std::string_view msg, const char* caller, const char* file = __FILE__, int line = __LINE__)
-&#123;
-    std::cout
-        &lt;&lt; &quot;FILE: &quot; &lt;&lt; file &lt;&lt; &quot; LINE: &quot; &lt;&lt; line &lt;&lt; &quot; CALLER: &quot; &lt;&lt; caller
-        &lt;&lt; &quot; MSG: &quot; &lt;&lt; msg &lt;&lt; &quot;\n&quot;;
-&#125;
-
-int main()
-&#123;
-    bad_log(&quot;Hell&quot;, __FUNCTION__);
-    bad_log(&quot;Hell&quot;, __func__);
-&#125;
+<p>可能的输出：  </p>
+<pre><code>string
+str
 </code></pre>
-<p>可能的输出：</p>
-<pre><code>FILE: xxx/main.cpp LINE: 5 CALLER: main MSG: Hell
-FILE: xxx/main.cpp LINE: 5 CALLER: main MSG: Hell
+<h4 id="25"><a href="#25" class="headerlink" title="25"></a>25</h4><pre><code class="C++">using namespace std::string_literals;
+using namespace std::string_view_literals;
+cout &lt;&lt; string&#123; &quot;str\0ing&quot; &#125; &lt;&lt; &quot;\n&quot;;
+cout &lt;&lt; string_view&#123; &quot;str\0ing&quot; &#125; &lt;&lt; &quot;\n&quot;;
+cout &lt;&lt; &quot;str\0ing&quot;s &lt;&lt; &quot;\n&quot;;
+cout &lt;&lt; &quot;str\0ing&quot;sv &lt;&lt; &quot;\n&quot;;
 </code></pre>
-<p>很明显不是我们要的效果，在这个程序中，不管在哪里使用默认参数调用<code>bad_log</code>，它的实参<code>line</code>总是<code>5</code>，由于<code>bad_log</code>调用和<code>bad_log</code>的声明同处一个源文件，它能以我们期望的方式工作，但这不够，如果我们在头文件里对<code>bad_log</code>进行声明(包括默认参数的定义)，它将不能按我们的意愿工作(值总是代表声明它的头文件的名称，使用MSVC测试)。<br>简而言之：Only MACRO can do.  </p>
-<h3 id="当下可用的C"><a href="#当下可用的C" class="headerlink" title="当下可用的C++"></a>当下可用的C++</h3><p>我在写这篇文章的时候，正值除夕(实际写到这里时已经到正月初一了)，可以说各种意义上都进入2024年了。C++23尚且不能被支持完善，但是C++20可用。然而就在C++20中，标准库中增加了<code>std::source_location</code>，以解决我们的燃眉之急：  </p>
-<pre><code class="C++">#include &lt;iostream&gt;
-#include &lt;string&gt;
-#include &lt;source_location&gt;
-
-void log(std::string_view msg = &quot;&quot;, const std::source_location&amp; location = std::source_location::current())
-&#123;
-    std::cout
-        &lt;&lt; &quot;FILE: &quot;    &lt;&lt; location.file_name()
-        &lt;&lt; &quot;(&quot;         &lt;&lt; location.line() &lt;&lt; &quot;,&quot; &lt;&lt; location.column() &lt;&lt; &quot;)&quot;
-        &lt;&lt; &quot; CALLER: &quot; &lt;&lt; location.function_name()
-        &lt;&lt; &quot; MSG: &quot;    &lt;&lt; msg &lt;&lt; &quot;\n&quot;;
-&#125;
-
-int main()
-&#123;
-    log(&quot;Hello&quot;);
-&#125;
+<p>可能的输出：  </p>
+<pre><code>str
+str
+string
+string
 </code></pre>
-<p>可能的输出(MSVC)：</p>
-<pre><code>FILE: xxx/main.cpp(16,2) CALLER: int __cdecl main(void) MSG: Hello
-</code></pre>
-<p>注：全部使用<code>TAB</code>表示缩进而非空格（这会影响<code>column</code>的返回值，如果使用四个空格表示缩进，我想<code>column</code>的返回值会是<code>5</code>）。  </p>
-<p>这正是我们想要的。</p>
-<h4 id="std-source-location-current"><a href="#std-source-location-current" class="headerlink" title="std::source_location::current"></a>std::source_location::current</h4><p><code>std::source_location::current</code>函数将构造一个表示调用位置的 source_location 对象。  </p>
-<p>若直接调用 <code>current()</code> （通过指名 <code>current()</code> 的函数调用），则它返回对应调用位置的拥有实现定义值的 <code>source_location</code> 对象。该值应当以同预定义宏 <code>__LINE__</code> 与 <code>__FILE__</code> 的方式受 <code>#line</code> 预处理指令影响。<br>若在默认成员初始化器中使用 <code>current()</code>，则返回值对应初始化该数据成员的构造函数定义或聚合初始化的位置。<br>若 <code>current()</code> 用于默认参数，则返回值对应对 <code>current()</code> 的调用的调用点位置。<br>若以任何其他方式调用 <code>current()</code> ，则返回值未指定。  </p>
-<p>注：<code>std::source_location::current</code> 通常要求编译器的内建实现。  </p>
-<p>以上是 <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/utility/source_location">c++ reference</a> 中的描述(稍有改动)。<br>以下是我写的示例：  </p>
-<pre><code class="C++">#include &lt;iostream&gt;
-#include &lt;string&gt;
-#include &lt;source_location&gt;
-// curr line: 4
-void log(std::string_view msg = &quot;&quot;, const std::source_location&amp; location = std::source_location::current())
-&#123;
-    std::cout
-        &lt;&lt; &quot;FILE: &quot; &lt;&lt; location.file_name()
-        &lt;&lt; &quot;(&quot; &lt;&lt; location.line() &lt;&lt; &quot;,&quot; &lt;&lt; location.column() &lt;&lt; &quot;)&quot;
-        &lt;&lt; &quot; CALLER: &quot; &lt;&lt; location.function_name()
-        &lt;&lt; &quot; MSG: &quot; &lt;&lt; msg &lt;&lt; &quot;\n&quot;;
-&#125;
-// curr line: 13
-struct T1 // 使用默认成员初始化器
-&#123;
-    std::source_location loc = std::source_location::current();
-&#125;;
-// curr line: 18
-struct T2 // 使用构造函数的成员初始化器列表
-&#123;
-    T2() : loc&#123; std::source_location::current() &#125; &#123;&#125;
-    std::source_location loc;
-&#125;;
-// curr line: 24
-struct T3 // 将在main函数中使用聚合初始化
-&#123;
-    std::source_location loc;
-&#125;;
-// curr line: 29
-int main()
-&#123;
-    T1 t1&#123;&#125;; // curr line: 32
-    log(&quot;T1&quot;, t1.loc);
-    T2 t2&#123;&#125;; // curr line: 34
-    log(&quot;T2&quot;, t2.loc);
-    T3 t3&#123; std::source_location::current() &#125;; // curr line: 36
-    log(&quot;T3&quot;, t3.loc);
-    return 0;
-&#125;
-</code></pre>
-<p>可能的输出(MSVC)：  </p>
-<pre><code>FILE: xxx\main.cpp(32,8) CALLER: int __cdecl main(void) MSG: T1
-FILE: xxx\main.cpp(21,36) CALLER: __cdecl T2::T2(void) MSG: T2
-FILE: xxx\main.cpp(36,31) CALLER: int __cdecl main(void) MSG: T3
-</code></pre>
-<p>预处理指令 <code>#line</code> 影响 <code>std::source_location::current</code> 的例子：  </p>
-<pre><code class="C++">#include &lt;iostream&gt;
-#include &lt;string&gt;
-#include &lt;source_location&gt;
-
-void log(std::string_view msg = &quot;&quot;, const std::source_location&amp; location = std::source_location::current())
-&#123;
-    std::cout
-        &lt;&lt; &quot;FILE: &quot; &lt;&lt; location.file_name()
-        &lt;&lt; &quot;(&quot; &lt;&lt; location.line() &lt;&lt; &quot;,&quot; &lt;&lt; location.column() &lt;&lt; &quot;)&quot;
-        &lt;&lt; &quot; CALLER: &quot; &lt;&lt; location.function_name()
-        &lt;&lt; &quot; MSG: &quot; &lt;&lt; msg &lt;&lt; &quot;\n&quot;;
-&#125;
-
-int main()
-&#123;
-#line 123456 &quot;foo.cpp&quot;
-    u8&quot;😁&quot;; // __LINE__: 123456
-    log(&quot;after #line&quot;, std::source_location::current());  // __LINE__: 123457
-    return 0;
-&#125;
-</code></pre>
-<p>可能的输出(MSVC)：  </p>
-<pre><code>FILE: xxx\foo.cpp(123457,43) CALLER: int __cdecl main(void) MSG: after #line
-</code></pre>
-<p>预处理指令 <code>#line</code> 的 <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/preprocessor/line" title="预处理指令 #line">c++ reference</a>。  </p>
-<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>在使用C++时，总会听到别人建议“尽量避免使用宏”等。正如题注所隐含的信息，本贾尼就不喜欢C语言预处理器，C++也在竭力提供不依靠预处理器的选择，比如模板使得程序员不必再使用宏来泛型编程、模块使得程序员摆脱<code>#include</code>指令是唯一选择的境地、包括本文所提到的<code>std::source_location</code>也淡化了使用<code>__FILE__</code>和<code>__LINE__</code>的必要性，毕竟，我们现在有新的、更优的方式达到我们的目的。  </p>
-<p>在没有模板的时期编写一个支持泛型的工具 be like：  </p>
-<pre><code class="CC">// stack.h
-class ELEM_stack
-&#123;
-    ELEM *min, *top, *max;
-    ...
-&#125;
-</code></pre>
-<pre><code class="CC">// main.cpp
-#define ELEM int
-#define ELEM_stack int_stack
-#include &quot;stack.h&quot;
-#undef ELEM
-#undef ELEM_stack
-
-#define ELEM float
-#define ELEM_stack float_stack
-#include &quot;stack.h&quot;
-#undef ELEM
-#undef ELEM_stack
-
-int_stack is;
-float_stack fs;
-</code></pre>
-<blockquote>
-<p>源自《C++语言的设计和演化》(2.9.2 没有模板时的容器类)。</p>
-</blockquote>
-<h3 id="注"><a href="#注" class="headerlink" title="注"></a>注</h3><h4 id="引-1"><a href="#引-1" class="headerlink" title="_引"></a>_引</h4><p><em>这<a href="#%E5%BC%95">两句话</a>分别为《C++语言设计与演化》的第一章《C++的史前时代》与最后一章《C语言预处理器》的题记（引用的是中文译本，裘宗燕译。题记中的“Cpp”指“C语言预处理器——C Preprocessor”）。老加图是古罗马政治家，老加图自然不可能对C语言预处理器有什么意见，这句话是模仿的老加图的名言：迦太基必须被摧毁。</em>  </p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达，请邮件至 3090002881@qq.com </span>

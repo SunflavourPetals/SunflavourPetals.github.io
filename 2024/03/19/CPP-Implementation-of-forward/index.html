@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Petals&#39; blog</title>
+  <title>C++ 完美转发的实现 | Petals&#39; blog</title>
   <meta name="keywords" content="">
-  <meta name="description" content="Petals&#39; blog">
+  <meta name="description" content="C++ 完美转发的实现 | Petals&#39; blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="怀疑书上表达有误，若以“小于等于”为例，第一条就令所有整型值和浮点型值内建的&lt;&#x3D;运算无法满足。   对于二元关系 less：    若 less(a, b) 为真，则 less(b, a) 为假，即不满足自反性。   若 less(a, b) 和 less(b, c) 为真，蕴含 less(a, c) 为真，即满足传递性。   令关系 equal(a, b) 为 (¬less(a, b)">
 <meta property="og:type" content="article">
@@ -63,7 +63,7 @@
 
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -433,12 +433,45 @@
         </div>
     </div>
 </aside>
-<div id="post" class="index">
+<div id="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-CPP-Implementation-of-forward" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Welcome-to-my-Blog"><span class="toc-text">Welcome to my Blog</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0"><span class="toc-text">博客平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">快捷键</span></a></li></ol></li></ol>
+        <h1 class="article-title">C++ 完美转发的实现</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2024-03-20 23:35:30'>2024-03-19 16:04</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:2.4k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#C-%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">C++ 完美转发的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E5%8F%91%E5%BC%95%E7%94%A8"><span class="toc-text">转发引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0"><span class="toc-text">引用折叠</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">模板参数的类型推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-text">需要完美转发的原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91"><span class="toc-text">完美转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#arg-%E4%B8%BA%E5%B7%A6%E5%80%BC%E5%BC%95%E7%94%A8%E6%97%B6"><span class="toc-text">arg 为左值引用时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#arg-%E4%B8%BA%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8%E6%97%B6"><span class="toc-text">arg 为右值引用时</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%C2%B7%E7%BB%AD"><span class="toc-text">完美转发·续</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -451,32 +484,189 @@
     }
 </style>
 </div>
-            <h1 id="Welcome-to-my-Blog"><a href="#Welcome-to-my-Blog" class="headerlink" title="Welcome to my Blog"></a>Welcome to my Blog</h1><p>这里是 Petals 的 Blog，  </p>
-<p>正在研究 C++ &#x2F; <del>DirectX 12</del>  </p>
-<p>咕咕咕中…  </p>
-<h2 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h2><p>这个博客通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> 生成，部署在 <a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a> 使用的主题为 <a target="_blank" rel="noopener" href="https://github.com/yelog/hexo-theme-3-hexo">3-hexo</a></p>
-<h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><ul>
-<li><code>[S]</code> 全屏&#x2F;取消全屏</li>
-<li><code>[W]</code> 打开&#x2F;关闭文章目录(大纲)</li>
-<li><code>[I]</code> 获取搜索框焦点</li>
-<li><code>[j]</code> 向下滑动</li>
-<li><code>[K]</code> 向上滑动</li>
-<li><code>[GG]</code> 到最顶端</li>
-<li><code>[shift+G]</code> 到最下端</li>
-</ul>
-<p>搜索框操作：  </p>
-<ul>
-<li><code>[ESC]</code> 如果输入框有内容，清除内容</li>
-<li><code>[ESC]</code> 如果输入框无内容，失去焦点</li>
-<li><code>[UP]</code> 向下选择文章</li>
-<li><code>[DOWN]</code> 向上选择文章</li>
-<li><code>[ENTER]</code> 打开当前选中的文章，若没有，则默认打开第一个</li>
-</ul>
-<p><a target="_blank" rel="noopener" href='http://yelog.org/2017/03/24/3-hexo-shortcuts/'>3-hexo快捷键说明</a></p>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="C-完美转发的实现"><a href="#C-完美转发的实现" class="headerlink" title="C++ 完美转发的实现"></a>C++ 完美转发的实现</h1><p>本文将介绍 <code>std::forward</code> 怎样做到“完美转发”及如何实现。<br>如有错误请指出，感激不尽。  </p>
+<p>讲完美转发前需要先了解转发引用和引用折叠。  </p>
+<h2 id="转发引用"><a href="#转发引用" class="headerlink" title="转发引用"></a>转发引用</h2><p>在函数模板中，为了可以根据传入参数的值类别，使形参的类型为相应的左值引用&#x2F;右值引用，我们通常使用转发引用，也称为万能引用：  </p>
+<pre><code class="C++">template &lt;typename T&gt;
+void foo(T&amp;&amp; arg) &#123;&#125;
+</code></pre>
+<p>对 C++20 新增的简写函数模板也是如此：  </p>
+<pre><code class="C++">void foo(auto&amp;&amp; arg) &#123;&#125;
+</code></pre>
+<p>下面的调用中：  </p>
+<pre><code class="C++">foo(1);
+int num&#123; 1 &#125;;
+foo(num);
+</code></pre>
+<p>对于 <code>foo(1)</code>，形参 <code>arg</code> 的类型是 <code>int&amp;&amp;</code>；对于 <code>foo(num)</code>，形参 <code>arg</code> 的类型是 <code>int&amp;</code>。这都是用引用折叠来实现的。  </p>
+<p>虽然 <code>T&amp;&amp;</code> 看上去是右值引用的形式，但是需要考虑 <code>T</code> 是引用类型的别名或是需要被推导的类型的情况，请看“引用折叠”。</p>
+<h2 id="引用折叠"><a href="#引用折叠" class="headerlink" title="引用折叠"></a>引用折叠</h2><p>C++ 不允许引用的引用，如 <code>int &amp; &amp; r = num;</code> <code>int &amp; &amp;&amp; r = 1;</code>……<br>这些都无法通过编译。  </p>
+<p>但是当 <code>T</code> 是引用类型的类型别名时，使用 <code>T&amp;</code> 和 <code>T&amp;&amp;</code> 将发生引用折叠。  </p>
+<pre><code class="C++">using T = int&amp;;
+using U = int&amp;&amp;;
+int num&#123;&#125;;
 
-        </article>
-        
-        
+T&amp;  r1 = num;
+T&amp;&amp; r2 = num;
+U&amp;  r3 = num;
+U&amp;&amp; r4 = 0;
+</code></pre>
+<p>引用折叠的规则：<code>&amp;&amp; &amp;&amp;</code> 折叠成右值引用，所有其他组合均折叠成左值引用。  </p>
+<p>就以上代码，运用上述规则进行推导，得出：  </p>
+<table>
+<thead>
+<tr>
+<th align="center">标识符</th>
+<th>类型声明</th>
+<th>替换类型别名后</th>
+<th align="center">引用折叠后的类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">r1</td>
+<td>T&amp;</td>
+<td>int&amp; &amp;</td>
+<td align="center">int&amp;</td>
+</tr>
+<tr>
+<td align="center">r2</td>
+<td>T&amp;&amp;</td>
+<td>int&amp; &amp;&amp;</td>
+<td align="center">int&amp;</td>
+</tr>
+<tr>
+<td align="center">r3</td>
+<td>U&amp;</td>
+<td>int&amp;&amp; &amp;</td>
+<td align="center">int&amp;</td>
+</tr>
+<tr>
+<td align="center">r4</td>
+<td>U&amp;&amp;</td>
+<td>int&amp;&amp; &amp;&amp;</td>
+<td align="center">int&amp;&amp;</td>
+</tr>
+</tbody></table>
+<p>除了类型别名，使用 <code>模板参数&amp;&amp;</code> 和 <code>auto&amp;&amp;</code> 也能发生引用折叠：  </p>
+<pre><code class="C++">template &lt;typename T&gt;
+void foo(T&amp;&amp; arg) // T&amp;&amp; 在接受左值时将发生引用折叠
+&#123;
+    std::vector&lt;int&gt; vec&#123; 1, 2, 3 &#125;;
+    for (auto&amp;&amp; e : vec) // auto&amp;&amp; 同上
+    &#123;
+        std::cout &lt;&lt; e &lt;&lt; &#39; &#39;;
+    &#125;
+&#125;
+</code></pre>
+<p>至于模板参数T和auto如何被推导为引用类型而引发引用折叠，请看下节。  </p>
+<h2 id="模板参数的类型推导"><a href="#模板参数的类型推导" class="headerlink" title="模板参数的类型推导"></a>模板参数的类型推导</h2><p>还是以 <code>foo</code> 函数模板为例，为了使 <code>foo</code> 接收拥有不同值类别的参数并且使形参为相应引用，如何推导模板参数 <code>T</code> 的类型？  </p>
+<pre><code class="C++">template &lt;typename T&gt;
+void foo(T&amp;&amp; arg) &#123;&#125;
+
+void test()
+&#123;
+    int num = 1;
+    foo(1);
+    foo(num);
+&#125;
+</code></pre>
+<p><code>foo(1)</code> 中，实参 <code>1</code> 是纯右值，形参 <code>T&amp;&amp; arg</code> 中，arg是引用而且只能是右值引用(因为无法将左值引用绑定到右值)，<code>T</code> 被推导为 <code>int</code>，<code>T&amp;&amp;</code> 刚好是 <code>int&amp;&amp;</code>；<br><code>foo(num)</code> 中， 实参 <code>num</code> 是左值，形参 <code>T&amp;&amp; arg</code> 中，arg是引用而且只能是左值引用(因为无法将右值引用绑定到左值)，<code>T</code> 被推导为 <code>int&amp;</code>，<code>T&amp;&amp;</code> 则是 <code>int&amp; &amp;&amp;</code>，引用折叠为 <code>int&amp;</code>；  </p>
+<p>此外，<code>auto</code> 使用和模板参数一样的推导规则。  </p>
+<p>类型推导和引用折叠双剑合璧，就使之成为转发引用。  </p>
+<p>转发引用使用引用折叠，根据实参的值类别使形参为左值引用或右值引用，那么为什么需要完美转发呢？请看下节。  </p>
+<h2 id="需要完美转发的原因"><a href="#需要完美转发的原因" class="headerlink" title="需要完美转发的原因"></a>需要完美转发的原因</h2><p>上节提到左值引用只能绑定到左值，右值引用只能绑定到右值。值类别是个需要严肃讨论的东西，但是本文主题不在于此，关于值类别，不同于传统 C 语言，C++11 给出的定义，参考<a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/value_category" title="value_category - 值类别">C++ Reference</a>(<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/value_category" title="c++ reference 值类别(中文)">中文</a>)。<br>值类别-左值引用、右值引用通常用于拷贝控制，在使用转发引用的函数模板中给使用转发引用的函数模板传递参数时需要保持参数原本的值类别。注：将右值引用传递给转发引用时，转发引用实际是左值引用。  </p>
+<p>整型、浮点型、字符、布尔字面量都是纯右值(字符串字面量是左值)。只能用右值引用去引用上述为右值的字面量：  </p>
+<pre><code class="C++">int&amp;&amp; rref = 1;
+</code></pre>
+<p>但是这里的引用都是左值，包括右值引用：  </p>
+<pre><code class="C++">int&amp; lref = rref; // 例如这里将左值引用绑定到rref，绝对可以，轻易可以。
+</code></pre>
+<p>对于函数传参也是如此：  </p>
+<pre><code class="C++">void bar(int&amp; lref) &#123; std::cout &lt;&lt; &quot;void bar(int&amp;)\n&quot;; &#125;
+void bar(int&amp;&amp; rref) &#123; std::cout &lt;&lt; &quot;void bar(int&amp;&amp;)\n&quot;; &#125;
+void test(int lval, int&amp; lref, int&amp;&amp; rref)
+&#123;
+    bar(lval); // lval 是左值，匹配 void bar(int&amp;)
+    bar(1);    // 1    是右值，匹配 void bar(int&amp;&amp;)
+    bar(lref); // lref 是左值，匹配 void bar(int&amp;)
+    bar(rref); // rref 是左值，匹配 void bar(int&amp;)
+    foo(rref); // 不例外，foo 的模板参数 T 被推导为 int&amp;，引用折叠后形参类型为 int&amp;
+&#125;
+</code></pre>
+<p>故虽然转发引用有用，但遇到将转发引用的参数传递给其他使用转发引用的函数模板时，无法保持参数原本的值类别。<br>解决方案请看下节，完美转发。  </p>
+<h2 id="完美转发"><a href="#完美转发" class="headerlink" title="完美转发"></a>完美转发</h2><p>为制造一个右值，我们可以使用 <code>std::move</code>，<code>std::move</code> 接收一个左值或右值，并返回一个右值。  </p>
+<p>一般 <code>std::move</code> 的实现：  </p>
+<pre><code class="C++">// C++14
+template &lt;typename T&gt;
+constexpr remove_reference_t&lt;T&gt;&amp;&amp; move(T&amp;&amp; arg) noexcept
+&#123;
+    return static_cast&lt;remove_reference_t&lt;T&gt;&amp;&amp;&gt;(arg);
+&#125;
+</code></pre>
+<p>从 <code>std::move</code> 源码可以看出，它实际是使用 <code>static_cast</code> 实现的。<br>对于持有 <code>int</code> 类型的左值 <code>num</code>，<code>static_cast&lt;int&amp;&amp;&gt;(num)</code> 将左值转换为右值。使用 <code>static_cast</code> 需要我们显式填入类型，<code>std::move(num)</code> 则不需要，更加简短方便。  </p>
+<p>如上文所述，引用都是左值。虽然引用都是左值，但是若函数返回类型是右值引用，那么这个函数调用表达式的值类别是右值；若函数返回类型是左值引用，那么这个函数调用表达式的值类别是左值。<br>(若函数返回值类型不是引用，那么函数调用表达式的值类别是右值)  </p>
+<p>回顾<a href="#%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC">类型推导小节</a>，我们同样以  </p>
+<pre><code class="C++">template &lt;typename T&gt;
+void foo(T&amp;&amp; arg) &#123;&#125;
+
+void test()
+&#123;
+    int num = 1;
+    foo(1);
+    foo(num);
+&#125;
+</code></pre>
+<p>为例，对于 <code>foo(1)</code>，形参 <code>arg</code> 有类型 <code>int&amp;&amp;</code>，<code>T</code> 为 <code>int</code>；对于 <code>foo(num)</code>，形参 <code>arg</code> 有类型 <code>int&amp;</code>，<code>T</code> 为 <code>int&amp;</code>。  </p>
+<p>有以上信息帮助，我们就能分辨出哪些情况应该使用 <code>std::move</code> 或 <code>static_cast</code> 将 <code>arg</code> 制作成右值，但是手动选择何时使用 <code>std::move</code> 过于麻烦，我们应该有一个函数模板，根据以上信息返回左值或右值，那就是 <code>std::forward</code>。  </p>
+<p>我们可以实现一个 <code>my_forward</code>，让它具有 <code>std::forward</code> 的功能。  </p>
+<p>对于 <code>my_forward</code>，<code>foo</code> 的模板参数 <code>T</code> 和形参类型 <code>decltype(arg)</code> 是有用的信息；<br>我们选用 <code>T</code> 作为有效信息就已足够，选用它的原因是使用它足够方便；<br>为了使用我们需要的信息 <code>T</code>，<code>my_forward</code> 应该是一个模板，令模板参数列表为 <code>&lt;typename T&gt;</code>；<br>使用引用折叠来处理返回类型；<br>由于转发所接收的参数通常是引用，对形参，应为左值引用；<br>返回语句同样需要引用折叠配合 <code>static_cast</code> 来处理成正确的值类别，令返回值能够绑定到它。  </p>
+<p><code>my_forward</code> 的实现如下：  </p>
+<pre><code class="C++">// arg 是左值引用，用于匹配左值的实参(如左值引用和右值引用)
+template &lt;typename T&gt;
+constexpr T&amp;&amp; my_forward(std::remove_reference_t&lt;T&gt;&amp; arg) noexcept
+&#123;
+    return static_cast&lt;T&amp;&amp;&gt;(arg);
+&#125;
+</code></pre>
+<p>由于 <code>T</code> 是我们要用的信息，所以应该显式填入模板的参数列表，而不是令其推导。  </p>
+<pre><code class="C++">template &lt;typename T&gt;
+void forward_test(T&amp;&amp; arg)
+&#123;
+    foo(my_forward&lt;T&gt;(arg));
+&#125;
+</code></pre>
+<p>成功实现完美转发！  </p>
+<p>根据引用折叠的知识，我们来推演一下 <code>forward_test</code> 的 <code>arg</code> 分别有类型 <code>int&amp;</code> 和 <code>int&amp;&amp;</code> 时，<code>my_forward</code> 的工作状况：  </p>
+<h3 id="arg-为左值引用时"><a href="#arg-为左值引用时" class="headerlink" title="arg 为左值引用时"></a>arg 为左值引用时</h3><p>已知当 <code>arg</code> 为 <code>int&amp;</code> 时，<code>T</code> 也为 <code>int&amp;</code>，<br>将 <code>T</code> 填入后 <code>my_forward&lt;T&gt;(arg)</code> 即是 <code>my_forward&lt;int&amp;&gt;(arg)</code>。<br>再来看 <code>my_forward</code> 的处理：<br>返回值类型 <code>T&amp;&amp;</code> 即是 <code>int&amp; &amp;&amp;</code>，引用折叠后为 <code>int&amp;</code>，<br>参数是 <code>std::remove_reference_t&lt;T&gt;&amp; arg</code>，经处理后是 <code>int &amp; arg</code>，<br>返回语句 <code>return static_cast&lt;T&amp;&amp;&gt;(arg);</code> 即是 <code>return static_cast&lt;int&amp; &amp;&amp;&gt;(arg);</code>，引用折叠后为 <code>return static_cast&lt;int&amp;&gt;(arg);</code>，<br>成功转发为左值。  </p>
+<h3 id="arg-为右值引用时"><a href="#arg-为右值引用时" class="headerlink" title="arg 为右值引用时"></a>arg 为右值引用时</h3><p>已知当 <code>arg</code> 为 <code>int&amp;&amp;</code> 时，<code>T</code> 为 <code>int</code>，<br>将 <code>T</code> 填入后 <code>my_forward&lt;T&gt;(arg)</code> 即是 <code>my_forward&lt;int&gt;(arg)</code>。<br>再来看 <code>my_forward</code> 的处理：<br>返回值类型 <code>T&amp;&amp;</code> 即是 <code>int&amp;&amp;</code>，<br>参数是 <code>std::remove_reference_t&lt;T&gt;&amp; arg</code>，经处理后是 <code>int &amp; arg</code>，<br>返回语句 <code>return static_cast&lt;T&amp;&amp;&gt;(arg);</code> 即是 <code>return static_cast&lt;int&amp;&amp;&gt;(arg);</code>，<br>成功转发为右值。  </p>
+<h2 id="完美转发·续"><a href="#完美转发·续" class="headerlink" title="完美转发·续"></a>完美转发·续</h2><p>标准库还提供了为右值准备的 <code>std::forward</code>，以 msvc-stl为例：  </p>
+<pre><code class="C++">_EXPORT_STD template &lt;class _Ty&gt;
+_NODISCARD _MSVC_INTRINSIC constexpr _Ty&amp;&amp; forward(remove_reference_t&lt;_Ty&gt;&amp;&amp; _Arg) noexcept &#123;
+    static_assert(!is_lvalue_reference_v&lt;_Ty&gt;, &quot;bad forward call&quot;);
+    return static_cast&lt;_Ty&amp;&amp;&gt;(_Arg);
+&#125;
+</code></pre>
+<p>可以看到为右值提供的 <code>std::forward</code> 不允许将右值转发为左值！  </p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达，请邮件至 3090002881@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -485,11 +675,11 @@
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-</div>
-<div class="full-toc">
-    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
+    </div>
 </div>
 
 </body>

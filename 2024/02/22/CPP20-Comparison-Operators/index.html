@@ -2,21 +2,24 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>C++ 使用extern关键字声明全局常量的作用 | Petals&#39; blog</title>
-  <meta name="keywords" content=" CPP , 猝不及防系列 ">
-  <meta name="description" content="C++ 使用extern关键字声明全局常量的作用 | Petals&#39; blog">
+  <title>C++20 的比较运算符 | Petals&#39; blog</title>
+  <meta name="keywords" content=" CPP , CPP20 , 猝不及防系列 ">
+  <meta name="description" content="C++20 的比较运算符 | Petals&#39; blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="C++ 完美转发的实现本文将介绍 std::forward 怎样做到“完美转发”及如何实现。如有错误请指出，感激不尽。   讲完美转发前需要先了解转发引用和引用折叠。   转发引用在函数模板中，为了可以根据传入参数的值类别，使形参的类型为相应的左值引用&#x2F;右值引用，我们通常使用转发引用，也称为万能引用：   template &lt;typename T&gt; void foo(T&amp;am">
+<meta name="description" content="怀疑书上表达有误，若以“小于等于”为例，第一条就令所有整型值和浮点型值内建的&lt;&#x3D;运算无法满足。   对于二元关系 less：    若 less(a, b) 为真，则 less(b, a) 为假，即不满足自反性。   若 less(a, b) 和 less(b, c) 为真，蕴含 less(a, c) 为真，即满足传递性。   令关系 equal(a, b) 为 (¬less(a, b)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++ 完美转发的实现">
-<meta property="og:url" content="http://sunflavourpetals.github.io/2024/03/19/CPP%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:title" content="C++ 严格弱序">
+<meta property="og:url" content="http://sunflavourpetals.github.io/2024/03/26/CPP-Strict-Weak-Order/index.html">
 <meta property="og:site_name" content="Petals&#39; blog">
-<meta property="og:description" content="C++ 完美转发的实现本文将介绍 std::forward 怎样做到“完美转发”及如何实现。如有错误请指出，感激不尽。   讲完美转发前需要先了解转发引用和引用折叠。   转发引用在函数模板中，为了可以根据传入参数的值类别，使形参的类型为相应的左值引用&#x2F;右值引用，我们通常使用转发引用，也称为万能引用：   template &lt;typename T&gt; void foo(T&amp;am">
+<meta property="og:description" content="怀疑书上表达有误，若以“小于等于”为例，第一条就令所有整型值和浮点型值内建的&lt;&#x3D;运算无法满足。   对于二元关系 less：    若 less(a, b) 为真，则 less(b, a) 为假，即不满足自反性。   若 less(a, b) 和 less(b, c) 为真，蕴含 less(a, c) 为真，即满足传递性。   令关系 equal(a, b) 为 (¬less(a, b)">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-19T08:04:43.000Z">
-<meta property="article:modified_time" content="2024-03-20T15:35:30.758Z">
+<meta property="og:image" content="http://sunflavourpetals.github.io/2024/03/26/CPP-Strict-Weak-Order/img.png">
+<meta property="article:published_time" content="2024-03-26T05:24:33.000Z">
+<meta property="article:modified_time" content="2024-03-26T11:15:42.769Z">
 <meta property="article:author" content="SunflavourPetals">
+<meta property="article:tag" content="CPP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://sunflavourpetals.github.io/2024/03/26/CPP-Strict-Weak-Order/img.png">
 
 
 <link rel="icon" href="/img/avatar.png">
@@ -149,7 +152,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(8)</small>
+                <small>(9)</small>
             
         </div>
     </li>
@@ -161,7 +164,7 @@
         <div data-rel="CPP">
             <i class="fold iconfont icon-right"></i>
             CPP
-            <small>(5)</small>
+            <small>(6)</small>
         </div>
         
             <ul class="sub hide">
@@ -250,8 +253,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="8">
-<input type="hidden" id="yelog_site_word_count" value="12.3k">
+<input type="hidden" id="yelog_site_posts_number" value="9">
+<input type="hidden" id="yelog_site_word_count" value="12.4k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -334,8 +337,17 @@
     <nav id="title-list-nav">
         
         
+        <a  class="全部文章 CPP "
+           href="/2024/03/26/CPP-Strict-Weak-Order/"
+           data-tag="CPP"
+           data-author="" >
+            <span class="post-title" title="C++ 严格弱序">C++ 严格弱序</span>
+            <span class="post-date" title="2024-03-26 13:24:33">2024/03/26</span>
+        </a>
+        
+        
         <a  class="全部文章 "
-           href="/2024/03/19/CPP%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%E7%9A%84%E5%AE%9E%E7%8E%B0/"
+           href="/2024/03/19/CPP-Implementation-of-forward/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="C++ 完美转发的实现">C++ 完美转发的实现</span>
@@ -344,7 +356,7 @@
         
         
         <a  class="全部文章 CPP CPP20 "
-           href="/2024/02/22/CPP20%E7%9A%84%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6/"
+           href="/2024/02/22/CPP20-Comparison-Operators/"
            data-tag="CPP,CPP20,猝不及防系列"
            data-author="" >
             <span class="post-title" title="C++20 的比较运算符">C++20 的比较运算符</span>
@@ -353,7 +365,7 @@
         
         
         <a  class="全部文章 DX D2D "
-           href="/2024/02/12/MSDN%E4%B8%ADDirect2D%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E9%A1%B5%E9%9D%A2%E4%B8%AD%E7%9A%84%E7%96%8F%E6%BC%8F/"
+           href="/2024/02/12/Omissions-in-MSDN-Getting-Started-with-Direct2d/"
            data-tag="DX,D2D,MSDN"
            data-author="" >
             <span class="post-title" title="MSDN中Direct2D快速入门页面中的疏漏">MSDN中Direct2D快速入门页面中的疏漏</span>
@@ -362,7 +374,7 @@
         
         
         <a  class="全部文章 CPP CPP20 "
-           href="/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/"
+           href="/2024/02/09/The-source-location-Better-Than-Macro/"
            data-tag="CPP,CPP20"
            data-author="" >
             <span class="post-title" title="C++20 比宏更好用的source_location">C++20 比宏更好用的source_location</span>
@@ -371,7 +383,7 @@
         
         
         <a  class="全部文章 日常 "
-           href="/2024/02/03/%E5%88%86%E4%BA%ABVS2022Preview%E6%96%B0UI/"
+           href="/2024/02/03/Try-VS2022Preview-New-UI/"
            data-tag="日常"
            data-author="" >
             <span class="post-title" title="分享VS2022Preview新UI">分享VS2022Preview新UI</span>
@@ -380,7 +392,7 @@
         
         
         <a  class="全部文章 CPP "
-           href="/2024/01/16/C%E9%A3%8E%E6%A0%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8ECPP%E7%9A%84%E7%9F%9B%E7%9B%BE/"
+           href="/2024/01/16/The-Conflict-Between-C-Style-String-and-CPP/"
            data-tag="CPP"
            data-author="" >
             <span class="post-title" title="C风格字符串与CPP的矛盾">C风格字符串与CPP的矛盾</span>
@@ -389,7 +401,7 @@
         
         
         <a  class="全部文章 CPP CPP20 "
-           href="/2023/09/22/CPP20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/"
+           href="/2023/09/22/CPP20-How-to-Use-Three-Way-Comparison/"
            data-tag="CPP,CPP20"
            data-author="" >
             <span class="post-title" title="C++20 三路比较运算符的使用">C++20 三路比较运算符的使用</span>
@@ -398,7 +410,7 @@
         
         
         <a  class="全部文章 CPP "
-           href="/2023/09/18/CPP%E4%BD%BF%E7%94%A8extern%E5%85%B3%E9%94%AE%E5%AD%97%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%B8%B8%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8/"
+           href="/2023/09/18/The-Effect-of-Using-extern-in-const-variable-Declaration/"
            data-tag="CPP,猝不及防系列"
            data-author="" >
             <span class="post-title" title="C++ 使用extern关键字声明全局常量的作用">C++ 使用extern关键字声明全局常量的作用</span>
@@ -423,9 +435,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-CPP使用extern关键字声明全局常量的作用" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-CPP20-Comparison-Operators" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">C++ 使用extern关键字声明全局常量的作用</h1>
+        <h1 class="article-title">C++20 的比较运算符</h1>
     
     <div class="article-meta">
         
@@ -435,7 +447,9 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="CPP">CPP</a>
+            <a  data-rel="CPP">CPP</a> > 
+            
+            <a  data-rel="CPP&lt;---&gt;CPP20">CPP20</a>
             
         </span>
         
@@ -445,6 +459,8 @@
             
             <a class="color4">CPP</a>
             
+            <a class="color1">CPP20</a>
+            
             <a class="color2">猝不及防系列</a>
             
         </span>
@@ -452,12 +468,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-02-28 10:30:31'>2023-09-18 20:34</time>
+            发布时间 : <time class="date" title='最后更新: 2024-02-26 23:08:44'>2024-02-22 03:11</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.7k</span>
+        <span>字数:1.6k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -476,7 +492,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95"><span class="toc-text">引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Extern-%E5%9C%A8%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E6%97%B6%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">Extern 在声明全局变量时的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%9A%84%E9%93%BE%E6%8E%A5"><span class="toc-text">C++全局变量的链接</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E7%89%B9%E6%AE%8A%E9%87%8D%E8%BD%BD%E8%A7%A3%E6%9E%90%E8%A7%84%E5%88%99"><span class="toc-text">比较运算符的特殊重载解析规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E8%8D%89%E6%A1%88%E6%91%98%E5%BD%95"><span class="toc-text">C++草案摘录</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -492,191 +508,208 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="#toolongtowatch">太长不看环节</a></p>
-<h2 id="引"><a href="#引" class="headerlink" title="引"></a>引</h2><p>通常在编写大型C&#x2F;C++程序时，我们会用到分文件编写程序的方式组织代码，按照不同的功能模块(此模块非c++20模块)，将一份程序分成不同的部分。</p>
-<p>为了让模块之间能够相互访问，需要将声明放在头文件(.h)中，将定义放在源文件(.c&#x2F;.cpp)中。</p>
-<pre><code class="cpp">// header &quot;foo.h&quot;
-int foo();
-</code></pre>
-<pre><code class="cpp">// source &quot;foo.cpp&quot;
-#include &quot;foo.h&quot;
-int foo()
+        <p>在 C++20 中，比较运算符们迎来了一次革新，不仅有三路比较运算符的加入，还有重载决议上的改变。<br>C++20 中添加了比较运算符的特殊重载解析规则。  </p>
+<p>关于三路比较运算符的使用方法可以查看<a href="https://sunflavourpetals.github.io/2023/09/22/CPP20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/">我的博客</a>。  </p>
+<p>在 C++20 之前，若要支持所有的比较运算符，一般需要提供：  </p>
+<ol>
+<li><code>operator==</code>  </li>
+<li><code>operator!=</code>  </li>
+<li><code>operator&lt;</code>  </li>
+<li><code>operator&lt;=</code>  </li>
+<li><code>operator&gt;</code>  </li>
+<li><code>operator&gt;=</code></li>
+</ol>
+<p>从 C++20 起，一般只需要提供：  </p>
+<ol>
+<li><code>operator==</code>  </li>
+<li><code>operator&lt;=&gt;</code></li>
+</ol>
+<p><code>!=</code> 可以通过重载决议选择到使用 <code>operator==</code> 的方式；  </p>
+<p><code>&gt;</code>、<code>&gt;=</code>、<code>&lt;</code>、<code>&lt;=</code> 可以通过重载决议选择到使用 <code>operator&lt;=&gt;</code> 的方式。  </p>
+<p>这极大地缩减了为用户自定义类型提供比较操作的成本，<br>此外，若 <code>operator&lt;=&gt;</code> 被定义为 <code>=default</code>，那么 <code>==</code>、<code>!=</code> 也将可用：  </p>
+<pre><code class="C++">struct Foo
 &#123;
-    return &#123;&#125;;
-&#125;
+    int data&#123;&#125;;
+    friend auto operator&lt;=&gt;(Foo, Foo) = default;
+&#125;;
+// 仅仅这样就能对 Foo 类型对象使用任意比较操作
 </code></pre>
-<p>这样，其他模块只要使用了预处理指令<code>#include &quot;foo.h&quot;</code>，就能使用函数<code>foo</code>了(<del>每个用到<code>foo</code>的源文件中，直接在使用之前声明一次也行</del>)。</p>
-<pre><code class="cpp">// main.cpp
-#include &quot;foo.h&quot;
-int main()
-&#123;
-    return foo();
-&#125;
-</code></pre>
-<hr>
-<p>预处理指令<code>#include &quot;foo.h&quot;</code>的作用仅仅只是在预处理阶段使用”foo.h”文件的内容替换掉这条指令而已。</p>
-<p>也就是说，编译器在编译”main.cpp”阶段，代码中只有孤零零一条声明：<code>int foo();</code>，而没有函数<code>foo</code>的定义，大家都不知道这个函数<code>foo</code>在哪里，也不知道这个函数<code>foo</code>干了什么，只知道有个叫<code>foo</code>的函数并且这里调用了函数<code>foo</code>。</p>
-<p>虽然有些疑问，但是”main.cpp”还是被成功编译了，生成了一个”main.obj”(Windows平台)，<code>.obj</code>文件即”可重定位目标文件”，里面装满了编译器生成的目标代码。这时，”foo.cpp”也被编译了，生成了一个”foo.obj”文件……</p>
-<p>现在来到了链接阶段，”main.cpp”中的<code>main</code>函数调用了<code>foo</code>函数，现在我们知道<code>foo</code>函数在”foo.obj”中，链接程序将它和<code>main</code>函数一并放入了”main.exe”(假设是这个名字)，并且在<code>main</code>函数中调用<code>foo</code>函数的地方填上了<code>foo</code>函数的位置。</p>
-<p>这样，<code>main</code>函数就知道<code>foo</code>函数在哪了，当程序执行到此处时，<code>main</code>函数将把控制权交给<code>foo</code>，等着它将返回值交给<code>main</code>……</p>
-<p>这就是小学生都知道的C&#x2F;C++语言从源码到可执行文件的流程。<del>当然，如果你照着上面写了然后还编译链接了，甚至还反编译了，甚至还一条条去看汇编指令了，最后发现<code>main</code>函数直接返回了0，说程序编译链接都是骗人的……别急，这可能是编译器将<code>foo</code>函数直接内联了，用代码替换了函数调用，这不是我们要讨论的内容。</del></p>
-<p>一个内联的例子，用<code>mov eax, 5</code>替换了对函数foo的调用(Release模式下)。</p>
-<img title="例子" src="inline_o.png" data-align="center">
+<p>示例 <a target="_blank" rel="noopener" href="https://godbolt.org/z/6a3nfjcPW">godbolt</a>：  </p>
+<pre><code class="C++">#include &lt;iostream&gt;
 
-<h2 id="Extern-在声明全局变量时的作用"><a href="#Extern-在声明全局变量时的作用" class="headerlink" title="Extern 在声明全局变量时的作用"></a>Extern 在声明全局变量时的作用</h2><p>闹了半天主角”extern”都没出现，现在开始进入正题。</p>
-<p>对函数进行分文件编写是呼吸一样平常的事情，而经常编写C&#x2F;C++程序的话，全局变量&#x2F;命名空间局部变量将是一个绕不开的东西。它也能像函数一样，将声明与定义分离。下面将进行展示~  </p>
-<p>(使用MSVC)</p>
-<pre><code class="cpp">// header &quot;bar.h&quot;
-extern int bar;
-</code></pre>
-<pre><code class="cpp">// source &quot;bar.cpp&quot;
-int bar&#123; 123 &#125;;
-</code></pre>
-<pre><code class="cpp">// main.cpp
-#include &quot;bar.h&quot;
-int main()
+struct A
 &#123;
-    return bar;
-&#125;
-</code></pre>
-<p>没错， <code>extern</code>关键字出现了，它告诉链接器这个叫<code>bar</code>的，等会去别的翻译单元中查找定义。通常情况下，非常量全局变量具有外部链接，如你所见，这个<code>bar</code>就是一个非常量全局变量，它具有外部链接，链接器让远在他<code>.obj</code>的<code>main</code>函数也能找到它。</p>
-<hr>
-<div id="toolongtowatch">我所熟知的情况到这就结束了，但是前几天，我在整理旧的代码的时候，发现了一个奇怪又熟悉的东西：</div>
-
-<pre><code class="cpp">namespace Petal::UserEntrance
-&#123;
-    extern const fptr&lt;int&gt; pt_user_main&#123; &amp;::MainFunc &#125;;
-    extern const ptrc&lt;TChar&gt; pt_user_main_name&#123; Petal_TStr(#MainFunc) &#125;;
-&#125;
-</code></pre>
-<p>在定义的时候出现了关键字<code>extern</code>，显然此时我已经忘记了<code>extern</code>在此处的作用，我抱着好奇的心态将它删了(指<code>extern</code>)，结果出现了链接错误：</p>
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/error-messages/tool-errors/linker-tools-error-lnk2001">LNK2001</a></td>
-<td>无法解析的外部符号 “int (__cdecl* Petal::UserEntrance::pt_user_main)(void)” (?pt_user_main@UserEntrance@Petal@@3Q6AHXZEA)</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/error-messages/tool-errors/linker-tools-error-lnk2001">LNK2001</a></td>
-<td>无法解析的外部符号 “wchar_t const * const Petal::UserEntrance::pt_user_main_name” (?pt_user_main_name@UserEntrance@Petal@@3QEB_WEB)</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/error-messages/tool-errors/linker-tools-error-lnk1120">LNK1120</a></td>
-<td>2 个无法解析的外部命令</td>
-</tr>
-</tbody></table>
-<p>经典链接错误  </p>
-<p><em>Classic</em>  </p>
-<p>我忘记了当时为什么会这样写，查下MSDN。</p>
-<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/cpp/extern-cpp?view=msvc-170">extern (C++) | Microsoft Learn | zh-cn</a></p>
-<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/cpp/extern-cpp?view=msvc-170">extern (C++) | Microsoft Learn | en-us</a></p>
-<p>我果然是健忘的，故写下博客以便未来哪天犯傻了能快速找到之前的经验</p>
-<img title="cat" src="my_cat.jpg" width="298" data-align="center">
-
-<p>也就是说，全局常量变量具有内部链接，即使在外声明也无法使用，除非在定义时在前面加上关键字<code>extern</code>。用<code>bar</code>来举例如下：</p>
-<pre><code class="cpp">// header &quot;bar.h&quot;
-extern const int bar;
-</code></pre>
-<pre><code class="cpp">// source &quot;bar.cpp&quot;
-extern const int bar&#123; 123 &#125;;
-</code></pre>
-<pre><code class="cpp">// main.cpp
-#include &quot;bar.h&quot;
-int main()
-&#123;
-    return bar;
-&#125;
-</code></pre>
-<hr>
-<h2 id="C-全局变量的链接"><a href="#C-全局变量的链接" class="headerlink" title="C++全局变量的链接"></a>C++全局变量的链接</h2><p>既然都说到这份上，还是复习一下VC++中全局变量(及命名空间局部变量)所具有的链接(不包含C++20及更高标准的内容)。</p>
-<p>仅内部链接：</p>
-<ul>
-<li><p>使用 <code>static</code> 声明的全局变量或命名空间局部变量</p>
-</li>
-<li><p>类型具有 <code>const</code> 限定且无 <code>inline</code> 说明符 并且 先前没有外部链接的声明 的全局变量或命名空间局部变量</p>
-</li>
-<li><p>无名命名空间及其中的命名空间中的命名空间局部变量</p>
-</li>
-</ul>
-<p>例</p>
-<pre><code class="cpp">// test.cpp
-static int foo&#123; 1 &#125;;
-const int bar&#123; 2 &#125;;
-namespace &#123; int unnamed&#123; 3 &#125;; &#125;
-</code></pre>
-<pre><code class="cpp">// main.cpp
-extern int foo;
-extern const int bar;
-extern int baz;
+    int a&#123;&#125;;
+    auto operator==(A aa)
+    &#123;
+        std::cout &lt;&lt; &quot;my A==&quot; &lt;&lt; &quot;\n&quot;;
+        return a == aa.a;
+    &#125;
+    auto operator&lt;=&gt;(A aa)
+    &#123;
+        std::cout &lt;&lt; &quot;my A&lt;=&gt;&quot; &lt;&lt; &quot;\n&quot;;
+        return a &lt;=&gt; aa.a;
+    &#125;
+&#125;;
 
 int main()
 &#123;
-    int&#123; foo &#125;; // LNK2001
-    int&#123; bar &#125;; // LNK2001
-    int&#123; baz &#125;; // LNK2001
-    return 0;
+    A a1&#123; 1 &#125;, a2&#123; 1 &#125;;
+    std::cout &lt;&lt; std::boolalpha;
+    std::cout &lt;&lt; &quot;==: &quot;  &lt;&lt; (a1 == a2) &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; &quot;!=: &quot;  &lt;&lt; (a1 != a2) &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; &quot;&lt;=&gt;: &quot; &lt;&lt; ((a1 &lt;=&gt; a2) == 0 ? &quot;eq&quot; : &quot;not eq&quot;) &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; &quot;&gt;: &quot;   &lt;&lt; (a1 &gt; a2)  &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; &quot;&gt;=: &quot;  &lt;&lt; (a1 &gt;= a2) &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; &quot;&lt;: &quot;   &lt;&lt; (a1 &lt; a2)  &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; &quot;&lt;=: &quot;  &lt;&lt; (a1 &lt;= a2) &lt;&lt; &quot;\n&quot;;
 &#125;
 </code></pre>
-<p>外部链接(不在无名命名空间及其中的命名空间内定义的情况)：</p>
-<ul>
-<li><p>使用extern声明的全局变量或命名空间局部变量</p>
-</li>
-<li><p>没有const限定的全局变量或命名空间局部变量</p>
-</li>
-</ul>
-<p>例</p>
-<pre><code class="cpp">// test.cpp
-extern const int foo&#123; 1 &#125;;
-int bar&#123; 2 &#125;;
-extern const int baz;
-
-const int baz&#123; 3 &#125;;
+<pre><code class="output">==: my A==
+true
+!=: my A==
+false
+&lt;=&gt;: my A&lt;=&gt;
+eq
+&gt;: my A&lt;=&gt;
+false
+&gt;=: my A&lt;=&gt;
+true
+&lt;: my A&lt;=&gt;
+false
+&lt;=: my A&lt;=&gt;
+true
 </code></pre>
-<pre><code class="cpp">// main.cpp
-extern const int foo;
-extern int bar;
-extern const int baz;
+<h3 id="比较运算符的特殊重载解析规则"><a href="#比较运算符的特殊重载解析规则" class="headerlink" title="比较运算符的特殊重载解析规则"></a>比较运算符的特殊重载解析规则</h3><p>在 C++20 之前，如果只有 <code>operator==(A, int)</code> 那么只有 <code>a == 123</code> 这种比较方式能够通过编译，从 C++20 起，此情况上 <code>123 == a</code> 将被视为 <code>a == 123</code>，重载决议选择最佳候选为 <code>operator==(A, int)</code>;  </p>
+<p>如果有 <code>operator==(A, int)</code>、<code>operator==(A, A)</code>、<code>A::A(int)</code>(A的非 explicit 构造函数)，<code>123 == a</code> 将被视为 <code>a == 123</code>，重载决议选择最佳候选为 <code>operator==(A, int)</code>，在 C++20 前，这个操作将被解释为从字面量 <code>123</code> 构造 <code>A</code> 对象，再选择 <code>operator==(A, A)</code> 进行比较操作；  </p>
+<p>如果有 <code>A::operator==(int)</code>、<code>A::operator==(A)</code>、<code>A::A(int)</code>(A的非 explicit 构造函数)，<code>123 == a</code> 将被视为 <code>a == 123</code>，重载决议选择最佳候选 <code>A::operator==(int)</code>，在 C++20 前，这个操作无法通过编译。  </p>
+<p>示例 <a target="_blank" rel="noopener" href="https://godbolt.org/z/s8ddG873h">godbolt</a>：  </p>
+<pre><code class="C++">#include &lt;iostream&gt;
+
+struct A
+&#123;
+    int a&#123;&#125;;
+    A() = default;
+    A(int i) : a&#123; i &#125; &#123;&#125;
+    auto operator==(A aa)
+    &#123;
+        std::cout &lt;&lt; &quot;my A==A&quot; &lt;&lt; &quot;\n&quot;;
+        return a == aa.a;
+    &#125;
+    auto operator==(int i)
+    &#123;
+        std::cout &lt;&lt; &quot;my A==int&quot; &lt;&lt; &quot;\n&quot;;
+        return a == i;
+    &#125;
+&#125;;
 
 int main()
 &#123;
-    int&#123; foo &#125;;
-    int&#123; bar &#125;;
-    int&#123; baz &#125;;
-    return 0;
+    A a1&#123; 1 &#125;, a2&#123; 1 &#125;;
+    std::cout &lt;&lt; std::boolalpha;
+    
+    std::cout &lt;&lt; (a1 == 1) &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; (1 == a2) &lt;&lt; &quot;\n&quot;; // error before c++20
 &#125;
 </code></pre>
-<p>值得注意的是，C++引用忽略限定符，所以如下也能通过编译链接(MSVC)：</p>
-<pre><code class="cpp">// test.cpp
-int val&#123; 100 &#125;;
-int const/*此const限定int*/ &amp;const/*此const无效*/ test&#123; val &#125;;
+<pre><code class="output">my A==int
+true
+my A==int
+true
 </code></pre>
-<pre><code class="cpp">extern const int&amp; const test;
+<p>此操作会受 <code>operator!=</code> 定义的影响，阅读下方C++草案 12.2.2.3.4 部分了解。  </p>
+<p>还有下面这个例子 <a target="_blank" rel="noopener" href="https://godbolt.org/z/zo4qvMb1E">godbolt</a>：  </p>
+<pre><code class="C++">#include &lt;iostream&gt;
+
+struct A
+&#123;
+    int a&#123;&#125;;
+    A() = default;
+    A(int aa) : a&#123; aa &#125; &#123;&#125;
+    auto operator==(A aa)
+    &#123;
+        std::cout &lt;&lt; &quot;my A==&quot; &lt;&lt; &quot;\n&quot;;
+        return a == aa.a;
+    &#125;
+    auto operator&lt;=&gt;(A aa)
+    &#123;
+        std::cout &lt;&lt; &quot;my A&lt;=&gt;&quot; &lt;&lt; &quot;\n&quot;;
+        return a &lt;=&gt; aa.a;
+    &#125;
+    auto operator&lt;(A aa)
+    &#123;
+        std::cout &lt;&lt; &quot;my A&lt;&quot; &lt;&lt; &quot;\n&quot;;
+        return a &lt; aa.a;
+    &#125;
+&#125;;
 int main()
 &#123;
-    int&#123; test &#125;;
-    return 0;
+    A a1&#123;&#125;, a2&#123;&#125;;
+    (void)(123 == a2);
+    (void)(123 != a2);
+    (void)(123 &lt;=&gt; a2);
+    (void)(123 &gt; a2);
+    (void)(123 &gt;= a2);
+    (void)(123 &lt; a2); // 最佳匹配是 A::operator&lt;=&gt;(A) 注：reversed
+                      // 0 &lt; (a2 &lt;=&gt; 123)
+                      // 0 &lt; (a2 &lt;=&gt; A&#123; 123 &#125;)
+    (void)(123 &lt;= a2);
+
+    (void)(a1 &lt; 123); // 最佳匹配是 A::operator&lt;(A)
+                      // a1 &lt; A&#123; 123 &#125;
+    (void)(a1 &lt; a2);  // 最佳匹配是 A::operator&lt;(A)
 &#125;
 </code></pre>
-<p>但请不要这么编写代码。</p>
-<p>更复杂的例子(其实分清顶层const和底层const的区别就不会被const限定迷惑住了)</p>
-<pre><code class="cpp">// test.cpp
-int* ptr1&#123; nullptr &#125;; // 外部链接
-const int* ptrc1&#123; nullptr &#125;; // 外部链接
-int *const cptr1&#123; nullptr &#125;; // 内部链接
-int const* const cptrc1&#123; nullptr &#125;; // 内部链接
-int const* const&amp; cptrcr1&#123; cptrc1 &#125;; // 外部链接
-extern int const* const cptrc2&#123; nullptr &#125;; // 外部链接
+<pre><code class="output">my A==
+my A==
+my A&lt;=&gt;
+my A&lt;=&gt;
+my A&lt;=&gt;
+my A&lt;=&gt;
+my A&lt;=&gt;
+my A&lt;
+my A&lt;
 </code></pre>
-<p>C++参考</p>
-<p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/storage_duration">存储类说明符 - cppreference.com</a></p>
-<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/storage_duration">Storage class specifiers - cppreference.com</a></p>
-<hr>
-<p>完结！</p>
+<p>阅读下方C++草案 12.2.2.3.9 部分了解。  </p>
+<p>从某种意义上讲，<code>lhs op rhs</code> 和 <code>operator op(lhs, rhs)</code> 的不同之处又增加了，如果 <code>op</code> 实际上是 <code>operator==</code> 或 <code>operator&lt;=&gt;</code> 经特殊处理而来，而不是被s声明的运算符重载函数，那么使用后者的形式应该会得到一个调用未声明函数的错误(<a target="_blank" rel="noopener" href="https://godbolt.org/z/jrEq91WG9">godbolt</a>)。  </p>
+<h3 id="C-草案摘录"><a href="#C-草案摘录" class="headerlink" title="C++草案摘录"></a>C++草案摘录</h3><blockquote>
+<p>12.2.2.3 Operators in expressions  </p>
+<p>…  </p>
+<p>4  </p>
+<p>A non-template function or function template F named operator&#x3D;&#x3D; is a rewrite target with first operand o unless a search for the name operator!&#x3D; in the scope S from the instantiation context of the operator expression finds a function or function template that would correspond ([basic.scope.scope]) to F if its name were operator&#x3D;&#x3D;, where S is the scope of the class type of o if F is a class member, and the namespace scope of which F is a member otherwise. A function template specialization named operator&#x3D;&#x3D; is a rewrite target if its function template is a rewrite target.<br>[Example 2:  </p>
+<pre><code class="C++">struct A &#123;&#125;;  
+template&lt;typename T&gt; bool operator==(A, T);     // #1  
+bool a1 = 0 == A();                             // OK, calls reversed #1  
+template&lt;typename T&gt; bool operator!=(A, T);  
+bool a2 = 0 == A();                             // error, #1 is not a rewrite target  
+ 
+struct B &#123;  
+    bool operator==(const B&amp;);    // #2  
+&#125;;  
+struct C : B &#123;  
+    C();  
+    C(B);  
+    bool operator!=(const B&amp;);    // #3  
+&#125;;
+bool c1 = B() == C();           // OK, calls #2; reversed #2 is not a candidate
+// because search for operator!= in C finds #3
+bool c2 = C() == B();           // error: ambiguous between #2 found when searching C and
+                                // reversed #2 found when searching B
+struct D &#123;&#125;;
+template&lt;typename T&gt; bool operator==(D, T);       // #4
+inline namespace N &#123;
+    template&lt;typename T&gt; bool operator!=(D, T);   // #5
+&#125;
+bool d1 = 0 == D();             // OK, calls reversed #4; #5 does not forbid #4 as a rewrite target
+</code></pre>
+<p>— end example]  </p>
+<p>…  </p>
+<p>9  </p>
+<p>If a rewritten operator&lt;&#x3D;&gt; candidate is selected by overload resolution for an operator @, x @ y is interpreted as 0 @ (y &lt;&#x3D;&gt; x) if the selected candidate is a synthesized candidate with reversed order of parameters, or (x &lt;&#x3D;&gt; y) @ 0 otherwise, using the selected rewritten operator&lt;&#x3D;&gt; candidate. Rewritten candidates for the operator @ are not considered in the context of the resulting expression.  </p>
+<p>10  </p>
+<p>If a rewritten operator&#x3D;&#x3D; candidate is selected by overload resolution for an operator @, its return type shall be cv bool, and x @ y is interpreted as:<br>(10.1)<br>if @ is !&#x3D; and the selected candidate is a synthesized candidate with reversed order of parameters, !(y &#x3D;&#x3D; x),<br>(10.2)<br>otherwise, if @ is !&#x3D;, !(x &#x3D;&#x3D; y),<br>(10.3)<br>otherwise (when @ is &#x3D;&#x3D;), y &#x3D;&#x3D; x,<br>in each case using the selected rewritten operator&#x3D;&#x3D; candidate.  </p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://eel.is/c++draft/over.match">完整 C++ 草案</a>  </p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达，请邮件至 3090002881@qq.com </span>

@@ -2,21 +2,24 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>C风格字符串与CPP的矛盾 | Petals&#39; blog</title>
-  <meta name="keywords" content=" CPP ">
-  <meta name="description" content="C风格字符串与CPP的矛盾 | Petals&#39; blog">
+  <title>分享VS2022Preview新UI | Petals&#39; blog</title>
+  <meta name="keywords" content=" 日常 ">
+  <meta name="description" content="分享VS2022Preview新UI | Petals&#39; blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="C++ 完美转发的实现本文将介绍 std::forward 怎样做到“完美转发”及如何实现。如有错误请指出，感激不尽。   讲完美转发前需要先了解转发引用和引用折叠。   转发引用在函数模板中，为了可以根据传入参数的值类别，使形参的类型为相应的左值引用&#x2F;右值引用，我们通常使用转发引用，也称为万能引用：   template &lt;typename T&gt; void foo(T&amp;am">
+<meta name="description" content="怀疑书上表达有误，若以“小于等于”为例，第一条就令所有整型值和浮点型值内建的&lt;&#x3D;运算无法满足。   对于二元关系 less：    若 less(a, b) 为真，则 less(b, a) 为假，即不满足自反性。   若 less(a, b) 和 less(b, c) 为真，蕴含 less(a, c) 为真，即满足传递性。   令关系 equal(a, b) 为 (¬less(a, b)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++ 完美转发的实现">
-<meta property="og:url" content="http://sunflavourpetals.github.io/2024/03/19/CPP%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:title" content="C++ 严格弱序">
+<meta property="og:url" content="http://sunflavourpetals.github.io/2024/03/26/CPP-Strict-Weak-Order/index.html">
 <meta property="og:site_name" content="Petals&#39; blog">
-<meta property="og:description" content="C++ 完美转发的实现本文将介绍 std::forward 怎样做到“完美转发”及如何实现。如有错误请指出，感激不尽。   讲完美转发前需要先了解转发引用和引用折叠。   转发引用在函数模板中，为了可以根据传入参数的值类别，使形参的类型为相应的左值引用&#x2F;右值引用，我们通常使用转发引用，也称为万能引用：   template &lt;typename T&gt; void foo(T&amp;am">
+<meta property="og:description" content="怀疑书上表达有误，若以“小于等于”为例，第一条就令所有整型值和浮点型值内建的&lt;&#x3D;运算无法满足。   对于二元关系 less：    若 less(a, b) 为真，则 less(b, a) 为假，即不满足自反性。   若 less(a, b) 和 less(b, c) 为真，蕴含 less(a, c) 为真，即满足传递性。   令关系 equal(a, b) 为 (¬less(a, b)">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-19T08:04:43.000Z">
-<meta property="article:modified_time" content="2024-03-20T15:35:30.758Z">
+<meta property="og:image" content="http://sunflavourpetals.github.io/2024/03/26/CPP-Strict-Weak-Order/img.png">
+<meta property="article:published_time" content="2024-03-26T05:24:33.000Z">
+<meta property="article:modified_time" content="2024-03-26T11:15:42.769Z">
 <meta property="article:author" content="SunflavourPetals">
+<meta property="article:tag" content="CPP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://sunflavourpetals.github.io/2024/03/26/CPP-Strict-Weak-Order/img.png">
 
 
 <link rel="icon" href="/img/avatar.png">
@@ -149,7 +152,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(8)</small>
+                <small>(9)</small>
             
         </div>
     </li>
@@ -161,7 +164,7 @@
         <div data-rel="CPP">
             <i class="fold iconfont icon-right"></i>
             CPP
-            <small>(5)</small>
+            <small>(6)</small>
         </div>
         
             <ul class="sub hide">
@@ -250,8 +253,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="8">
-<input type="hidden" id="yelog_site_word_count" value="12.3k">
+<input type="hidden" id="yelog_site_posts_number" value="9">
+<input type="hidden" id="yelog_site_word_count" value="12.4k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -334,8 +337,17 @@
     <nav id="title-list-nav">
         
         
+        <a  class="全部文章 CPP "
+           href="/2024/03/26/CPP-Strict-Weak-Order/"
+           data-tag="CPP"
+           data-author="" >
+            <span class="post-title" title="C++ 严格弱序">C++ 严格弱序</span>
+            <span class="post-date" title="2024-03-26 13:24:33">2024/03/26</span>
+        </a>
+        
+        
         <a  class="全部文章 "
-           href="/2024/03/19/CPP%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%E7%9A%84%E5%AE%9E%E7%8E%B0/"
+           href="/2024/03/19/CPP-Implementation-of-forward/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="C++ 完美转发的实现">C++ 完美转发的实现</span>
@@ -344,7 +356,7 @@
         
         
         <a  class="全部文章 CPP CPP20 "
-           href="/2024/02/22/CPP20%E7%9A%84%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6/"
+           href="/2024/02/22/CPP20-Comparison-Operators/"
            data-tag="CPP,CPP20,猝不及防系列"
            data-author="" >
             <span class="post-title" title="C++20 的比较运算符">C++20 的比较运算符</span>
@@ -353,7 +365,7 @@
         
         
         <a  class="全部文章 DX D2D "
-           href="/2024/02/12/MSDN%E4%B8%ADDirect2D%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E9%A1%B5%E9%9D%A2%E4%B8%AD%E7%9A%84%E7%96%8F%E6%BC%8F/"
+           href="/2024/02/12/Omissions-in-MSDN-Getting-Started-with-Direct2d/"
            data-tag="DX,D2D,MSDN"
            data-author="" >
             <span class="post-title" title="MSDN中Direct2D快速入门页面中的疏漏">MSDN中Direct2D快速入门页面中的疏漏</span>
@@ -362,7 +374,7 @@
         
         
         <a  class="全部文章 CPP CPP20 "
-           href="/2024/02/09/%E6%AF%94%E5%AE%8F%E6%9B%B4%E5%A5%BD%E7%94%A8%E7%9A%84source-location/"
+           href="/2024/02/09/The-source-location-Better-Than-Macro/"
            data-tag="CPP,CPP20"
            data-author="" >
             <span class="post-title" title="C++20 比宏更好用的source_location">C++20 比宏更好用的source_location</span>
@@ -371,7 +383,7 @@
         
         
         <a  class="全部文章 日常 "
-           href="/2024/02/03/%E5%88%86%E4%BA%ABVS2022Preview%E6%96%B0UI/"
+           href="/2024/02/03/Try-VS2022Preview-New-UI/"
            data-tag="日常"
            data-author="" >
             <span class="post-title" title="分享VS2022Preview新UI">分享VS2022Preview新UI</span>
@@ -380,7 +392,7 @@
         
         
         <a  class="全部文章 CPP "
-           href="/2024/01/16/C%E9%A3%8E%E6%A0%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8ECPP%E7%9A%84%E7%9F%9B%E7%9B%BE/"
+           href="/2024/01/16/The-Conflict-Between-C-Style-String-and-CPP/"
            data-tag="CPP"
            data-author="" >
             <span class="post-title" title="C风格字符串与CPP的矛盾">C风格字符串与CPP的矛盾</span>
@@ -389,7 +401,7 @@
         
         
         <a  class="全部文章 CPP CPP20 "
-           href="/2023/09/22/CPP20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/"
+           href="/2023/09/22/CPP20-How-to-Use-Three-Way-Comparison/"
            data-tag="CPP,CPP20"
            data-author="" >
             <span class="post-title" title="C++20 三路比较运算符的使用">C++20 三路比较运算符的使用</span>
@@ -398,7 +410,7 @@
         
         
         <a  class="全部文章 CPP "
-           href="/2023/09/18/CPP%E4%BD%BF%E7%94%A8extern%E5%85%B3%E9%94%AE%E5%AD%97%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E5%B8%B8%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8/"
+           href="/2023/09/18/The-Effect-of-Using-extern-in-const-variable-Declaration/"
            data-tag="CPP,猝不及防系列"
            data-author="" >
             <span class="post-title" title="C++ 使用extern关键字声明全局常量的作用">C++ 使用extern关键字声明全局常量的作用</span>
@@ -423,9 +435,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-C风格字符串与CPP的矛盾" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Try-VS2022Preview-New-UI" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">C风格字符串与CPP的矛盾</h1>
+        <h1 class="article-title">分享VS2022Preview新UI</h1>
     
     <div class="article-meta">
         
@@ -435,7 +447,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="CPP">CPP</a>
+            <a  data-rel="日常">日常</a>
             
         </span>
         
@@ -443,19 +455,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color4">CPP</a>
+            <a class="color3">日常</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-02-16 19:32:43'>2024-01-16 12:52</time>
+            发布时间 : <time class="date" title='最后更新: 2024-03-19 20:55:11'>2024-02-03 00:00</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.1k</span>
+        <span>字数:44</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -474,7 +486,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95"><span class="toc-text">引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%88%E8%BF%B0"><span class="toc-text">陈述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E9%A1%B9%E5%92%8C%E5%BB%BA%E8%AE%AE"><span class="toc-text">事项和建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#14"><span class="toc-text">14</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#25"><span class="toc-text">25</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E9%A2%98%E4%BA%94%E4%B8%AA%E5%AD%97"><span class="toc-text">标题五个字</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -490,76 +502,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <style>
-.rev {
-    color: #101595;
-}
-</style>
+        <h3 id="标题五个字"><a href="#标题五个字" class="headerlink" title="标题五个字"></a>标题五个字</h3><img src="img.png" alt="效果图" data-align="center">
 
-<h3 id="引"><a href="#引" class="headerlink" title="引"></a>引</h3><img src="blue_pen.jpg" alt="蓝的盆" width="353" height="264" data-align="center">
-
-<p>声明：乱写的。  </p>
-<h3 id="陈述"><a href="#陈述" class="headerlink" title="陈述"></a>陈述</h3><ol>
-<li>字符串字面量持有类型 <code>const char_t[N]</code>，字符串长度等于 <code>N-1</code>；  </li>
-<li>字符串字面量保证 null terminated， <code>&quot;...&quot;[N-1]</code> 为 NUL，其中N是(1)中的N；  </li>
-<li>C风格字符串以NUL字符表示字符串结束；  </li>
-<li>字符串字面量通常被用以表示C风格字符串；  </li>
-<li>字符数组对象退化为指针，丢失数组大小信息，容易产生越界访问甚至引起错误；  </li>
-<li>字符串字面量所表示的C风格字符串通常以 <code>const char*</code> 的形式被引用；  </li>
-<li>从类型上无法区分字符串字面量和字符数组(<code>const char[N]</code>)；  </li>
-<li>函数无法区分实参是字符串字面量还是字符数组；  </li>
-<li>C风格API的参数列表 <code>(const char* str, size_t len)</code> 对安全的保证无济于事；  </li>
-<li><code>std::string</code> 不同于C风格字符串，它允许字符串内存在NUL字符；  </li>
-<li><code>std::string</code> 保证 null terminated，保证被当作C风格字符串时符合“以NUL结尾”的规则；  </li>
-<li><code>std::string</code> 提供了 <code>c_str</code> 成员函数；  </li>
-<li>当 <code>std::string</code> 字符串内存在NUL字符时，按C风格字符串的规则，<code>c_str</code> 表示的C风格字符串被字符串内第一个NUL字符“截断”；  </li>
-<li>若 <code>std::string</code> 字符串内存在NUL字符，作为C风格字符串(<code>c_str</code>)时的行为和其本身<a href="#14">不一致</a>； </li>
-<li><code>std::string_view</code> 是字符串视图；  </li>
-<li><code>std::string_view</code> 不同于C风格字符串，它允许字符串内存在NUL字符；  </li>
-<li><code>std::string_view</code> 不保证 null terminated；  </li>
-<li><code>std::string_view</code> 不提供 <code>c_str</code> 成员函数；  </li>
-<li><code>std::string_view</code> 可能是某个字符串的子串；  </li>
-<li><code>std::string_view</code> 不持有所表示的字符串的所有权，而像是一种引用；  </li>
-<li>仅将字符串字面量作为实参用于构造 <code>std::string</code> 和&#x2F;或 <code>std::string_view</code>，将匹配到接受C风格字符串的构造函数；  </li>
-<li>字符串字面量中可以出现值为 NUL 的元素；  </li>
-<li>通过用户自定义字面量的方式使用标准库(命名空间 <code>std::literals::string_literals</code>) 中的 <code>operator&quot;&quot;s</code> 从字符串字面量构造 <code>std::string</code> 对象；  </li>
-<li>通过用户自定义字面量的方式使用标准库(命名空间 <code>std::literals::string_view_literals</code>)中的 <code>operator&quot;&quot;sv</code> 从字符串字面量构造 <code>std::string_view</code> 对象；  </li>
-<li>通过(23)、(24)获得的 <code>std::string</code>、<code>std::string_view</code> 对象，字符串长度应是 <code>N-1</code> (N为字符数组的尺寸)，不管字符串字面量中是否有 NUL，而(20)中的构造方法则会受 NUL 元素的影响，<a href="#25">示例</a>。</li>
-</ol>
-<h3 id="事项和建议"><a href="#事项和建议" class="headerlink" title="事项和建议"></a>事项和建议</h3><ul>
-<li><div class="rev">使用现代C++，</div>  </li>
-<li><div class="rev">尽量使用 string 和 string_view，</div>  </li>
-<li><div class="rev">尽量避免使用字符数组表示字符串，</div>  </li>
-<li><div class="rev">尽量使用用户自定义字面量通过字符串字面量获得string或string_view对象，</div>  </li>
-<li><div class="rev">当函数接收字符串作为输入参数(不修改)时，考虑使用 string_view 做形参的类型：T foo(string_view in);，</div>  </li>
-<li><div class="rev">优先以返回值作为函数输出的方式，</div>  </li>
-<li><div class="rev">当函数接收字符串作为输入输出参数且可能需要修改它的元素时，考虑使用 span&lt;char_t> 做形参的类型(C++20)，</div>  </li>
-<li><div class="rev">当函数接收字符串作为输入输出参数且可能需要修改它时(可能增长或缩短)，考虑使用 string& 做形参的类型，</div>  </li>
-<li><div class="rev">函数向调用方输出字符串应当优先采用返回值的方式返回 string 类型字符串，</div>  </li>
-<li><div class="rev">不要让 string_view 的生命周期长于它引用的字符串的生命周期，如不要返回从局部(自动存储期) string 对象得来的 string_view，对于 span 同理，它们都不拥有资源的所有权，而像是一种“引用”，</div>  </li>
-<li><div class="rev">不要错误使用 `string_view` 和 `span`，如 `string_view result = foo(1); // 函数foo类型为 string(int)`，</div>  </li>
-<li><div class="rev">字符串字面量具有静态存储期。</div></li>
+<ul>
+<li>Microsoft Visual Studio Community 2022 (64 位) - Preview</li>
+<li>版本 17.9.0 Preview 5.0</li>
 </ul>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><h4 id="14"><a href="#14" class="headerlink" title="14"></a>14</h4><pre><code class="C++">cout &lt;&lt; string&#123; &quot;str\0ing&quot;, 7 &#125; &lt;&lt; &quot;\n&quot;;
-cout &lt;&lt; string&#123; &quot;str\0ing&quot;, 7 &#125;.c_str() &lt;&lt; &quot;\n&quot;;
-</code></pre>
-<p>可能的输出：  </p>
-<pre><code>string
-str
-</code></pre>
-<h4 id="25"><a href="#25" class="headerlink" title="25"></a>25</h4><pre><code class="C++">using namespace std::string_literals;
-using namespace std::string_view_literals;
-cout &lt;&lt; string&#123; &quot;str\0ing&quot; &#125; &lt;&lt; &quot;\n&quot;;
-cout &lt;&lt; string_view&#123; &quot;str\0ing&quot; &#125; &lt;&lt; &quot;\n&quot;;
-cout &lt;&lt; &quot;str\0ing&quot;s &lt;&lt; &quot;\n&quot;;
-cout &lt;&lt; &quot;str\0ing&quot;sv &lt;&lt; &quot;\n&quot;;
-</code></pre>
-<p>可能的输出：  </p>
-<pre><code>str
-str
-string
-string
-</code></pre>
+<p>漂亮得很呐，<del>用上新 ui 立马就觉得老 ui 丑到看不下去了</del>。</p>
+<img src="meme_alice_kawaii.jpg" width="330" height="261" data-align="center">
+
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达，请邮件至 3090002881@qq.com </span>
