@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>烦人的 C4819 警告</title>
+      <link href="/2024/09/13/Annoying-Warning-C4819/"/>
+      <url>/2024/09/13/Annoying-Warning-C4819/</url>
+      
+        <content type="html"><![CDATA[<p>随着 Windows 对 utf-8 的支持逐渐完善（不需要 bom 记事本也能分辨 utf-8 和所谓 “ANSI” 编码的文本文件），我现在基本都会使用 utf-8 作为 C++ 源文件的编码。但是 <code>CL.EXE</code> 却不行，它把不带 bom 的源文件当 “ANSI” 编码的文本来处理，我的代码页为 936，即 GBK，导致存在非 ASCII 字符时出现 <a href="https://learn.microsoft.com/zh-cn/cpp/error-messages/compiler-warnings/compiler-warning-level-1-c4819?view=msvc-170" title="MSDN zh-cn">C4819</a> 警告。  </p><p>下面是一些常见的解决方法：  </p><p>分类一：迁就文件  </p><ol><li>在使用 <code>CL.EXE</code> 编译时添加参数 <code>/utf-8</code> 非常好使，<br>如果是通过 VS 使用 <code>CL.EXE</code> 编译，在 <code>项目-&gt;属性-&gt;配置属性-&gt;C/C++-&gt;命令行-&gt;其他选项</code> 里添加 <code>/utf-8</code> 就行；  </li><li>把系统的代码页改成 65001，即 utf-8，<br>这就需要你开启那个狗屎 beta 功能“全局 utf-8” 了，我开了之后，<code>.chm</code> 文件打不开了，以前的文本文件也乱码了，如果没有历史负担，可以开，但我用了一段时间就换回去了💩💩💩。</li></ol><p>分类二：迁就系统</p><ol><li>把 utf-8 的源文件转为 “带 BOM 的 utf-8” 文件，这样 <code>CL.EXE</code> 才没意见💩；  </li><li>把 utf-8 的源文件转为 “ANSI” 编码，比如用记事本打开另存为 “ANSI” 编码的文件💩💩💩；  </li><li>修改源文件里冲突的部分，比如字符串里写了个 emoji <code>&quot;💩&quot;</code>，用通用字符名 <code>&quot;\U0001F4A9&quot;</code> 替换它，可读性直线下降。</li></ol><p>我遇到的问题是什么呢，我的源文件准备只用 ASCII，这样利用 utf-8 对 ASCII 的兼容性，可以无需改变任何事也能在我的环境里无警告通过编译。等到我写好，编译器说我某个源文件 <code>xxx.h</code> 里有不兼容的字符，叫我保存成 Unicode 文本文件，但是给的位置是错误的 “1 行 1 列”。  </p><p>无奈只能自己找，代码比较多我看了半天都没发现哪有非 ASCII 字符💩💩💩。  </p><p>最后的解决方案，写个程序把源文件按字节读出，如果有数值大于 127 的字节就报告偏移量，最后发现在偏移量 598 处有一个全角冒号出现在了注释里，修改它，解决。  </p><p>💩</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CPP </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CPP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++ 严格弱序</title>
       <link href="/2024/03/26/CPP-Strict-Weak-Order/"/>
       <url>/2024/03/26/CPP-Strict-Weak-Order/</url>
