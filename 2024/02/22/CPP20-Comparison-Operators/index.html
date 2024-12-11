@@ -477,7 +477,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-02-26 23:08:44'>2024-02-22 03:11</time>
+            发布时间 : <time class="date" title='最后更新: 2024-12-11 19:33:00'>2024-02-22 03:11</time>
         
     </div>
     <div class="article-meta">
@@ -680,7 +680,7 @@ my A&lt;
 my A&lt;
 </code></pre>
 <p>阅读下方C++草案 12.2.2.3.9 部分了解。  </p>
-<p>从某种意义上讲，<code>lhs op rhs</code> 和 <code>operator op(lhs, rhs)</code> 的不同之处又增加了，如果 <code>op</code> 实际上是 <code>operator==</code> 或 <code>operator&lt;=&gt;</code> 经特殊处理而来，而不是被s声明的运算符重载函数，那么使用后者的形式应该会得到一个调用未声明函数的错误(<a target="_blank" rel="noopener" href="https://godbolt.org/z/jrEq91WG9">godbolt</a>)。  </p>
+<p>从某种意义上讲，<code>lhs op rhs</code> 和 <code>operator op(lhs, rhs)</code> 的不同之处又增加了，如果 <code>op</code> 实际上是 <code>operator==</code> 或 <code>operator&lt;=&gt;</code> 经特殊处理而来，而不是被声明的运算符重载函数，那么使用后者的形式应该会得到一个调用未声明函数的错误(<a target="_blank" rel="noopener" href="https://godbolt.org/z/jrEq91WG9">godbolt</a>)。  </p>
 <h3 id="C-草案摘录"><a href="#C-草案摘录" class="headerlink" title="C++草案摘录"></a>C++草案摘录</h3><blockquote>
 <p>12.2.2.3 Operators in expressions  </p>
 <p>…  </p>
